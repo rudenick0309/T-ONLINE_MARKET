@@ -1,15 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import Footer from './components/Footer'
+import Header from './components/Header'
+import styled from 'styled-components'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import 'react-native-gesture-handler';
+import MyStack from "./MyStack";
 
-export default function App() {
+// import {SafeAreaView} from "react-native-web";  // this is not a SafeAreaView module. just 'from react-native';
+
+
+
+const SafeAreaViewStyled = styled.SafeAreaView`
+  flex:1;
+  border : 4px solid #eb4034
+`
+
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <NavigationContainer >
       <StatusBar style="auto" />
-    </View>
+
+      {/*<Header/>*/}
+      <MyStack/>
+      {/*<Footer/>*/}
+
+    </NavigationContainer>
   );
 }
+
+export default App
 
 const styles = StyleSheet.create({
   container: {
