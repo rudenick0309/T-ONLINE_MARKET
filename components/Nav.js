@@ -1,58 +1,28 @@
-import React from "react";
-import {StyleSheet, Text, View, Button} from "react-native";
+import React from 'react'
 import styled from "styled-components";
+import {StyleSheet, Text, View, Input, TouchableOpacity} from "react-native";
+import Home from "../pages/Home";
 
-
-import {makeStyles} from "@material-ui/core/styles";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-// import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-
-const TextStyled = styled.Text`
-  margin:10px;
-  font-size:30px;
-`;
-
-// flex:1;
-  // position: relative;
-const ViewStyled = styled.View`
-  border: 3px solid blue;
-  bottom:-630px;
-  height : 50px;
+const NavView = styled.View`
+  height: 50px;
   flex-direction: row;
   justify-content: space-around;
-  text-align:center;
- 
-`;
-
-const ViewChildren = styled.View`
-  flex:1;
-  flex-direction: row;
-  
-  position : absolute;
-  bottom:1;
-  border: 3px solid blue;
+  margin-top: 20px;
+`
+const NavIcon = styled.TouchableOpacity`
+  width : 50px;
+  height : 50px;
+  border : 3px solid blue;
 `
 
-const ButtonStyled = styled.Button`
-  flex:1;
-  width: 40px;
-`
-
-const Footer = () => {
-
+const Nav = ({props}) => {
   return (
-    <ViewStyled>
-      {/*<ViewChildren>*/}
-        <ButtonStyled title={'1'} onPress={()=>{}}/>
-        <ButtonStyled title={'2'} onPress={()=>{}}/>
-        <ButtonStyled title={'3'} onPress={()=>{}}/>
-      {/*</ViewChildren>*/}
-    </ViewStyled>
-  );
-};
+    <NavView>
+      <NavIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>홈</Text></NavIcon>
+      <NavIcon><Text>마이페이지</Text></NavIcon>
+      <NavIcon><Text>카테고리</Text></NavIcon>
+    </NavView>
+  )
+}
 
-export default Footer;
+export default Nav;
