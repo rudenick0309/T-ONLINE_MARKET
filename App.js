@@ -1,35 +1,65 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Footer from './components/Footer'
-import Header from './components/Header'
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import styled from 'styled-components'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import MyStack from "./MyStack";
+import AppNavigator from "./navigators/AppNavigator";
 
-// import {SafeAreaView} from "react-native-web";  // this is not a SafeAreaView module. just 'from react-native';
+//TODO : after test, delete or apply the below code ( HomeScreen, SettingScreen )
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+// TODO: apply themes in NavigationContainer of App
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#ffffff',
+  },
+};
 
+// TODO: after test, delete or apply the below code ( HomeScreend, SettingScreen )
+// function HomeScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Home!</Text>
+//     </View>
+//   );
+// }
+//
+// function SettingsScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Settings!</Text>
+//     </View>
+//   );
+// }
+// const Tab = createBottomTabNavigator();
+// function Apps() {
+//   return (
+//     <NavigationContainer>
+//       <Tab.Navigator>
+//         <Tab.Screen name="Home" component={HomeScreen} />
+//         <Tab.Screen name="Settings" component={SettingsScreen} />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   );
+// }
 
-const SafeAreaViewStyled = styled.SafeAreaView`
-  flex:1;
-  border : 4px solid #eb4034
-`
-
-const Stack = createStackNavigator();
+//
 
 const App = () => {
   return (
-    <NavigationContainer >
+    <>
+
       <StatusBar style="auto" />
 
-      {/*<Header/>*/}
-      <MyStack/>
-      {/*<Footer/>*/}
+      <NavigationContainer theme={Theme} >
+        <AppNavigator/>
+        {/*<Apps />*/}
+      </NavigationContainer>
 
-    </NavigationContainer>
+    </>
   );
 }
 
