@@ -1,54 +1,27 @@
-import React from "react";
-import {StyleSheet, Text, View, Button} from "react-native";
+import React from 'react'
 import styled from "styled-components";
+import {View, Text, TouchableOpacity} from "react-native";
 
-
-const ViewStyled = styled.View`
-  border: 3px solid blue;
-  top:15px;
-  height : 50px;
+const HeaderView = styled.View`
+  height: 50px;
   flex-direction: row;
-  justify-content: space-between;
-  text-align:center;
-  
- 
-`;
-// const TextStyled = styled.Text`
-//   margin:10px;
-//   font-size:20px;
-// `;
-
-const ViewLeftStyled = styled.View`
-  font-size:20px;
-  flex-direction:row;
+  justify-content: space-around;
+  margin-top: 20px;
 `
-const ViewRightStyled = styled.View`
-  font-size:20px;
-  flex-direction:row;
-`
-const ButtonStyled = styled.Button`
-  flex:1;
-  width: 40px;
-  
+const HeaderIcon = styled.TouchableOpacity`
+  width : 50px;
+  height : 50px;
+  border : 3px solid blue;
 `
 
-const Header = () => {
+const Header = ({props}) => {
   return (
-    <>
-      <ViewStyled>
-        {/*<ViewChildren>*/}
-        <ViewLeftStyled>
-          <ButtonStyled title={'1'} onPress={()=>{}} />
-        </ViewLeftStyled>
-
-        <ViewRightStyled>
-          <ButtonStyled title={'2'} onPress={()=>{}} />
-          <ButtonStyled title={'3'} onPress={()=>{}} />
-        </ViewRightStyled>
-        {/*</ViewChildren>*/}
-      </ViewStyled>
-    </>
-  );
-};
+    <HeaderView>
+      <HeaderIcon onPress={ () => {props.navigation.navigate('TestPage')} } ><Text>1</Text></HeaderIcon>
+      <HeaderIcon><Text>2</Text></HeaderIcon>
+      <HeaderIcon><Text>3</Text></HeaderIcon>
+    </HeaderView>
+  )
+}
 
 export default Header;
