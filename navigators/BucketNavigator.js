@@ -13,7 +13,7 @@ const BucketNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Bucket" component={Bucket}/>
-      <Stack.Screen name="Home" component={Home}/>
+      {/*<Stack.Screen name="Home" component={Home}/>*/}
       <Stack.Screen name="TestPage" component={TestPage}/>
       <Stack.Screen name="TestPageNav" component={TestPageNav}/>
     </Stack.Navigator>
