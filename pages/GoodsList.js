@@ -17,20 +17,20 @@ const Contents = styled.ScrollView`
 
 
 // function part
-const Bucket = (props) => {
-  // TODO : changes the state name :  const [checkList, setCheckList] = useState(null);
+const GoodsList = (props) => {
+  // TODO: changes the state name : const [checkList, setCheckList] = useState(null);
 
   useEffect(() => {
-    // TODO: take the bucket list to axios
+    // TODO: axios to list
   }, []);
 
   return (
     <Container>
       <Header props={props}/>
-      <Contents><Text>장바구니 페이지</Text></Contents>
+      <Contents><Text>GoodsList</Text></Contents>
       <Nav props={props}/>
     </Container>
   );
 };
 
-export default Bucket;
+export default GoodsList;
