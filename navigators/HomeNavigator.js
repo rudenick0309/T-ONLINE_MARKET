@@ -9,8 +9,13 @@ import Payment from "../pages/Payment";
 //TODO: import Logout from '../pages/Logout'
 //TODO: import Mypage from '../pages/Myapge'
 //TODO: import Signup from '../pages/Signup'
-import TestPage from '../pages/TestPage'
-import TestPageNav from '../pages/TestPageNav'
+// import TestPage from '../pages/TestPage'
+// import TestPageNav from '../pages/TestPageNav'
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
+import Mypage from "../pages/Mypage";
+import Myinfocheck from "../pages/Myinfocheck";
+import Myinfo from "../pages/Myinfo";
 
 const Stack = createStackNavigator();
 
@@ -18,15 +23,19 @@ const HomeNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={Home}/>
+
       <Stack.Screen name="GoodsDetail" component={GoodsDetail}/>
       <Stack.Screen name="GoodsList" component={GoodsList}/>
       <Stack.Screen name="Payment" component={Payment}/>
       <Stack.Screen name="Bucket" component={Bucket}/>
 
-      {/* TODO: <Stack.Screen name="Login" component={Login}/>*/}
+      <Stack.Screen name="SignIn" component={SignIn}/>
       {/* TODO: <Stack.Screen name="Logout" component={Logout}/>*/}
-      {/* TODO: <Stack.Screen name="Mypage" component={Mypage}/>*/}
-      {/* TODO: <Stack.Screen name="Signup" component={Signup}/>*/}
+       <Stack.Screen name="Mypage" component={Mypage}/>
+      <Stack.Screen name="SignUp" component={SignUp}/>
+      <Stack.Screen name="Myinfocheck" component={Myinfocheck}/>
+      <Stack.Screen name="Myinfo" component={Myinfo}/>
+
 
     </Stack.Navigator>
   );

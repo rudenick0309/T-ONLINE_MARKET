@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
+import styled from "styled-components";
+import Header from "../components/Header";
+import Nav from '../components/Nav'
 import { StyleSheet,Button, Text, View, ScrollView, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import axios from 'axios';
 
-const SignUp = ({navigation}) => {
+const Container = styled.SafeAreaView`
+  flex: 1;
+  border : 2px solid blue
+`;
+
+const Contents = styled.ScrollView`
+  flex: 1;
+  border : 2px solid blue
+`;
+
+
+const SignUp = (props) => {
+  
     const [userInfo, setUserInfo] = useState({
       username: "",
       email:"",
@@ -39,9 +54,8 @@ const SignUp = ({navigation}) => {
 
      const handleSubmit = (Transition) => {
       setTransition(() => Transition);
-      const apiUrl = "http://localhost:19002";
-      // const aa ="http://ec2-54-180-105-165.ap-northeast-2.compute.amazonaws.com:3040/user/signin";
-      // axios.defaults.withCredentials = true
+      const apiUrl = "http://localhost:4000";
+      
       axios.post(apiUrl + "/user/signup", userInfo).then((data) => {
         // console.log(aa, 'url')
         // axios.post(aa, userInfo).then((data) => {  
@@ -60,9 +74,11 @@ const SignUp = ({navigation}) => {
     }
 
       return (
-          <View>
+        <Container>
+            <Header props={props}/>
+            <Contents>
             <Text>Sign Up</Text>
-            <Button title="Go back" onPress={() => navigation.goBack()} />
+            <Button title="Go back" onPress={() => props.navigation.goBack()} />
             <TextInput
       style={{
         height: 40,
@@ -208,7 +224,9 @@ const SignUp = ({navigation}) => {
         // disabled={!isLogin}
         // title={isLogin ? "Log in" : "Log out"}
       />
-      </View>
+      </Contents>
+      <Nav props={props}/>
+      </Container>
       )
 }
 
