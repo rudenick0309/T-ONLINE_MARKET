@@ -33,7 +33,6 @@ const TextStyled = styled.Text`
   margin-top: 20px
 `
 
-
 // dummy data part
 let homeData = []
 
