@@ -17,7 +17,7 @@ const HeaderIcon = styled.TouchableOpacity`
 const Header = ({props}) => {
   return (
     <HeaderView>
-      <HeaderIcon onPress={ () => {props.navigation.navigate('TestPage')} } ><Text>1</Text></HeaderIcon>
+      <HeaderIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>1</Text></HeaderIcon>
       <HeaderIcon><Text>2</Text></HeaderIcon>
       <HeaderIcon onPress={ () => {props.navigation.navigate('SignIn')} }><Text>로그인</Text></HeaderIcon>
     </HeaderView>
