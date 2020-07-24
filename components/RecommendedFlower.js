@@ -3,23 +3,24 @@ import {StyleSheet, Text, View, Input, TouchableOpacity, Image} from "react-nati
 import styled from "styled-components";
 
 // css part
-export const BestFlowerContainer = styled.TouchableOpacity`
+export const RecommendedFlowerContainer = styled.TouchableOpacity`
   flex: 1;
-  border: 3px solid blue
+  border: 3px solid grey
+  flex-direction:row;
 `;
 
-export const BestFlowerContents = styled.ScrollView`
+export const RecommendedFlowerContents = styled.View`
   flex: 1;
   border: 3px solid grey;
 `;
 
-export const BestFlowerImageView = styled.Image`
+export const RecommendedFlowerImageView = styled.Image`
   flex:1
   height: 160px;
   border: 2px solid yellow;
 `;
 
-export const BestFlowerTextView = styled.Text`
+export const RecommendedFlowerTextView = styled.Text`
   color : red;
 `;
 //
