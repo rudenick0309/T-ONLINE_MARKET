@@ -54,7 +54,7 @@ const App = () => {
 
       <StatusBar style="auto" />
 
-      <NavigationContainer theme={Theme} >
+      <NavigationContainer initialRouteName="Home" theme={Theme} >
         <AppNavigator/>
         {/*<Apps />*/}
       </NavigationContainer>
