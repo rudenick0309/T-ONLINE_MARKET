@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
+import styled from "styled-components";
+import Header from "../components/Header";
+import Nav from '../components/Nav'
 import { StyleSheet,Button, Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Actions } from 'react-native-router-flux';
+// import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 
+const Container = styled.SafeAreaView`
+  flex: 1;
+  border : 2px solid blue
+`;
 
-const SignIn = ({navigation}) => {
+const Contents = styled.ScrollView`
+  flex: 1;
+  border : 2px solid blue
+`;
+
+const SignIn = (props) => {
     
 
       const [userInfo, setUserInfo] = useState({
@@ -33,10 +45,9 @@ const SignIn = ({navigation}) => {
      const [open, setOpen] = useState(false);
 
      const handleSubmit = ({ handleIsLogin }) => {
-      const apiUrl = "http://localhost:19002";
-      // const aa ="http://ec2-54-180-105-165.ap-northeast-2.compute.amazonaws.com:3040/user/signin";
-      // axios.defaults.withCredentials = true
-      axios.post(apiUrl + "/user/signin", userInfo).then((data) => {
+      const apiUrl = "http://localhost:4000";
+      
+      axios.post(apiUrl + "/user/login", userInfo).then((data) => {
         // console.log(aa, 'url')
         // axios.post(aa, userInfo).then((data) => {  
           
@@ -63,15 +74,13 @@ const SignIn = ({navigation}) => {
 
     return(
      
-      <View >
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() => navigation.push('SignIn')}
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="회원가입하기" onPress={() => navigation.navigate('SignUp')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Container>
+        <Header props={props}/>
+        <Contents>
+      
+      <Button title="Go to Home" onPress={() => props.navigation.navigate('Home')} />
+      <Button title="회원가입하기" onPress={() => props.navigation.navigate('SignUp')} />
+      <Button title="Go back" onPress={() => props.navigation.goBack()} />
     
      {/* <TouchableOpacity style = {{ margin: 100 }} onPress = {goToHome}>
          <Text>Log In</Text>
@@ -124,7 +133,9 @@ const SignIn = ({navigation}) => {
         // disabled={!isLogin}
         // title={isLogin ? "Log in" : "Log out"}
       />
-    </View>
+      </Contents>
+      <Nav props={props}/>
+    </Container>
     )
 }
 
