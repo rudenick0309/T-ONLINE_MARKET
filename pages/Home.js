@@ -1,9 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {StyleSheet, Text, View, Input, TouchableOpacity} from "react-native";
+import {StyleSheet, Text, View, TextInput , TouchableOpacity,Image} from "react-native";
 import styled from "styled-components";
 import axios from "axios";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
+import faker from 'faker';
+// import RecommendedFlower from "../components/RecommendedFlower";
+import GoodsDetail from "./GoodsDetail";
+import { RecommendedFlowerContainer,
+  RecommendedFlowerContents,
+  RecommendedFlowerImageView,
+  RecommendedFlowerTextView} from "../components/RecommendedFlower";
+import { BestFlowerContainer,
+  BestFlowerContents,
+  BestFlowerImageView,
+  BestFlowerTextView } from "../components/BestFlower";
 
 // TODO: import {ActivityIndicator} from "react-native";    This is a Ellipse Loading image, I will use this later.
 
@@ -18,26 +29,49 @@ const Contents = styled.ScrollView`
   border: 3px solid grey;
 `;
 
-const RecommendedView = styled.View`
-  height: 150px;
-`;
+const TextStyled = styled.Text`
+  margin-top: 20px
+`
 
+
+// dummy data part
+let homeData = []
+
+function Fake() {
+  return {
+    id: faker.random.number(),
+    title:faker.random.word(),
+    img:faker.image.imageUrl(),
+    contents:faker.name.jobTitle(),
+    // not add to price, Use the contents property
+  };
+}
+
+for(let i = 0; i < 30; i++) {
+  homeData.push(Fake())
+}
+
+// random Index
+const getRandomIndex = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 // function part
 const Home = (props) => {
-  // const [] = useState('')  -> redux
-
   // later, under state are changed in api res.
-  const [recommendedFlower, setRecommendedFlower] = useState(null);
-  const [bestFlower, setBestFlower] = useState(null);
+  const RecommendedFlowerData = homeData[getRandomIndex(0, homeData.length)]
+  const BestFlowerData = homeData;
+  const [text, onChangeText] = React.useState('Here is Search part');
 
-  useEffect(() => {
-    /* TODO: axios.get('url~~~')
-    *   try {} catch {}
-    *   1. RecommendedFlower api -> GoodsDetail
-    *   2. BestFlower api -> GoodsDetail
-    */
-  }, []);
+  // useEffect(() => {
+  //   /* TODO: axios.get('url~~~')
+  //   *   try {} catch {}
+  //   *   1. RecommendedFlower api -> GoodsDetail
+  //   *   2. BestFlower api -> GoodsDetail
+  //   */
+  // }, []);
 
   return (
     <Container>
@@ -45,12 +79,36 @@ const Home = (props) => {
       <Header props={props}/>
 
       <Contents>
-        <Text>홈 화면</Text>
         {/*  TODO: <Search></Search>*/}
+        <TextInput
 
-        {/*  TODO: {recommendedFlower.map( (el) => { <RecommendedFlower key={el.~} onPress={ () => {props.navigation.navigate( 'RecommendedFlower', ~~ )} } /> */}
+          onChangeText={text => onChangeText(text)}
+          value={text}
+        />
 
-        {/*  TODO: {bestFlower.map( (el) => { <BestFlower key={el.~} onPress={ () => {props.navigation.navigate( 'BestFlower', ~~ )} } /> )*/}
+        <RecommendedFlowerContainer
+          // onPress={ () => {props.navigation.navigate("GoodsList")} }>
+          onPress={ () => {props.navigation.navigate("GoodsList", {id : RecommendedFlowerData.id} )} }>
+          <RecommendedFlowerContents>
+            <RecommendedFlowerImageView source={RecommendedFlowerData.img}></RecommendedFlowerImageView>
+            <RecommendedFlowerTextView>{RecommendedFlowerData.contents}</RecommendedFlowerTextView>
+          </RecommendedFlowerContents>
+        </RecommendedFlowerContainer>
+
+        <TextStyled >Best Seller</TextStyled>
+
+        {BestFlowerData.map((el) => {
+          return (
+            <BestFlowerContainer
+              // onPress={ () => {props.navigation.navigate("GoodsDetail")} }>
+              onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>
+              <BestFlowerContents>
+                <BestFlowerImageView source={el.img}></BestFlowerImageView>
+                <BestFlowerTextView>{el.contents}</BestFlowerTextView>
+              </BestFlowerContents>
+            </BestFlowerContainer>
+            )
+        })}
 
       </Contents>
 
