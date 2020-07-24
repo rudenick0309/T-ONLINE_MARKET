@@ -3,8 +3,6 @@ import {createStackNavigator} from "@react-navigation/stack";
 import Bucket from "../pages/Bucket";
 import RecommendedFlower from "../components/RecommendedFlower";
 import BestFlower from "../components/BestFlower";
-import TestPage from "../pages/TestPage";
-import TestPageNav from "../pages/TestPageNav";
 import Home from "../pages/Home";
 
 const Stack = createStackNavigator();
