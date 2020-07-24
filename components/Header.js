@@ -19,7 +19,7 @@ const Header = ({props}) => {
     <HeaderView>
       <HeaderIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>1</Text></HeaderIcon>
       <HeaderIcon><Text>2</Text></HeaderIcon>
-      <HeaderIcon><Text>3</Text></HeaderIcon>
+      <HeaderIcon onPress={ () => {props.navigation.navigate('SignIn')} }><Text>로그인</Text></HeaderIcon>
     </HeaderView>
   )
 }

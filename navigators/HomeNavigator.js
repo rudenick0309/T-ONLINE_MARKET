@@ -8,10 +8,11 @@ import Payment from "../pages/Payment";
 import QnAPlus from "../pages/QnAPlus";
 import ReviewPlus from "../pages/ReviewPlus";
 
-//TODO: import Login from '../pages/Login'
-//TODO: import Logout from '../pages/Logout'
-//TODO: import Mypage from '../pages/Myapge'
-//TODO: import Signup from '../pages/Signup'
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
+import Mypage from "../pages/Mypage";
+import Myinfocheck from "../pages/Myinfocheck";
+import Myinfo from "../pages/Myinfo";
 
 
 const Stack = createStackNavigator();
@@ -21,6 +22,7 @@ const HomeNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
 
       <Stack.Screen name="Home" component={Home}/>
+
       <Stack.Screen name="GoodsDetail" component={GoodsDetail}/>
       <Stack.Screen name="GoodsList" component={GoodsList}/>
       <Stack.Screen name="Payment" component={Payment}/>
@@ -28,10 +30,13 @@ const HomeNavigator = () => {
       <Stack.Screen name="QnAPlus" component={QnAPlus}/>
       <Stack.Screen name="ReviewPlus" component={ReviewPlus}/>
 
-      {/* TODO: <Stack.Screen name="Login" component={Login}/>*/}
+      <Stack.Screen name="SignIn" component={SignIn}/>
       {/* TODO: <Stack.Screen name="Logout" component={Logout}/>*/}
-      {/* TODO: <Stack.Screen name="Mypage" component={Mypage}/>*/}
-      {/* TODO: <Stack.Screen name="Signup" component={Signup}/>*/}
+       <Stack.Screen name="Mypage" component={Mypage}/>
+      <Stack.Screen name="SignUp" component={SignUp}/>
+      <Stack.Screen name="Myinfocheck" component={Myinfocheck}/>
+      <Stack.Screen name="Myinfo" component={Myinfo}/>
+
 
     </Stack.Navigator>
   );
