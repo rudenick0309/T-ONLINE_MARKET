@@ -6,7 +6,7 @@ import GoodsList from '../pages/GoodsList'
 import Bucket from "../pages/Bucket";
 import Payment from "../pages/Payment";
 import QnAPlus from "../pages/QnAPlus";
-import ReviewPlus from "../pages/ReviewPlus";
+import ReviewPlus from '../pages/ReviewPlus';
 
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";

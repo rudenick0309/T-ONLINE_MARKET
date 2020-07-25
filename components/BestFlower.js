@@ -1,6 +1,13 @@
-import React from "react";
-import {StyleSheet, Text, View, Input, TouchableOpacity, Image} from "react-native";
-import styled from "styled-components";
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Input,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import styled from 'styled-components';
 
 // css part
 export const BestFlowerContainer = styled.TouchableOpacity`
