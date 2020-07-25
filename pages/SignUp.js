@@ -19,7 +19,7 @@ const Contents = styled.ScrollView`
 
 
 const SignUp = (props) => {
-  
+
     const [userInfo, setUserInfo] = useState({
       username: "",
       email:"",
@@ -35,7 +35,7 @@ const SignUp = (props) => {
       const handleOpen = () => {
         setOpen(true);
       };
-    
+
       const handleClose = () => {
         setOpen(false);
       };
@@ -53,24 +53,24 @@ const SignUp = (props) => {
       const [transition, setTransition] = useState(undefined);
 
      const handleSubmit = (Transition) => {
-      setTransition(() => Transition);
-      const apiUrl = "http://localhost:4000";
-      
-      axios.post(apiUrl + "/user/signup", userInfo).then((data) => {
-        // console.log(aa, 'url')
-        // axios.post(aa, userInfo).then((data) => {  
-          
-        console.log(data, "data");
-        if (data.status === 200) {
-          alert("회원가입에 성공하셨습니다");
-          handleClose();
-  
-        } else {
-          alert("회원가입에 실패하였습니다");
-  
-          // props.history.push('/');
-        }
-      });
+      // setTransition(() => Transition);
+      // const apiUrl = "http://localhost:4000";
+      //
+      // axios.post(apiUrl + "/user/signup", userInfo).then((data) => {
+      //   // console.log(aa, 'url')
+      //   // axios.post(aa, userInfo).then((data) => {
+      //
+      //   console.log(data, "data");
+      //   if (data.status === 200) {
+      //     alert("회원가입에 성공하셨습니다");
+      //     handleClose();
+      //
+      //   } else {
+      //     alert("회원가입에 실패하였습니다");
+      //
+      //     // props.history.push('/');
+      //   }
+      // });
     }
 
       return (
@@ -103,8 +103,8 @@ const SignUp = (props) => {
       onChange={handleInputValue("email")} >
 
       </TextInput>
-      
-      <TextInput 
+
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -115,7 +115,7 @@ const SignUp = (props) => {
       onChange={handleInputValue("password")}>
       </TextInput>
 
-      <TextInput 
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -128,12 +128,12 @@ const SignUp = (props) => {
         handleInputValue("password")
       }else{
         alert("비밀번호가 다릅니다")
-        } 
+        }
        }
       }>
       </TextInput>
 
-      <TextInput 
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -150,7 +150,7 @@ const SignUp = (props) => {
       }>
       </TextInput>
 
-      <TextInput 
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -160,7 +160,7 @@ const SignUp = (props) => {
       onChange={handleInputValue("address")}>
       </TextInput>
 
-      {/* <TextInput 
+      {/* <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -169,7 +169,7 @@ const SignUp = (props) => {
       placeholder = "사업자 등록번호">
       </TextInput>
 
-      <TextInput 
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -178,7 +178,7 @@ const SignUp = (props) => {
       placeholder = "사업자명">
       </TextInput>
 
-      <TextInput 
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -186,7 +186,7 @@ const SignUp = (props) => {
       }}
       placeholder = "사업자 주소">
       </TextInput> */}
-{/* 
+{/*
       <table >
                     <tr>
                       <th>[필수] 개인정보 수집 및 이용 동의</th>
