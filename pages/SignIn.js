@@ -19,7 +19,7 @@ const Contents = styled.ScrollView`
 `;
 
 const SignIn = (props) => {
-    
+
 
       const [userInfo, setUserInfo] = useState({
         email: "",
@@ -33,7 +33,7 @@ const SignIn = (props) => {
       const handleOpen = () => {
         setOpen(true);
       };
-    
+
       const handleClose = () => {
         setOpen(false);
       };
@@ -45,43 +45,43 @@ const SignIn = (props) => {
      const [open, setOpen] = useState(false);
 
      const handleSubmit = ({ handleIsLogin }) => {
-      const apiUrl = "http://localhost:4000";
-      
-      axios.post(apiUrl + "/user/login", userInfo).then((data) => {
-        // console.log(aa, 'url')
-        // axios.post(aa, userInfo).then((data) => {  
-          
-        console.log(data, "data");
-        if (data.status === 200) {
-          alert("로그인에 성공하셨습니다");
-          handleIsLogin();
-  
-          if (data.data.memberId === "admin") {
-            handleClose();
-            props.history.push("/admin");
-          } else {
-            handleClose();
-            props.history.push("/");
-          }
-  
-        } else {
-          alert("로그인 실패하였습니다");
-  
-          // props.history.push('/');
-        }
-      });
+      // const apiUrl = "http://localhost:4000";
+      //
+      // axios.post(apiUrl + "/user/login", userInfo).then((data) => {
+      //   // console.log(aa, 'url')
+      //   // axios.post(aa, userInfo).then((data) => {
+      //
+      //   console.log(data, "data");
+      //   if (data.status === 200) {
+      //     alert("로그인에 성공하셨습니다");
+      //     handleIsLogin();
+      //
+      //     if (data.data.memberId === "admin") {
+      //       handleClose();
+      //       props.history.push("/admin");
+      //     } else {
+      //       handleClose();
+      //       props.history.push("/");
+      //     }
+      //
+      //   } else {
+      //     alert("로그인 실패하였습니다");
+      //
+      //     // props.history.push('/');
+      //   }
+      // });
     }
 
     return(
-     
+
       <Container>
         <Header props={props}/>
         <Contents>
-      
+
       <Button title="Go to Home" onPress={() => props.navigation.navigate('Home')} />
       <Button title="회원가입하기" onPress={() => props.navigation.navigate('SignUp')} />
       <Button title="Go back" onPress={() => props.navigation.goBack()} />
-    
+
      {/* <TouchableOpacity style = {{ margin: 100 }} onPress = {goToHome}>
          <Text>Log In</Text>
       </TouchableOpacity> */}
@@ -100,8 +100,8 @@ const SignIn = (props) => {
       onChange={handleInputValue("email")} >
 
       </TextInput>
-      
-      <TextInput 
+
+      <TextInput
       style={{
         height: 40,
         borderColor: 'gray',
@@ -116,10 +116,10 @@ const SignIn = (props) => {
               title = "log out"
               onClick={handleIsLogin}
             >
-              
+
             </Button>
           ) : (
-            <Button 
+            <Button
             title = "log in"
             handleIsLogin={handleIsLogin} >
                 </Button>
@@ -140,6 +140,6 @@ const SignIn = (props) => {
 }
 
 
-  
-  
+
+
   export default SignIn;
