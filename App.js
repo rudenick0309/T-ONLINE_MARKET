@@ -7,6 +7,7 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
+import {Provider} from 'react-native-redux';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,13 +17,13 @@ import {
   StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// import {
+//   Header,
+//   LearnMoreLinks,
+//   Colors,
+//   DebugInstructions,
+//   ReloadInstructions,
+// } from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import AppNavigator from './navigators/AppNavigator';
 
@@ -38,12 +39,17 @@ const Theme = {
 const App: () => React$Node = () => {
   return (
     <>
-      <StatusBar style="auto" />
+
+      <StatusBar style="auto"/>
 
       <NavigationContainer initialRouteName="Home" theme={Theme}>
-        <AppNavigator />
+        {/*<Provider>*/}
+          <AppNavigator/>
+
+        {/*</Provider>*/}
         {/*<Apps />*/}
       </NavigationContainer>
+
     </>
   );
 };
