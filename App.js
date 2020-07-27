@@ -7,7 +7,9 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import {Provider} from 'react-native-redux';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import allReducers from './reducers';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,6 +18,8 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import AppNavigator from './navigators/AppNavigator';
 
 // import {
 //   Header,
@@ -24,8 +28,6 @@ import {
 //   DebugInstructions,
 //   ReloadInstructions,
 // } from 'react-native/Libraries/NewAppScreen';
-import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
-import AppNavigator from './navigators/AppNavigator';
 
 
 const Theme = {
@@ -36,21 +38,21 @@ const Theme = {
   },
 };
 
+const store = createStore(allReducers);
+
 const App: () => React$Node = () => {
   return (
-    <>
-
-      <StatusBar style="auto"/>
+    <Provider store={store}>
+      <StatusBar style="auto" />
 
       <NavigationContainer initialRouteName="Home" theme={Theme}>
         {/*<Provider>*/}
-          <AppNavigator/>
+        <AppNavigator />
 
         {/*</Provider>*/}
         {/*<Apps />*/}
       </NavigationContainer>
-
-    </>
+    </Provider>
   );
 };
 
