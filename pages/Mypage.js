@@ -13,7 +13,7 @@ const Container = styled.SafeAreaView`
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border : 2px solid green
+  border: 2px solid green;
 `;
 
 

@@ -39,7 +39,7 @@ let homeData = []
 function Fake() {
   return {
     id: faker.random.number(),
-    title:faker.random.word(),
+    title: faker.random.word(),
     img:faker.image.imageUrl(),
     contents:faker.name.jobTitle(),
     // not add to price, Use the contents property
