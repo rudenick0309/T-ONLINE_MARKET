@@ -55,7 +55,7 @@ const QnAPlus = (props) => {
     // TODO: take the bucket list to axios
   }, []);
 
-  const onSubmit = useCallback(() => {
+  const onPressQuestion = useCallback(() => {
     // dispatch({
     //
     // })
@@ -94,4 +94,4 @@ const QnAPlus = (props) => {
   );
 };
 
-export default QnAPlus;
+export default connect(QnAPlus);

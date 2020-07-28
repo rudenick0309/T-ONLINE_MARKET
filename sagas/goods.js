@@ -1,40 +1,37 @@
-import axios from 'axios';
-import {
-  QNA_POST_REQUEST,
-  QNA_POST_SUCCESS,
-  QNA_POST_FAILURE,
-} from '../reducers/goods';
-import {all, fork, call, put, takeLatest, throttle} from 'redux-saga/effects';
+import axios from "axios";
+import {ADD_QUESTION_REQUEST, ADD_QUESTION_SUCCESS, ADD_QUESTION_FAILURE} from "../reducers/store";
+import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
+// 4
 function qnaPostsAPI(data) {
-  // TODO: return axios.post("/post/", data);
-  // TODO : url should check
+  // TODO: return axios.post("/post/", data)
 }
 
-function* qnaPost(action) {
+// 3
+function* addQnA(action) {
   try {
-    // TODO : const result = yield call(qnaPostsAPI, action.data);
+    // TODO : const result = yield call(addQnAAPI, action.data);
     yield put({
-      type: QNA_POST_SUCCESS,
+      type:  ADD_QUESTION_SUCCESS,
       // TODO : data: result.data,
     });
   } catch (err) {
     console.log(err);
     yield put({
-      type: QNA_POST_FAILURE,
+      type: ADD_QUESTION_FAILURE,
       error: err.response.data,
     });
   }
 }
 
-//
-function* watchQnAPost() {
-  yield takeLatest(QNA_POST_REQUEST, qnaPost);
+// 2
+function* watchAddQna() {
+  yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
 }
 
-//
+// 1
 export default function* goodsSaga() {
   yield all([
-    fork(watchQnAPost),
+    fork(watchAddQna),
   ]);
 }
