@@ -12,7 +12,8 @@ import {createStore} from "redux";
 import {StatusBar,} from "react-native";
 import {NavigationContainer, DefaultTheme} from "@react-navigation/native";
 import AppNavigator from "./navigators/AppNavigator";
-import store from "./reducers/store";
+// import store from "./store/configureStore";
+import configureStore from "./store/configureStore";
 
 const Theme = {
   ...DefaultTheme,
@@ -24,7 +25,7 @@ const Theme = {
 
 const App: () => React$Node = () => {
   return (
-    <Provider store={store}>
+    <Provider store={configureStore}>
       <StatusBar style="auto"/>
 
       <NavigationContainer initialRouteName="Home" theme={Theme}>
