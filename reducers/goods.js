@@ -1,4 +1,4 @@
-import {createStore} from "redux";
+// import {createStore} from "redux";
 
 // initialState part
 export const initialState = {
@@ -50,7 +50,8 @@ const loadToQuestion = () => {
   };
 };
 
-const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
+export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
+  console.log('In reducers, at TEXT : ', text);
   return {
     type: ADD_QUESTION_REQUEST,
     text,
@@ -90,7 +91,7 @@ const reducer = (state = initialState, action) => {
         loadQnALoading: false,
         loadQnADone: true,
 
-        qna : [action.data, state.qna],  // TODO : Why this qna is 'loading, done, error'?
+        qna : [action.data],  // TODO : Why this qna is 'loading, done, error'?
       }
     case LOAD_QUESTION_FAILURE:
       return {
@@ -121,7 +122,7 @@ const reducer = (state = initialState, action) => {
         addQnAError: null,
       }
 
-      // delete question
+    // delete question
     case DELETE_QUESTION_REQUEST:
       return {
         deleteQnALoading: false,    // QnA Plus
@@ -163,7 +164,7 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
 
 // the collection part of reducers
 export const actionCreators = {
@@ -171,4 +172,4 @@ export const actionCreators = {
   // TODO : puts other reducer here,
 };
 
-export default store;
+export default reducer;

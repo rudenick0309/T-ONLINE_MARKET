@@ -3,8 +3,10 @@ import {StyleSheet, Text, View, TextInput} from 'react-native';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import {connect} from 'react-redux';
-import {actionCreators} from "../reducers/store";
+import {connect, useDispatch} from "react-redux";
+import {actionCreators} from "../reducers/goods";
+import shortid from 'shortid'
+// import {addToQuestion} from "../reducers/goods";
 
 
 // css part
@@ -48,10 +50,11 @@ const QnAPlus = (props) => {
   const {addToQuestion} = props;
   const {qna} = props;
 
-  const [name, onChangeName] = useState('');
+  const [title, onChangeTitle] = useState('');
   const [content, onChangeContent] = useState('');
+  const dispatch = useDispatch();
 
-  console.log('addToQuestion : ', props);
+  console.log('This is a dispatch : ', dispatch);
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
@@ -59,16 +62,18 @@ const QnAPlus = (props) => {
   const onPressQuestion = useCallback(() => {
 
     const text = {
-      name,
+      title,
       content,
+      id:shortid.generate(),
     }
 
     // console.log('name and content : ', name, content)
     // console.log('text : ', text)
-    console.log('qna : ', qna);
-    addToQuestion(text);  //TODO : 1. text  or  2. (name, content)
+    console.log('text : ', text);
+    // addToQuestion(text);  //TODO : 1. text  or  2. (name, content)
+    dispatch( addToQuestion(text) );  //TODO : 1. text  or  2. (name, content)
     props.navigation.goBack()
-  }, [name, content]);
+  }, [title, content]);
 
   return (
     <Container>
@@ -84,7 +89,7 @@ const QnAPlus = (props) => {
         </Text>
 
         <QnAView>
-          <QnANameText maxLength={5} value={name} onChangeText={(name) => onChangeName(name)}/>
+          <QnANameText maxLength={5} value={title} onChangeText={(title) => onChangeTitle(title)}/>
           <QnAButton title={'등록하기'} onPress={onPressQuestion} />
         </QnAView>
 
@@ -94,7 +99,7 @@ const QnAPlus = (props) => {
           onChangeText={(text) => onChangeContent(text)}
           value={content}
         />
-        {qna}
+        {/*{qna}*/}
       </Contents>
 
       <Nav props={props} />
@@ -103,10 +108,11 @@ const QnAPlus = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return {qna : state};
+  return {state};
 }
 
 const mapDispatchToProps = (dispatch) => {
+  console.dir('qna plus 에서 dispatch : ', dispatch)
   return {
     addToQuestion: (text) => dispatch(actionCreators.addToQuestion(text)),
   }
