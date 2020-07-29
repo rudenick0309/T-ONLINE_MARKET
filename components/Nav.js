@@ -18,7 +18,7 @@ const Nav = ({props}) => {
   return (
     <NavView>
       <NavIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>홈</Text></NavIcon>
-      <NavIcon><Text>마이페이지</Text></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.navigate('Mypage')} }><Text>마이페이지</Text></NavIcon>
       <NavIcon onPress={ () => {props.navigation.navigate('GoodsList')}} >
         <Text>카테고리</Text>
       </NavIcon>
