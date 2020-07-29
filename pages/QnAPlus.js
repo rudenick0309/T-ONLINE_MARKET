@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, TextInput} from 'react-native';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import {connect, useDispatch} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {actionCreators} from "../reducers/goods";
 import shortid from 'shortid'
 // import {addToQuestion} from "../reducers/goods";
@@ -47,14 +47,15 @@ const QnAContentTextInput = styled.TextInput`
 // function part
 const QnAPlus = (props) => {
 
-  const {addToQuestion} = props;
+  const {addToQuestion} = props;   // In mapDispatchToProps
   const {qna} = props;
 
   const [title, onChangeTitle] = useState('');
   const [content, onChangeContent] = useState('');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  // const {addToQuestion} = useSelector(state => state.goos);
 
-  console.log('This is a dispatch : ', dispatch);
+  console.log('This is a dispatch : ', addToQuestion);
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
@@ -70,8 +71,10 @@ const QnAPlus = (props) => {
     // console.log('name and content : ', name, content)
     // console.log('text : ', text)
     console.log('text : ', text);
-    // addToQuestion(text);  //TODO : 1. text  or  2. (name, content)
-    dispatch( addToQuestion(text) );  //TODO : 1. text  or  2. (name, content)
+
+    addToQuestion(text); // This logic goes to saga, but below the 'dispatch' does not go to saga
+                        // TODO : 1. text  or  2. (name, content)
+    // dispatch( addToQuestion(text) );  //TODO : 1. text  or  2. (name, content)
     props.navigation.goBack()
   }, [title, content]);
 
@@ -119,3 +122,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QnAPlus);
+// export default connect(mapStateToProps)(QnAPlus);
