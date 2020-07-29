@@ -3,8 +3,9 @@ import {StyleSheet, Text, View, TextInput} from 'react-native';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import {useDispatch} from 'react-redux';
-import {connect} from 'react-native-redux';
+import {connect} from 'react-redux';
+import {actionCreators} from "../reducers/store";
+
 
 // css part
 const Container = styled.SafeAreaView`
@@ -43,24 +44,31 @@ const QnAContentTextInput = styled.TextInput`
 
 // function part
 const QnAPlus = (props) => {
-  // const dispatch = useDispatch();
-  const [writer, setWriter] = useState('');
-  const [content, setContent] = useState('');
+
+  const {addToQuestion} = props;
+  const {qna} = props;
+
   const [name, onChangeName] = useState('');
-  const [text, onChangeContent] = useState('');
+  const [content, onChangeContent] = useState('');
 
-  // TODO : changes the state name :  const [checkList, setCheckList] = useState(null);
-
+  console.log('addToQuestion : ', props);
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
 
   const onPressQuestion = useCallback(() => {
-    // dispatch({
-    //
-    // })
+
+    const text = {
+      name,
+      content,
+    }
+
+    // console.log('name and content : ', name, content)
+    // console.log('text : ', text)
+    console.log('qna : ', qna);
+    addToQuestion(text);  //TODO : 1. text  or  2. (name, content)
     props.navigation.goBack()
-  }, []);
+  }, [name, content]);
 
   return (
     <Container>
@@ -77,16 +85,16 @@ const QnAPlus = (props) => {
 
         <QnAView>
           <QnANameText maxLength={5} value={name} onChangeText={(name) => onChangeName(name)}/>
-          <QnAButton title={'등록하기'} onPress={onSubmit} />
+          <QnAButton title={'등록하기'} onPress={onPressQuestion} />
         </QnAView>
 
         <QnAContentTextInput
           maxLength={200}
           multiline={true}
           onChangeText={(text) => onChangeContent(text)}
-          value={text}
+          value={content}
         />
-
+        {qna}
       </Contents>
 
       <Nav props={props} />
@@ -94,4 +102,14 @@ const QnAPlus = (props) => {
   );
 };
 
-export default connect(QnAPlus);
+const mapStateToProps = (state) => {
+  return {qna : state};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToQuestion: (text) => dispatch(actionCreators.addToQuestion(text)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QnAPlus);
