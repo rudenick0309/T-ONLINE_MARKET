@@ -18,17 +18,29 @@ const Contents = styled.ScrollView`
   border : 2px solid blue
 `;
 
+const InputText = styled.TextInput`
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        pedding : 10`
+
+const InputButton = styled.Button`
+  width: 100px;
+  border: 2px solid yellow;
+`;
+
 const SignIn = (props) => {
 
+      const [email, setEmail] = useState('')
+      const [password, setPassword] = useState('')
+      // const [userInfo, setUserInfo] = useState({
+      //   email: "",
+      //   password: "",
+      // });
 
-      const [userInfo, setUserInfo] = useState({
-        email: "",
-        password: "",
-      });
-
-      const handleInputValue = (key) => (e) => {
-        setUserInfo({ ...userInfo, [key]: e.target.value });
-      };
+      // const handleInputValue = (key) => (e) => {
+      //   setUserInfo({ ...userInfo, [key]: e.target.value });
+      // };
 
       const handleOpen = () => {
         setOpen(true);
@@ -38,37 +50,35 @@ const SignIn = (props) => {
         setOpen(false);
       };
 
-    //   const goToHome = () => {
-    //     Actions.home()
-    //  }
+   
 
      const [open, setOpen] = useState(false);
 
-     const handleSubmit = ({ handleIsLogin }) => {
-      const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
-      //axios.defaults.withCredentials = true
-      axios.post(apiUrl + "/user/login", {withCredentials: true}, userInfo).then((data) => {
+    //  const handleSubmit = ({ handleIsLogin }) => {
+    //   const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
+    //   //axios.defaults.withCredentials = true
+    //   axios.post(apiUrl + "/user/login", {withCredentials: true}, userInfo).then((data) => {
         
-        console.log(data, "data");
-        if (data.status === 200) {
-          alert("로그인에 성공하셨습니다");
-          handleIsLogin();
+    //     console.log(data, "data");
+    //     if (data.status === 200) {
+    //       alert("로그인에 성공하셨습니다");
+    //       handleIsLogin();
       
-          // if (data.data.user_type === "admin") {
-          //   handleClose();
-          //   props.history.push("/admin");
-          // } else {
-          //   handleClose();
-          //   props.history.push("/");
-          // }
+    //       // if (data.data.user_type === "admin") {
+    //       //   handleClose();
+    //       //   props.history.push("/admin");
+    //       // } else {
+    //       //   handleClose();
+    //       //   props.history.push("/");
+    //       // }
       
-        } else {
-          alert("로그인 실패하였습니다");
+    //     } else {
+    //       alert("로그인 실패하였습니다");
       
-          // props.history.push('/');
-        }
-      });
-    }
+    //       // props.history.push('/');
+    //     }
+    //   });
+    // }
 
     return(
 
@@ -86,29 +96,20 @@ const SignIn = (props) => {
       <Text>
        Login
       </Text>
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        pedding : 10
-      }}
+      <InputText
       placeholder = "Email"
       type="email"
-      onChange={handleInputValue("email")} >
+      value={email}
+      onChangeText={ email => setEmail(email)} >
 
-      </TextInput>
+      </InputText>
 
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      <InputText
       placeholder = "Password"
       type = "password"
-      onChange={handleInputValue("password")}>
-      </TextInput>
+      value={password}
+      onChangeText={ password => setPassword(password)}>
+      </InputText>
       {/* {isLogin ? (
             <Button
               title = "log out"
@@ -122,11 +123,8 @@ const SignIn = (props) => {
             handleIsLogin={handleIsLogin} >
                 </Button>
           )} */}
-      <Button
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        onPress={() => {
-          handleSubmit(props);
-        }}
+      <InputButton
+        onPress={onSubmit}
         title='Log in'
         // disabled={!isLogin}
         // title={isLogin ? "Log in" : "Log out"}

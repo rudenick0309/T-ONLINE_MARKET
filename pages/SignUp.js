@@ -17,6 +17,16 @@ const Contents = styled.ScrollView`
   border : 2px solid blue
 `;
 
+const InputText = styled.TextInput`
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        pedding : 10`
+
+const InputButton = styled.Button`
+  width: 100px;
+  border: 2px solid yellow;
+`;
 
 const SignUp = (props) => {
 
@@ -79,31 +89,19 @@ const SignUp = (props) => {
             <Contents>
             <Text>Sign Up</Text>
             <Button title="Go back" onPress={() => props.navigation.goBack()} />
-            <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        pedding : 10
-      }}
+            <InputText
       placeholder = "Username"
       onChange={handleInputValue("username")} >
 
-      </TextInput>
+      </InputText>
 
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        pedding : 10
-      }}
+      <InputText
       textContentType='emailAddress'
       // autoCompleteType = "email"
       placeholder = "Email"
       onChange={handleInputValue("email")} >
 
-      </TextInput>
+      </InputText>
 
       <TextInput
       style={{
@@ -116,12 +114,7 @@ const SignUp = (props) => {
       onChange={handleInputValue("password")}>
       </TextInput>
 
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      <InputText
       textContentType="password"
       placeholder = "Password 확인"
       // onChange={(value) => {
@@ -133,14 +126,9 @@ const SignUp = (props) => {
       //  }
       // }
       onChange={handleInputValue("password")}>
-      </TextInput>
+      </InputText>
 
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      <InputText
       placeholder = "Phone"
       onChange={(value) => {
        let num = Number(value)
@@ -150,17 +138,12 @@ const SignUp = (props) => {
          handleInputValue("phone")}
        }
       }>
-      </TextInput>
+      </InputText>
 
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      <InputText
       placeholder = "Address"
       onChange={handleInputValue("address")}>
-      </TextInput>
+      </InputText>
 
       {/* <TextInput
       style={{
@@ -217,8 +200,7 @@ const SignUp = (props) => {
                     </tr>
                   </table> */}
 
-      <Button
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      <InputButton
         onPress={() => {
           handleSubmit(props);
         }}

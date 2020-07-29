@@ -16,6 +16,11 @@ const Contents = styled.ScrollView`
   border : 2px solid green
 `;
 
+const InputText = styled.TextInput`
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        pedding : 10`
 
 // function part
 const PasswordChange = (props) => {
@@ -46,26 +51,16 @@ const PasswordChange = (props) => {
       <Header props={props}/>
       <Contents>
           <Text>ID : </Text>
-      <TextInput 
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      <InputText
       placeholder = "Password"
       type = "password"
       onChange={handleInputValue("password")}>
-      </TextInput>
-      <TextInput 
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      </InputText>
+      <InputText
       placeholder = "Password변경"
       type = "password"
       onChange={handleInputValue("passwordChange")}>
-      </TextInput>
+      </InputText>
       <Button title="비밀번호 변경하기" onPress={ () => {props.navigation.navigate('Myinfo')} }/>
       </Contents>
       <Nav props={props}/>
