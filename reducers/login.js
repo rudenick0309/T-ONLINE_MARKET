@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions';
 export const initialState = {
     loginLoding: false,
     loginError: false,
-    loginDone: localStorage.getItem('isLogin') === 'true'
+    loginDone: false
   };
 
 
@@ -35,33 +35,39 @@ const reducer = (state = initialState, action) => {
         case POST_LOGIN_REQUEST:
       return {
         ...state,
-        loding: true,
-        error: false,
-        isLogin: false
+        loginLoding: true,
+        loginError: false,
+        loginDone: false
       }
       case POST_LOGIN_SUCCESS: 
       return {
         ...state,
-        loding: false,
+        loginLoding: false,
         data: action.payload,
-        isLogin: true
+        loginDone: true
       };
     
     case POST_LOGIN_FAILURE:
       return {
         ...state,
-        pending: false,
-        error: true,
-        isLogin: false
+        loginLoding: false,
+        loginError: true,
+        loginDone: false
       };
     
      case LOGOUT: 
       return {
         ...state,
-        isLogin: false
+        loginDone: false
       };
     }
 }
   const handleLogin = handleActions(reducer)
+
+  export const actionHandle = {
+    login, 
+    logout
+    // TODO : puts other reducer here,
+  };
 
   export default handleLogin;
