@@ -24,7 +24,7 @@ const Mypage = (props) => {
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
-
+  if (props.isLogin) {
   return (
     <Container>
       <Header props={props}/>
@@ -33,7 +33,19 @@ const Mypage = (props) => {
       </Contents>
       <Nav props={props}/>
     </Container>
-  );
+    )
+  } else {
+    return (
+      <Container>
+      <Header props={props}/>
+      <Contents>
+      <Text>로그인을 하십시오</Text>
+      </Contents>
+      <Nav props={props}/>
+    </Container>
+    );
+  
+  }
 };
 
 export default Mypage;

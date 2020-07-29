@@ -45,31 +45,29 @@ const SignIn = (props) => {
      const [open, setOpen] = useState(false);
 
      const handleSubmit = ({ handleIsLogin }) => {
-      // const apiUrl = "http://localhost:4000";
-      //
-      // axios.post(apiUrl + "/user/login", userInfo).then((data) => {
-      //   // console.log(aa, 'url')
-      //   // axios.post(aa, userInfo).then((data) => {
-      //
-      //   console.log(data, "data");
-      //   if (data.status === 200) {
-      //     alert("로그인에 성공하셨습니다");
-      //     handleIsLogin();
-      //
-      //     if (data.data.memberId === "admin") {
-      //       handleClose();
-      //       props.history.push("/admin");
-      //     } else {
-      //       handleClose();
-      //       props.history.push("/");
-      //     }
-      //
-      //   } else {
-      //     alert("로그인 실패하였습니다");
-      //
-      //     // props.history.push('/');
-      //   }
-      // });
+      const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
+      //axios.defaults.withCredentials = true
+      axios.post(apiUrl + "/user/login", {withCredentials: true}, userInfo).then((data) => {
+        
+        console.log(data, "data");
+        if (data.status === 200) {
+          alert("로그인에 성공하셨습니다");
+          handleIsLogin();
+      
+          // if (data.data.user_type === "admin") {
+          //   handleClose();
+          //   props.history.push("/admin");
+          // } else {
+          //   handleClose();
+          //   props.history.push("/");
+          // }
+      
+        } else {
+          alert("로그인 실패하였습니다");
+      
+          // props.history.push('/');
+        }
+      });
     }
 
     return(
@@ -78,7 +76,7 @@ const SignIn = (props) => {
         <Header props={props}/>
         <Contents>
 
-      <Button title="Go to Home" onPress={() => props.navigation.navigate('Home')} />
+      
       <Button title="회원가입하기" onPress={() => props.navigation.navigate('SignUp')} />
       <Button title="Go back" onPress={() => props.navigation.goBack()} />
 

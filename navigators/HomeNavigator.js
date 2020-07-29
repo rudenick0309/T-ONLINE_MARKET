@@ -13,6 +13,9 @@ import SignUp from "../pages/SignUp";
 import Mypage from "../pages/Mypage";
 import Myinfocheck from "../pages/Myinfocheck";
 import Myinfo from "../pages/Myinfo";
+import PasswordChange from "../pages/PasswordChange";
+import Resign from "../pages/Resign";
+import ResignCheck from "../pages/ResignCheck";
 
 
 const Stack = createStackNavigator();
@@ -36,6 +39,9 @@ const HomeNavigator = () => {
       <Stack.Screen name="SignUp" component={SignUp}/>
       <Stack.Screen name="Myinfocheck" component={Myinfocheck}/>
       <Stack.Screen name="Myinfo" component={Myinfo}/>
+      <Stack.Screen name="PasswordChange" component={PasswordChange}/>
+      <Stack.Screen name="Resign" component={Resign}/>
+      <Stack.Screen name="ResignCheck" component={ResignCheck}/>
 
 
     </Stack.Navigator>
