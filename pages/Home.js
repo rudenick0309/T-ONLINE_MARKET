@@ -80,7 +80,6 @@ const Home = (props) => {
       <Contents>
         {/*  TODO: <Search></Search>*/}
         <TextInput
-
           onChangeText={text => onChangeText(text)}
           value={text}
         />
