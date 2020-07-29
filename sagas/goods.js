@@ -8,16 +8,19 @@ import {
   DELETE_QUESTION_FAILURE,
   PATCH_QUESTION_FAILURE,
   PATCH_QUESTION_SUCCESS, LOAD_QUESTION_REQUEST, LOAD_QUESTION_SUCCESS, LOAD_QUESTION_FAILURE, PATCH_QUESTION_REQUEST
-} from "../reducers/store";
+} from "../reducers/goods";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
+console.log('In saga, at 0 : ', 'saga executes');
 // 4
 function loadQnAAPI(data) {
   // TODO: return axios.post("/post/", data)
 }
 
 function addQnAAPI(data) {
-  // TODO: return axios.post("/post/", data)
+  console.log('In saga 4, : ', data);
+  // return axios.post("/goods/info/qa_lists", data)
+  return axios.post("http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000/goods/info/qa_lists", data)
 }
 
 function deleteQnAAPI(data) {
@@ -32,7 +35,7 @@ function patchQnAAPI(data) {
 function* loadQnA(action) {
   try {
     yield delay(1000);
-    // TODO : const result = yield call(loadQnAAPI, action.data);
+    // const result = yield call(loadQnAAPI, action.data);
     yield put({
       type: LOAD_QUESTION_SUCCESS,
       // TODO : data: result.data,
@@ -48,11 +51,13 @@ function* loadQnA(action) {
 }
 
 function* addQnA(action) {
+  console.log('In saga, at 3 : ', action);
+
   try {
-    // TODO : const result = yield call(addQnAAPI, action.data);
+    // TODO: const result = yield call(addQnAAPI, action.data);  no 'data', It's 'text'.
     yield put({
       type: ADD_QUESTION_SUCCESS,
-      // TODO : data: result.data,
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
@@ -101,7 +106,9 @@ function* watchLoadQnA() {
 }
 
 function* watchAddQnA() {
+  console.log('In saga 2, : ');
   yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
+  console.log('In saga 2 - 1, : ');
 }
 
 function* watchDeleteQnA() {
@@ -114,14 +121,11 @@ function* watchPatchQnA() {
 
 // 1
 export default function* goodsSaga() {
+  console.log('In saga 1, : ');
   yield all([
     fork(watchLoadQnA),
     fork(watchAddQnA),
     fork(watchDeleteQnA),
     fork(watchPatchQnA),
-    // fork(watchLoadReview),
-    // fork(watchAddQnA),
-    // fork(watchDeleteQnA),
-    // fork(watchPatchQnA),
   ]);
 }
