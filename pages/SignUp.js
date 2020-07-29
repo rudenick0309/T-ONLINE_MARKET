@@ -53,24 +53,24 @@ const SignUp = (props) => {
       const [transition, setTransition] = useState(undefined);
 
      const handleSubmit = (Transition) => {
-      // setTransition(() => Transition);
-      // const apiUrl = "http://localhost:4000";
-      //
-      // axios.post(apiUrl + "/user/signup", userInfo).then((data) => {
-      //   // console.log(aa, 'url')
-      //   // axios.post(aa, userInfo).then((data) => {
-      //
-      //   console.log(data, "data");
-      //   if (data.status === 200) {
-      //     alert("회원가입에 성공하셨습니다");
-      //     handleClose();
-      //
-      //   } else {
-      //     alert("회원가입에 실패하였습니다");
-      //
-      //     // props.history.push('/');
-      //   }
-      // });
+      setTransition(() => Transition);
+      const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
+      
+      axios.post(apiUrl + "/user/signup", {withCredentials: true}, userInfo).then((data) => {
+        // console.log(aa, 'url')
+        // axios.post(aa, userInfo).then((data) => {
+      
+        console.log(data, "data");
+        if (data.status === 200) {
+          alert("회원가입에 성공하셨습니다");
+          handleClose();
+      
+        } else {
+          alert("회원가입에 실패하였습니다");
+         
+          // props.history.push('/');
+        }
+      });
     }
 
       return (
@@ -98,7 +98,8 @@ const SignUp = (props) => {
         borderWidth: 1,
         pedding : 10
       }}
-      type = "email"
+      textContentType='emailAddress'
+      // autoCompleteType = "email"
       placeholder = "Email"
       onChange={handleInputValue("email")} >
 
@@ -110,7 +111,7 @@ const SignUp = (props) => {
         borderColor: 'gray',
         borderWidth: 1
       }}
-      type = "password"
+      textContentType = "password"
       placeholder = "Password"
       onChange={handleInputValue("password")}>
       </TextInput>
@@ -121,16 +122,17 @@ const SignUp = (props) => {
         borderColor: 'gray',
         borderWidth: 1
       }}
-      type = "password"
+      textContentType="password"
       placeholder = "Password 확인"
-      onChange={(value) => {
-        if(value === password){
-        handleInputValue("password")
-      }else{
-        alert("비밀번호가 다릅니다")
-        }
-       }
-      }>
+      // onChange={(value) => {
+      //   if(value === password){
+      //   handleInputValue("password")
+      // }else{
+      //   alert("비밀번호가 다릅니다")
+      //   }
+      //  }
+      // }
+      onChange={handleInputValue("password")}>
       </TextInput>
 
       <TextInput
@@ -141,7 +143,7 @@ const SignUp = (props) => {
       }}
       placeholder = "Phone"
       onChange={(value) => {
-        let num = value.replace(".", '');
+       let num = Number(value)
      if(isNaN(num)){
         alert("숫자만 입력해주세요")
      }else{
