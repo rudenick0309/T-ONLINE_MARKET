@@ -15,6 +15,11 @@ const Contents = styled.ScrollView`
   flex: 1;
   border : 2px solid green
 `;
+const InputText = styled.TextInput`
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        pedding : 10`
 
 
 // function part
@@ -46,16 +51,11 @@ const Myinfocheck = (props) => {
       <Header props={props}/>
       <Contents>
           <Text>ID : </Text>
-      <TextInput 
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
+      <InputText
       placeholder = "Password"
       type = "password"
       onChange={handleInputValue("password")}>
-      </TextInput>
+      </InputText>
       <Button title="수정하기" onPress={ () => {props.navigation.navigate('Myinfo')} }/>
       </Contents>
       <Nav props={props}/>
