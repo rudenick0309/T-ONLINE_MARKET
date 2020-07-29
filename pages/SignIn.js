@@ -50,37 +50,35 @@ const SignIn = (props) => {
         setOpen(false);
       };
 
-    //   const goToHome = () => {
-    //     Actions.home()
-    //  }
+   
 
      const [open, setOpen] = useState(false);
 
-     const handleSubmit = ({ handleIsLogin }) => {
-      const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
-      //axios.defaults.withCredentials = true
-      axios.post(apiUrl + "/user/login", {withCredentials: true}, userInfo).then((data) => {
+    //  const handleSubmit = ({ handleIsLogin }) => {
+    //   const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
+    //   //axios.defaults.withCredentials = true
+    //   axios.post(apiUrl + "/user/login", {withCredentials: true}, userInfo).then((data) => {
         
-        console.log(data, "data");
-        if (data.status === 200) {
-          alert("로그인에 성공하셨습니다");
-          handleIsLogin();
+    //     console.log(data, "data");
+    //     if (data.status === 200) {
+    //       alert("로그인에 성공하셨습니다");
+    //       handleIsLogin();
       
-          // if (data.data.user_type === "admin") {
-          //   handleClose();
-          //   props.history.push("/admin");
-          // } else {
-          //   handleClose();
-          //   props.history.push("/");
-          // }
+    //       // if (data.data.user_type === "admin") {
+    //       //   handleClose();
+    //       //   props.history.push("/admin");
+    //       // } else {
+    //       //   handleClose();
+    //       //   props.history.push("/");
+    //       // }
       
-        } else {
-          alert("로그인 실패하였습니다");
+    //     } else {
+    //       alert("로그인 실패하였습니다");
       
-          // props.history.push('/');
-        }
-      });
-    }
+    //       // props.history.push('/');
+    //     }
+    //   });
+    // }
 
     return(
 
@@ -126,9 +124,7 @@ const SignIn = (props) => {
                 </Button>
           )} */}
       <InputButton
-        onPress={() => {
-          handleSubmit(props);
-        }}
+        onPress={onSubmit}
         title='Log in'
         // disabled={!isLogin}
         // title={isLogin ? "Log in" : "Log out"}
