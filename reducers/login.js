@@ -17,8 +17,8 @@ const LOGOUT = 'LOGOUT';
 
 export const login = data  => {
   
-  return {type: POST_LOGIN_SUCCESS,
-    payload: result.data}
+  return {type: POST_LOGIN_REQUEST,
+    data}
     
 };
 
