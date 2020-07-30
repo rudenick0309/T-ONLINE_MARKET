@@ -18,7 +18,7 @@ function loadQnAAPI(data) {
 }
 
 function addQnAAPI(data) {
-  console.log('In saga 4, : ', data);
+  console.log('In goods of SAGA 4, : ', data);
   // return axios.post("/goods/info/qa_lists", data)
   return axios.post("http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000/goods/info/qa_lists", data)
 }
@@ -51,13 +51,13 @@ function* loadQnA(action) {
 }
 
 function* addQnA(action) {
-  console.log('In saga, at 3 : ', action);
+  console.log('In goods of SAGA, at 3 : ', action);
 
   try {
     // TODO: const result = yield call(addQnAAPI, action.data);  no 'data', It's 'text'.
     yield put({
       type: ADD_QUESTION_SUCCESS,
-      data: result.data,
+      data: action.text,
     });
   } catch (err) {
     console.log(err);
@@ -106,9 +106,9 @@ function* watchLoadQnA() {
 }
 
 function* watchAddQnA() {
-  console.log('In saga 2, : ');
+  console.log(' In goods of SAGA 2, : ');
   yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
-  console.log('In saga 2 - 1, : ');
+  console.log('In goods of SAGA 2 - 1, : ');
 }
 
 function* watchDeleteQnA() {
@@ -121,7 +121,7 @@ function* watchPatchQnA() {
 
 // 1
 export default function* goodsSaga() {
-  console.log('In saga 1, : ');
+  console.log('In goods of SAGA 1, : ');
   yield all([
     fork(watchLoadQnA),
     fork(watchAddQnA),

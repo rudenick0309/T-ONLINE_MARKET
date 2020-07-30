@@ -2,6 +2,7 @@
 
 // initialState part
 export const initialState = {
+  qna : [],
 
   loadQnALoading: false,    // QnA Plus
   loadQnADone: false,
@@ -21,9 +22,9 @@ export const initialState = {
   //TODO: needs other state
 
   // the states saved and accmulated
-  qna : [],
 
 };
+console.log('In goods of REDUCERS, initialState : ', initialState);
 
 // the part of action definition
 export const LOAD_QUESTION_REQUEST = "LOAD_QUESTION_REQUEST";
@@ -44,7 +45,7 @@ export const PATCH_QUESTION_FAILURE = "PATCH_QUESTION_FAILURE";
 
 
 // the part of action creator definition
-const loadToQuestion = () => {
+export const loadToQuestion = () => {
   return {
     type: LOAD_QUESTION_REQUEST,
   };
@@ -58,14 +59,14 @@ export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, s
   };
 };
 
-const deleteToQuestion = (id) => {
+export const deleteToQuestion = (id) => {
   return {
     type: DELETE_QUESTION_REQUEST,
     id : parseInt(id),
   };
 };
 
-const patchToQuestion = (text, id) => { // TODO: advanced
+export const patchToQuestion = (text, id) => { // TODO: advanced
   return {
     type: PATCH_QUESTION_REQUEST,
     id,
@@ -81,56 +82,64 @@ const reducer = (state = initialState, action) => {
     // load question
     case LOAD_QUESTION_REQUEST:
       return {
+        ...state,
         loadQnALoading: true,
         loadQnADone: false,
         loadQnAError: null,
-        qna: state.qna,
+        // qna: state.qna,
       }
     case LOAD_QUESTION_SUCCESS:
       return {
+        ...state,
         loadQnALoading: false,
         loadQnADone: true,
-
         qna : [action.data],  // TODO : Why this qna is 'loading, done, error'?
       }
     case LOAD_QUESTION_FAILURE:
       return {
+        ...state,
         loadQnALoading: true,
         loadQnADone: false,
-        loadQnAError: null,
+        loadQnAError: action.error,
       }
 
     // add question
     case ADD_QUESTION_REQUEST:
       return {
+        ...state,
         addQnALoading: true,
         addQnADone: false,
         addQnAError: null,
       }
     case ADD_QUESTION_SUCCESS:
-      console.log("action.data : ", action.data);  //TODO: check 'action', 'action.data', 'data'
+      console.log("In reducers, action.data : ", action.data);  //TODO: check 'action', 'action.data', 'data'
       return {
+        ...state,
         addQnALoading: false,
         addQnADone: true,
-        qna: [action.data, ...state], //TODO: ...state.qna
+        qna: [action.data, ...state.qna], //TODO: ...state.qna
         // TODO: in immer ->  qna: state.qna.push(action.data),
       }
     case ADD_QUESTION_FAILURE:
+      console.log("action.data : ", action.data);
       return {
+        ...state,
         addQnALoading: true,
         addQnADone: false,
-        addQnAError: null,
+        addQnAError: action.error,
       }
 
     // delete question
     case DELETE_QUESTION_REQUEST:
       return {
+        ...state,
         deleteQnALoading: false,    // QnA Plus
         deleteQnADone: false,
         deleteQnAError: null,
       }
     case DELETE_QUESTION_SUCCESS:
       return {
+        ...state,
         deleteQnALoading: false,
         deleteQnADone: true,
         qna: state.qna.filter((el) => el.id !== action.id),
@@ -153,7 +162,9 @@ const reducer = (state = initialState, action) => {
       return {
         addQnALoading: false,
         addQnADone: true,
-        qna: [action.data, ...state]
+        qna: {
+
+        }
       }
     case PATCH_QUESTION_FAILURE:
       return {
@@ -161,6 +172,8 @@ const reducer = (state = initialState, action) => {
         addQnADone: false,
         addQnAError: null,
       }
+    default:
+      return state;
   }
 };
 
