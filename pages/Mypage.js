@@ -3,6 +3,10 @@ import {StyleSheet, Text, Button, View} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from '../components/Nav'
+import { OrderContainer,
+  OrderContents,
+  OrderImageView,
+  OrderTextView} from "../components/Orderitem";
 
 
 // css part
@@ -16,6 +20,12 @@ const Contents = styled.ScrollView`
   border: 2px solid green;
 `;
 
+const TextStyled = styled.Text`
+  margin-top: 20px
+`
+
+let OrderData = [];
+
 
 // function part
 const Mypage = (props) => {
@@ -24,28 +34,39 @@ const Mypage = (props) => {
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
-  if (props.isLogin) {
+  // if (props.loginDone === true) {
   return (
     <Container>
       <Header props={props}/>
       <Contents>
+        <TextStyled>orderList</TextStyled>
+        <OrderContainer
+          // onPress={ () => {props.navigation.navigate("GoodsList")} }>
+          onPress={ () => {props.navigation.navigate("GoodsList", {id : OrderData.id} )} }>
+          <OrderContents>
+            <OrderImageView source={OrderData.img}></OrderImageView>
+            <OrderTextView>{OrderData.contents}</OrderTextView>
+          </OrderContents>
+        </OrderContainer>
+
+        <TextStyled>정보수정</TextStyled>
       <Button title ="내 정보 수정하기" onPress={ () => {props.navigation.navigate('Myinfocheck')} } />
       </Contents>
       <Nav props={props}/>
     </Container>
     )
-  } else {
-    return (
-      <Container>
-      <Header props={props}/>
-      <Contents>
-      <Text>로그인을 하십시오</Text>
-      </Contents>
-      <Nav props={props}/>
-    </Container>
-    );
+  // } else {
+  //   return (
+  //     <Container>
+  //     <Header props={props}/>
+  //     <Contents>
+  //     <Text>로그인을 하십시오</Text>
+  //     </Contents>
+  //     <Nav props={props}/>
+  //   </Container>
+  //   );
   
-  }
+  // }
 };
 
 export default Mypage;
