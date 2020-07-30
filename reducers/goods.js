@@ -62,7 +62,8 @@ export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, s
 export const deleteToQuestion = (id) => {
   return {
     type: DELETE_QUESTION_REQUEST,
-    id : parseInt(id),
+    // id : parseInt(id),
+    id,
   };
 };
 
@@ -93,7 +94,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadQnALoading: false,
         loadQnADone: true,
-        qna : [action.data],  // TODO : Why this qna is 'loading, done, error'?
+        // qna : [action.data],  // TODO : Why this qna is 'loading, done, error'?
       }
     case LOAD_QUESTION_FAILURE:
       return {
@@ -131,9 +132,10 @@ const reducer = (state = initialState, action) => {
 
     // delete question
     case DELETE_QUESTION_REQUEST:
+      // console.log('In reducers, DELETE REQUEST')
       return {
         ...state,
-        deleteQnALoading: false,    // QnA Plus
+        deleteQnALoading: true,    // QnA Plus
         deleteQnADone: false,
         deleteQnAError: null,
       }
@@ -142,35 +144,38 @@ const reducer = (state = initialState, action) => {
         ...state,
         deleteQnALoading: false,
         deleteQnADone: true,
-        qna: state.qna.filter((el) => el.id !== action.id),
+        qna: state.qna.filter((el) => el.id !== action.data),
       }
     case DELETE_QUESTION_FAILURE:
+      console.log('In reducers, DELETE FAILURE')
       return {
+        ...state,
         addQnALoading: true,
         addQnADone: false,
-        addQnAError: null,
+        addQnAError: action.error,
       }
 
     // TODO: patch question  -> advanced?
     case PATCH_QUESTION_REQUEST:
       return {
+        ...state,
         addQnALoading: true,
         addQnADone: false,
         addQnAError: null,
       }
     case PATCH_QUESTION_SUCCESS:
       return {
+        ...state,
         addQnALoading: false,
         addQnADone: true,
-        qna: {
-
-        }
+        // TODO:qna :
       }
     case PATCH_QUESTION_FAILURE:
       return {
-        addQnALoading: true,
+        ...state,
+        addQnALoading: false,
         addQnADone: false,
-        addQnAError: null,
+        addQnAError: action.error,
       }
     default:
       return state;
