@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useCallback} from 'react';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from '../components/Nav'
@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -20,17 +21,16 @@ const Contents = styled.ScrollView`
 
 const InputText = styled.TextInput`
         height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        pedding : 10`
+`
 
-const InputButton = styled.Button`
+const InButton = styled.Button`
   width: 100px;
   border: 2px solid yellow;
 `;
 
 const SignIn = (props) => {
-
+      
+      const dispatch = useDispatch();
       const [email, setEmail] = useState('')
       const [password, setPassword] = useState('')
       // const [userInfo, setUserInfo] = useState({
@@ -80,6 +80,18 @@ const SignIn = (props) => {
     //   });
     // }
 
+    const onPressSignin = useCallback(() => {
+
+      const text = {
+        email,
+        password,
+        
+      }
+      
+      dispatch( login(text) );  //TODO : 1. text  or  2. (name, content)
+      props.navigation.goBack()
+    }, [email, password]);
+
     return(
 
       <Container>
@@ -123,8 +135,8 @@ const SignIn = (props) => {
             handleIsLogin={handleIsLogin} >
                 </Button>
           )} */}
-      <InputButton
-        onPress={onSubmit}
+      <InButton
+        onPress={onPressSignin}
         title='Log in'
         // disabled={!isLogin}
         // title={isLogin ? "Log in" : "Log out"}
