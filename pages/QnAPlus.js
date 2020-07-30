@@ -32,6 +32,11 @@ const QnANameText = styled.TextInput`
   border: 2px solid yellow;
 `;
 
+const QnATitleText = styled.TextInput`
+  width: 100px;
+  border: 2px solid green;
+`;
+
 const QnAButton = styled.Button`
   width: 100px;
   border: 2px solid yellow;
@@ -47,6 +52,7 @@ const QnAContentTextInput = styled.TextInput`
 // function part
 const QnAPlus = (props) => {
 
+  const [userName, onChangeUserName] = useState("");
   const [title, onChangeTitle] = useState("");
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
@@ -59,17 +65,16 @@ const QnAPlus = (props) => {
   }, []);
 
   const text = {
+    userName,
     title,
     content,
     id: shortid.generate(),
   };
 
   const onPressQuestion = useCallback(() => {
-    // console.log('useSelector test in oPQ 1 : ', test);
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
-    // console.log('useSelector test in oPQ 2 : ', test);
     props.navigation.goBack();
-  }, [title, content]);
+  }, [userName, content]);
 
 
   return (
@@ -86,8 +91,11 @@ const QnAPlus = (props) => {
         </Text>
 
         <QnAView>
-          <QnANameText maxLength={5} value={title} onChangeText={(title) => onChangeTitle(title)}/>
+          <QnANameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>
+          <QnATitleText maxLength={20} value={title} onChangeText={(text) => onChangeTitle(text)}/>
+
           <QnAButton title={"등록하기"} onPress={onPressQuestion}/>
+
         </QnAView>
 
         <QnAContentTextInput
