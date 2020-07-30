@@ -5,6 +5,7 @@ import Payment from "../pages/Payment";
 import TestPage from "../pages/TestPage";
 import TestPageNav from "../pages/TestPageNav";
 import Home from "../pages/Home";
+import QnAPlusEdit from '../pages/QnAPlusEdit'
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const GoodsDetailNavigator = () => {
       <Stack.Screen name="Payment" component={Payment}/>
       <Stack.Screen name="TestPage" component={TestPage}/>
       <Stack.Screen name="TestPageNav" component={TestPageNav}/>
+      <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit}/>
     </Stack.Navigator>
   );
 };

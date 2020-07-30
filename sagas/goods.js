@@ -39,7 +39,7 @@ function* loadQnA(action) {
     yield put({
       type: LOAD_QUESTION_SUCCESS,
       // TODO : data: result.data,
-      data: action.data,
+      id: action.data,
     });
   } catch (err) {
     console.log(err);
@@ -73,7 +73,7 @@ function* deleteQnA(action) {
     // TODO : const result = yield call(deleteQnAAPI, action.data);
     yield put({
       type: DELETE_QUESTION_SUCCESS,
-      // TODO : data: result.data,
+      data: action.id,
     });
   } catch (err) {
     console.log(err);

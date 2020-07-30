@@ -16,7 +16,7 @@ import Myinfo from "../pages/Myinfo";
 import PasswordChange from "../pages/PasswordChange";
 import Resign from "../pages/Resign";
 import ResignCheck from "../pages/ResignCheck";
-
+import QnAPlusEdit from "../pages/QnAPlusEdit";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +32,7 @@ const HomeNavigator = () => {
       <Stack.Screen name="Bucket" component={Bucket}/>
       <Stack.Screen name="QnAPlus" component={QnAPlus}/>
       <Stack.Screen name="ReviewPlus" component={ReviewPlus}/>
+      <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit}/>
 
       <Stack.Screen name="SignIn" component={SignIn}/>
       {/* TODO: <Stack.Screen name="Logout" component={Logout}/>*/}

@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
-import styled from 'styled-components';
-import Header from '../components/Header';
-import Nav from '../components/Nav';
+import React, {useState, useEffect} from "react";
+import {StyleSheet, Text, View, Button} from "react-native";
+import styled from "styled-components";
+import Header from "../components/Header";
+import Nav from "../components/Nav";
 // import RecommendedFlower from "../components/RecommendedFlower";
-import Payment from './Payment';
-import Bucket from './Bucket';
+import Payment from "./Payment";
+import Bucket from "./Bucket";
+import {useSelector} from "react-redux";
+import QnAList from "../components/QnAList";
 
 // css part
 const Container = styled.SafeAreaView`
@@ -52,13 +54,20 @@ const InfoDetailInfoOfBottom = styled.ScrollView`
 const QnADetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
-  border: 2px solid pink;
+  border: 5px solid green;
 `;
 
+const QnAheader = styled.View`
+  flex-direction : row;
+  justify-content : space-around;
+`
+
 const QnAButtonDetailInfoOfBottom = styled.Button`
-  height: 50px;
-  border: 2px solid pink;
+  height: 150px;
+  width : 400px;
+  border: 20px solid black;
 `;
+
 const ReviewButtonDetailInfoOfBottom = styled.Button`
   height: 50px;
   border: 2px solid pink;
@@ -85,107 +94,124 @@ const ButtonDetailInfoOfBottom = styled.Button`
 // function part
 const GoodsDetail = (props) => {
   const [info, setInfo] = useState(true);
-  const [qna, setQna] = useState(false);
+  const [userQnA, setQnA] = useState(false);
   const [review, setReview] = useState(false);
+  const qna = useSelector(state => state?.qna);
+  // console.log('In GoodsDetail, qna : ', qna[0].id)
 
   useEffect(() => {
-    // TODO: axios to detail
-    // GET?, NOT POST?
-    // try {
-    //   let test = await axios.post(http://localhost:4000/goods/info, props.route.params.id )
-    // } catch (error => console.error(error))
+    // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!
+
   }, []);
 
   return (
     <Container>
-      <Header props={props} />
+      <Header props={props}/>
 
       <Contents>
         <DetailInfoOfUpper>
-          <LeftDetailInfoOfUpper />
-          <RightDetailInfoOfUpper />
+          <LeftDetailInfoOfUpper/>
+          <RightDetailInfoOfUpper/>
         </DetailInfoOfUpper>
 
         {/* Distinct Line */}
         <DetailInfoOfBottom>
           <ViewDetailInfoOfBottom>
             <ButtonDetailInfoOfBottom
-              title={'info'}
+              title={"info"}
               onPress={() => {
-                setQna(false);
+                setQnA(false);
                 setInfo(true);
                 setReview(false);
               }}
             />
             <ButtonDetailInfoOfBottom
-              title={'qna'}
+              title={"userQnA"}
               onPress={() => {
-                setQna(true);
+                setQnA(true);
                 setInfo(false);
                 setReview(false);
               }}
             />
             <ButtonDetailInfoOfBottom
-              title={'review'}
+              title={"review"}
               onPress={() => {
-                setQna(false);
+                setQnA(false);
                 setInfo(false);
                 setReview(true);
               }}
             />
           </ViewDetailInfoOfBottom>
 
-          {info ? (
-            <InfoDetailInfoOfBottom>
-              <Text>info part</Text>
-            </InfoDetailInfoOfBottom>
-          ) : qna ? (
-            <View>
-              <QnADetailInfoOfBottom>
-                <Text>qna part</Text>
-                {/*  TODO: Should this function(write a text) is a page? or component?*/}
-                <QnAButtonDetailInfoOfBottom
-                  title={'+'}
-                  onPress={() => {
-                    props.navigation.navigate('QnAPlus');
-                  }}
-                />
-              </QnADetailInfoOfBottom>
-            </View>
-          ) : review ? (
-            <ReviewDetailInfoOfBottom>
-              <Text>review part</Text>
-              <ReviewButtonDetailInfoOfBottom
-                title={'+'}
-                onPress={() => {
-                  props.navigation.navigate('ReviewPlus');
-                }}
-              />
-              {/*  TODO: Should this function(write a text) is a page? or component?*/}
-            </ReviewDetailInfoOfBottom>
-          ) : (
-            <Text>empty part</Text>
-          )}
+          {info
+            ?
+            (
+              <InfoDetailInfoOfBottom>
+                <Text>info part</Text>
+              </InfoDetailInfoOfBottom>
+            )
+            : userQnA
+              ?
+              (
+                <View>
+                  <QnADetailInfoOfBottom>
+                    <QnAheader>
+                      <Text>궁금한 점을 남겨주세요.</Text>
+                      <QnAButtonDetailInfoOfBottom
+                        title={"글쓰기"}
+                        onPress={() => {
+                          props.navigation.navigate("QnAPlus");
+                        }}
+                      />
+                    </QnAheader>
+                    {qna.length === 0
+                      ? <Text>등록된 QnA가 없습니다</Text>
+                      : qna.map(el => {
+                        return <QnAList key={el.id} list={el} prop={props}/>;
+                      })
+                    }
+
+                  </QnADetailInfoOfBottom>
+                </View>
+              )
+              : review
+                ?
+                (
+                  <ReviewDetailInfoOfBottom>
+                    <Text>review part</Text>
+                    <ReviewButtonDetailInfoOfBottom
+                      title={"+"}
+                      onPress={() => {
+                        props.navigation.navigate("ReviewPlus");
+                      }}
+                    />
+                    {/*  TODO: Should this function(write a text) is a page? or component?*/}
+                  </ReviewDetailInfoOfBottom>
+                )
+                :
+                (
+                  <Text>empty part</Text>
+                )}
         </DetailInfoOfBottom>
 
         {/* Distinct Line */}
         {/*TODO: <Button title={'구매하기'} onPress={() => {props.navigation.navigate("Payment", {id : props.route.params.id} )}}/>*/}
         {/*TODO: <Button title={'장바구니 담기'} onPress={() => {props.navigation.navigate("Bucket", {id : props.route.params.id} )}}/>*/}
         <Button
-          title={'구매하기'}
+          title={"구매하기"}
           onPress={() => {
-            return props.navigation.navigate('Payment');
+            return props.navigation.navigate("Payment");
           }}
         />
         <Button
-          title={'장바구니 담기'}
+          title={"장바구니 담기"}
           onPress={() => {
-            props.navigation.navigate('Bucket');
+            props.navigation.navigate("Bucket");
           }}
         />
       </Contents>
 
-      <Nav props={props} />
+      <Nav props={props}/>
     </Container>
   );
 };
