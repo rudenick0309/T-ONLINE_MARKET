@@ -30,14 +30,16 @@ const TextView = styled.Text`
 `;
 
 const QnAPlusEdit = (props) => {
-  console.log('In QnAPlusEdit props : ', props)   //TODO : must check console.log for study
+
+  const {id, title, content, userName} = props.route.params;
+  console.log('In QnAPlusEdit props id, title, content: ', userName)   //TODO : must check console.log for study
+
   return (
     <Container>
       <Header props={props}/>
 
       <Contents>
-
-          <Text>QnAPlusEdit 페이지</Text>
+        <Text>QnAPlusEdit 페이지</Text>
       </Contents>
 
 

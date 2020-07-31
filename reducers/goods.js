@@ -62,7 +62,7 @@ export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, s
 export const deleteToQuestion = (id) => {
   return {
     type: DELETE_QUESTION_REQUEST,
-    // id : parseInt(id),
+    // TODO : id : parseInt(id),
     id,
   };
 };
