@@ -15,6 +15,8 @@ import { BestFlowerContainer,
   BestFlowerContents,
   BestFlowerImageView,
   BestFlowerTextView } from "../components/BestFlower";
+import {useDispatch, useSelector} from "react-redux";
+import {homeToLoad} from "../reducers/goods";
 
 // TODO: import {ActivityIndicator} from "react-native";    This is a Ellipse Loading image, I will use this later.
 
@@ -63,16 +65,24 @@ const Home = (props) => {
   const RecommendedFlowerData = homeData[getRandomIndex(0, homeData.length)]
   const BestFlowerData = homeData;
   const [text, onChangeText] = React.useState('Here is Search part');
+  const dispatch = useDispatch();
+  const home = useSelector(state => state.goods?.home);
+  const recommendation = useSelector((state) => state.goods.home?.recommendation)
+  const best = useSelector((state) => state.goods.home?.best)
+  console.log('In HOME COMPONENT, home : ', home);
+  console.log('In HOME COMPONENT, recommendation : ',recommendation)
+  console.log('In HOME COMPONENT, best : ',best)
 
-  // useEffect(() => {
-  //   /* TODO: axios.get('url~~~')
-  //   *   try {} catch {}
-  //   *   1. RecommendedFlower api -> GoodsDetail
-  //   *   2. BestFlower api -> GoodsDetail
-  //   */
-  // }, []);
+  useEffect( () => {
+    dispatch(homeToLoad());
+    console.log('In HOME, useEffect, home : ' ,home)
+    // recommendation = home.recommendation;
+    // best = home.best;
+
+  }, []);
 
   return (
+
     <Container>
 
       <Header props={props}/>
@@ -95,14 +105,13 @@ const Home = (props) => {
 
         <TextStyled >Best Seller</TextStyled>
 
-        {BestFlowerData.map((el) => {
+        {best && best.map((el) => {
           return (
             <BestFlowerContainer
-              // onPress={ () => {props.navigation.navigate("GoodsDetail")} }>
               onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>
               <BestFlowerContents>
-                <BestFlowerImageView source={el.img}></BestFlowerImageView>
-                <BestFlowerTextView>{el.contents}</BestFlowerTextView>
+                <BestFlowerImageView source={{ uri: el.img }}></BestFlowerImageView>
+                <BestFlowerTextView>{el.title}</BestFlowerTextView>
               </BestFlowerContents>
             </BestFlowerContainer>
             )
