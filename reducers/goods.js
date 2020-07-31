@@ -2,7 +2,7 @@
 
 // initialState part
 export const initialState = {
-  qna : [],
+  qna: [],
 
   loadQnALoading: false,    // QnA Plus
   loadQnADone: false,
@@ -24,7 +24,7 @@ export const initialState = {
   // the states saved and accmulated
 
 };
-console.log('In goods of REDUCERS, initialState : ', initialState);
+console.log("In goods of REDUCERS, initialState : ", initialState);
 
 // the part of action definition
 export const LOAD_QUESTION_REQUEST = "LOAD_QUESTION_REQUEST";
@@ -52,7 +52,7 @@ export const loadToQuestion = () => {
 };
 
 export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
-  console.log('In reducers, at TEXT : ', text);
+  console.log("In reducers, at TEXT : ", text);
   return {
     type: ADD_QUESTION_REQUEST,
     text,
@@ -67,10 +67,10 @@ export const deleteToQuestion = (id) => {
   };
 };
 
-export const patchToQuestion = (text, id) => { // TODO: advanced
+export const patchToQuestion = (text) => { // TODO: advanced
   return {
     type: PATCH_QUESTION_REQUEST,
-    id,
+    // id,   //TODO : Note , action creators takes a one parameter!
     text,
   };
 };
@@ -88,21 +88,21 @@ const reducer = (state = initialState, action) => {
         loadQnADone: false,
         loadQnAError: null,
         // qna: state.qna,
-      }
+      };
     case LOAD_QUESTION_SUCCESS:
       return {
         ...state,
         loadQnALoading: false,
         loadQnADone: true,
         // qna : [action.data],  // TODO : Why this qna is 'loading, done, error'?
-      }
+      };
     case LOAD_QUESTION_FAILURE:
       return {
         ...state,
         loadQnALoading: true,
         loadQnADone: false,
         loadQnAError: action.error,
-      }
+      };
 
     // add question
     case ADD_QUESTION_REQUEST:
@@ -111,7 +111,7 @@ const reducer = (state = initialState, action) => {
         addQnALoading: true,
         addQnADone: false,
         addQnAError: null,
-      }
+      };
     case ADD_QUESTION_SUCCESS:
       console.log("In reducers, action.data : ", action.data);  //TODO: check 'action', 'action.data', 'data'
       return {
@@ -120,7 +120,7 @@ const reducer = (state = initialState, action) => {
         addQnADone: true,
         qna: [action.data, ...state.qna], //TODO: ...state.qna
         // TODO: in immer ->  qna: state.qna.push(action.data),
-      }
+      };
     case ADD_QUESTION_FAILURE:
       console.log("action.data : ", action.data);
       return {
@@ -128,7 +128,7 @@ const reducer = (state = initialState, action) => {
         addQnALoading: true,
         addQnADone: false,
         addQnAError: action.error,
-      }
+      };
 
     // delete question
     case DELETE_QUESTION_REQUEST:
@@ -138,45 +138,58 @@ const reducer = (state = initialState, action) => {
         deleteQnALoading: true,    // QnA Plus
         deleteQnADone: false,
         deleteQnAError: null,
-      }
+      };
     case DELETE_QUESTION_SUCCESS:
       return {
         ...state,
         deleteQnALoading: false,
         deleteQnADone: true,
         qna: state.qna.filter((el) => el.id !== action.data),
-      }
+      };
     case DELETE_QUESTION_FAILURE:
-      console.log('In reducers, DELETE FAILURE')
+      console.log("In reducers, DELETE FAILURE");
       return {
         ...state,
         addQnALoading: true,
         addQnADone: false,
         addQnAError: action.error,
-      }
+      };
 
     // TODO: patch question  -> advanced?
     case PATCH_QUESTION_REQUEST:
+      console.log("In reducers, PATCH REQUEST");
       return {
         ...state,
-        addQnALoading: true,
-        addQnADone: false,
-        addQnAError: null,
-      }
+        patchQnALoading: true,
+        patchQnADone: false,
+        patchQnAError: null,
+      };
     case PATCH_QUESTION_SUCCESS:
+      console.log("In reducers, PATCH SUCCESS", action);
+      let qnaIndex = 0;
+      state.qna.forEach((el, index) => {
+        if (action.data.id === el.id) {
+          qnaIndex = index;
+        }
+      });
+
+      let forehand = state.qna.slice(0, qnaIndex);
+      let backhand = state.qna.slice(qnaIndex + 1);
+
       return {
         ...state,
-        addQnALoading: false,
-        addQnADone: true,
-        // TODO:qna :
-      }
+        patchQnALoading: false,
+        patchQnADone: true,
+        qna: forehand.concat(action.data, backhand)
+      };
     case PATCH_QUESTION_FAILURE:
+      console.log("In reducers, PATCH FAILURE");
       return {
         ...state,
-        addQnALoading: false,
-        addQnADone: false,
-        addQnAError: action.error,
-      }
+        patchQnALoading: false,
+        patchQnADone: false,
+        patchQnAError: action.error,
+      };
     default:
       return state;
   }
