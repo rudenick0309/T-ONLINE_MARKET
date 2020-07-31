@@ -1,9 +1,10 @@
-import React from "react";
-import {View, Text} from "react-native";
+import React, {useCallback, useState} from "react";
+import {View, Text, TextInput, Button} from "react-native";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import styled from "styled-components";
-
+import {useDispatch, useSelector} from "react-redux";
+import {patchToQuestion} from "../reducers/goods";
 
 // css part
 const Container = styled.ScrollView`
@@ -29,19 +30,56 @@ const TextView = styled.Text`
   color : red;
 `;
 
-const QnAPlusEdit = (props) => {
+const TextInputStyled = styled.TextInput`
+  border: 3px solid red;
+`;
 
+
+const QnAPlusEdit = (props) => {
   const {id, title, content, userName} = props.route.params;
-  console.log('In QnAPlusEdit props id, title, content: ', userName)   //TODO : must check console.log for study
+  console.log("In QnAPlusEdit props id, title, content: ", userName);   //TODO : must check console.log for study
+  const dispatch = useDispatch();
+  const {patchQnADone} = useSelector(state => state.goods)
+  console.log('In QnAEdidPlus patchQnADone : ', patchQnADone);
+
+  const [editTitle, onChangeTextTitle] = useState(title);
+  const [editContent, onChangeTextContent] = useState(content);
+  const [nonEditUserName, setNonEditUserName] = useState(userName);
+
+
+  const onChangeTextUserName = (text) => {
+    // setEditUserName(text);
+  };
+
+  const modifiedQnA = {
+    userName,
+    title: editTitle,
+    content: editContent,
+    id,
+  }
+
+  const onPressEditQnA = () => {
+    console.log('In QnAPluseEdit modifiedQnA : ', id);
+    dispatch(patchToQuestion(modifiedQnA))
+    onChangeTextTitle(title)
+    onChangeTextContent(content)
+    props.navigation.goBack();
+  }
 
   return (
     <Container>
       <Header props={props}/>
 
       <Contents>
-        <Text>QnAPlusEdit 페이지</Text>
-      </Contents>
 
+        <View>
+          <TextInputStyled placeholder={nonEditUserName} value={nonEditUserName} editable={false} />
+          <TextInputStyled placeholder={editTitle} value={editTitle} onChangeText={(text) => onChangeTextTitle(text)} />
+          <TextInputStyled placeholder={editContent} value={editContent} onChangeText={(text) => onChangeTextContent(text)} />
+        </View>
+        <Button title={"수정"} onPress={onPressEditQnA} />
+
+      </Contents>
 
       <Nav props={props}/>
     </Container>
