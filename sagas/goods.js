@@ -85,11 +85,13 @@ function* deleteQnA(action) {
 }
 
 function* patchQnA(action) {
+  console.log(' In goods of SAGA 3, : ', action);
   try {
     // TODO : const result = yield call(patchQnAAPI, action.data);
     yield put({
       type: PATCH_QUESTION_SUCCESS,
       // TODO : data: result.data,
+      data: action.text,
     });
   } catch (err) {
     console.log(err);
@@ -106,9 +108,7 @@ function* watchLoadQnA() {
 }
 
 function* watchAddQnA() {
-  console.log(' In goods of SAGA 2, : ');
   yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
-  console.log('In goods of SAGA 2 - 1, : ');
 }
 
 function* watchDeleteQnA() {
@@ -116,6 +116,7 @@ function* watchDeleteQnA() {
 }
 
 function* watchPatchQnA() {
+  console.log(' In goods of SAGA 2, : ');
   yield takeLatest(PATCH_QUESTION_REQUEST, patchQnA);
 }
 
