@@ -106,7 +106,7 @@ const QnAList = (props) => {
                 }
               </TextStyled>
               <ButtonStyled title={"수정"} onPress={() => {
-                props.prop.navigation.navigate("QnAPlusEdit", {id, title, content});
+                props.prop.navigation.navigate("QnAPlusEdit", {id, title, content, userName});
               }}/>
               <ButtonStyled title={"삭제"} onPress={deleteQnA}/>
             </TopViewStyled>
