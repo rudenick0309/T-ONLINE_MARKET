@@ -96,8 +96,8 @@ const GoodsDetail = (props) => {
   const [info, setInfo] = useState(true);
   const [userQnA, setQnA] = useState(false);
   const [review, setReview] = useState(false);
-  const qna = useSelector(state => state?.qna);
-  // console.log('In GoodsDetail, qna : ', qna[0].id)
+  const qna = useSelector(state => state.goods?.qna);
+  console.log('In GoodsDetail, qna : ', qna)
 
   useEffect(() => {
     // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!
