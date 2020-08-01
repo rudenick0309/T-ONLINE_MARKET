@@ -58,7 +58,7 @@ const QnAPlus = (props) => {
   const dispatch = useDispatch();
   const qna = useSelector((state) => state.goods?.qna);
 
-  console.log('In QnAPlus, qna : ', qna);
+  // console.log('In QnAPlus, qna : ', qna);
 
   useEffect(() => {
     // TODO: take the bucket list to axios

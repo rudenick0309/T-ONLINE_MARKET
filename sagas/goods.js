@@ -7,18 +7,28 @@ import {
   DELETE_QUESTION_SUCCESS,
   DELETE_QUESTION_FAILURE,
   PATCH_QUESTION_FAILURE,
-  PATCH_QUESTION_SUCCESS, LOAD_QUESTION_REQUEST, LOAD_QUESTION_SUCCESS, LOAD_QUESTION_FAILURE, PATCH_QUESTION_REQUEST
+  PATCH_QUESTION_SUCCESS,
+  LOAD_QUESTION_REQUEST,
+  LOAD_QUESTION_SUCCESS,
+  LOAD_QUESTION_FAILURE,
+  PATCH_QUESTION_REQUEST,
+  HOME_REQUEST, HOME_SUCCESS, HOME_FAILURE
 } from "../reducers/goods";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
-console.log('In saga, at 0 : ', 'saga executes');
+// console.log('In saga, at 0 : ', 'saga executes');
 // 4
+function homeAPI() {
+  console.log("In SAGA, homeAPI, executes")
+  return axios.get("/home")
+}
+
 function loadQnAAPI(data) {
   // TODO: return axios.post("/post/", data)
 }
 
 function addQnAAPI(data) {
-  console.log('In goods of SAGA 4, : ', data);
+  // console.log('In goods of SAGA 4, : ', data);
   // return axios.post("/goods/info/qa_lists", data)
   return axios.post("http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000/goods/info/qa_lists", data)
 }
@@ -32,6 +42,24 @@ function patchQnAAPI(data) {
 }
 
 // 3
+function* home() {
+  console.log("In SAGA, home, executes")
+  try {
+    const result = yield call(homeAPI);
+    yield put({
+      type: HOME_SUCCESS,
+      // TODO : data: result.data,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: HOME_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* loadQnA(action) {
   try {
     yield delay(1000);
@@ -51,7 +79,7 @@ function* loadQnA(action) {
 }
 
 function* addQnA(action) {
-  console.log('In goods of SAGA, at 3 : ', action);
+  // console.log('In goods of SAGA, at 3 : ', action);
 
   try {
     // TODO: const result = yield call(addQnAAPI, action.data);  no 'data', It's 'text'.
@@ -85,7 +113,7 @@ function* deleteQnA(action) {
 }
 
 function* patchQnA(action) {
-  console.log(' In goods of SAGA 3, : ', action);
+  // console.log(' In goods of SAGA 3, : ', action);
   try {
     // TODO : const result = yield call(patchQnAAPI, action.data);
     yield put({
@@ -103,6 +131,11 @@ function* patchQnA(action) {
 }
 
 // 2
+function* watchHome() {
+  console.log('In SAGA, watchHome');
+  yield takeLatest(HOME_REQUEST, home);
+}
+
 function* watchLoadQnA() {
   yield takeLatest(LOAD_QUESTION_REQUEST, loadQnA);
 }
@@ -116,14 +149,14 @@ function* watchDeleteQnA() {
 }
 
 function* watchPatchQnA() {
-  console.log(' In goods of SAGA 2, : ');
   yield takeLatest(PATCH_QUESTION_REQUEST, patchQnA);
 }
 
 // 1
 export default function* goodsSaga() {
-  console.log('In goods of SAGA 1, : ');
+  console.log('In SAGA, goodsSaga');
   yield all([
+    fork(watchHome),
     fork(watchLoadQnA),
     fork(watchAddQnA),
     fork(watchDeleteQnA),
