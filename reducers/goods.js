@@ -2,8 +2,8 @@
 
 // initialState part
 export const initialState = {
-  home: null,
-  goodsInfo: null,
+  home: [],  // change
+  goodsInfo: [], // change
   goodsList: [],
   qna: [],  // load -> add 까지
 
@@ -80,23 +80,26 @@ export const homeToLoad = () => {
   };
 };
 
-export const loadGoodsList = () => {
+export const loadGoodsList = (data) => {
   return {
     type: LOAD_GOODSLIST_REQUEST,
+    data,
     // TODO : whether add max param or just send TYPE;
   };
 };
 
 export const loadGoodsInfo = (id) => {
-  console.log('In REDUCER,  loadGoodsInfo, id : ', id);
-  const ids = id.id;
+  // console.log('In REDUCER,  loadGoodsInfo, id : ', id);
+  // const ids = id.id;
   return {
     type: LOAD_GOODSINFO_REQUEST,
     id,
+    // data:id,
   };
 };
 
 export const loadToQuestion = (id) => {
+  // console.log("In GOODS OF REDUCER, id : ", id);
   return {
     type: LOAD_QUESTION_REQUEST,
     id,
@@ -104,7 +107,7 @@ export const loadToQuestion = (id) => {
 };
 
 export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
-  console.log("In GOODS OF REDUCER, text : ", text);
+  console.log("In REDUCER, GOODS , text : ", text);
   return {
     type: ADD_QUESTION_REQUEST,
     text,
@@ -158,7 +161,7 @@ const reducer = (state = initialState, action) => {
 
     // load goods list
     case LOAD_GOODSLIST_REQUEST:
-      console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
+      // console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
       return {
         ...state,
         loadGoodsListLoading: true,     // goods list
@@ -166,7 +169,7 @@ const reducer = (state = initialState, action) => {
         loadGoodsListError: null,
       };
     case LOAD_GOODSLIST_SUCCESS:
-      console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action)
+      // console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action)
       return {
         ...state,
         loadGoodsListLoading: false,     // goods list
@@ -174,7 +177,7 @@ const reducer = (state = initialState, action) => {
        goodsList : action.data,
       };
     case LOAD_GOODSLIST_FAILURE:
-      console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action)
+      // console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action)
       return {
         ...state,
         loadGoodsListLoading:false,
@@ -183,7 +186,7 @@ const reducer = (state = initialState, action) => {
 
     // load goodsInfo rendering
     case LOAD_GOODSINFO_REQUEST:
-      console.log("In REDUX, LOAD_GOODSINFO_REQUEST, executes, action : ", action)
+      // console.log("In REDUX, LOAD_GOODSINFO_REQUEST, executes, action : ", action)
       return {
         ...state,
         loadGoodsInfoLoading: true,     // goods info
@@ -191,7 +194,7 @@ const reducer = (state = initialState, action) => {
         loadGoodsInfoError: null,
       };
     case LOAD_GOODSINFO_SUCCESS:
-      console.log("In REDUX, LOAD_GOODSINFO_SUCCESS, action : ", action)
+      // console.log("In REDUX, LOAD_GOODSINFO_SUCCESS, action : ", action)
       return {
         ...state,
         loadGoodsInfoLoading: false,     // goods info
@@ -199,7 +202,7 @@ const reducer = (state = initialState, action) => {
         goodsInfo: action.data,
       };
     case LOAD_GOODSINFO_FAILURE:
-      console.log("In REDUX, LOAD_GOODSINFO_FAILURE, ")
+      // console.log("In REDUX, LOAD_GOODSINFO_FAILURE, ")
       return {
         ...state,
         homeLoading: false,     // home rendering
@@ -208,7 +211,7 @@ const reducer = (state = initialState, action) => {
 
     // load question
     case LOAD_QUESTION_REQUEST:
-      // console.log("In REDUX, LOAD_QUESTION_REQUEST, action : ", action)
+      console.log("In REDUX, LOAD_QUESTION_REQUEST, action : ")
       return {
         ...state,
         loadQnALoading: true,
@@ -216,7 +219,7 @@ const reducer = (state = initialState, action) => {
         loadQnAError: null,
       };
     case LOAD_QUESTION_SUCCESS:
-      // console.log("In REDUX, LOAD_question SUCCESS, action : ", action.data)
+      console.log("In REDUX, LOAD_question SUCCESS, action : ", action.data)
       return {
         ...state,
         loadQnALoading: false,
@@ -224,17 +227,18 @@ const reducer = (state = initialState, action) => {
         qna: [action.data],
       };
     case LOAD_QUESTION_FAILURE:
-      // console.log("In REDUX, LOAD_question FAILURe action : ", action)
+      console.log("In REDUX, LOAD_question FAILURE action : ", action)
       return {
         ...state,
         loadQnALoading: true,
         loadQnADone: false,
         loadQnAError: action.error,
+        qna:state.qna.filter((el) => el.id !== 'delete')  //TODO: Or, if qna equals '[]' in component ?
       };
 
     // add question
     case ADD_QUESTION_REQUEST:
-      console.log("In REDUCERS OF ADD_QUESTION_REQUEST, action 이 있나? : ", action);
+      console.log("In REDUCERS OF ADD_QUESTION_REQUEST, action : ", action);
       return {
         ...state,
         addQnALoading: true,
@@ -242,16 +246,16 @@ const reducer = (state = initialState, action) => {
         addQnAError: null,
       };
     case ADD_QUESTION_SUCCESS:
-      console.log("In REDUCERS OF ADD_QUESTION_SUCCESS, action 이 있나? : ", action);
+      console.log("In REDUCERS OF ADD_QUESTION_SUCCESS, action : ", action);
       return {
         ...state,
         addQnALoading: false,
         addQnADone: true,
-        // qna: [action.data, ...state.qna], //TODO: ...state.qna
+        qna: [action.data, ...state.qna], //TODO: ...state.qna
         // TODO: in immer ->  qna: state.qna.push(action.data),
       };
     case ADD_QUESTION_FAILURE:
-      console.log("In REDUCERS OF ADD_QUESTION_FAILURE, action 이 있나? : ", action);
+      console.log("In REDUCERS OF ADD_QUESTION_FAILURE, action : ", action);
       return {
         ...state,
         addQnALoading: true,
@@ -323,13 +327,5 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
-
-// const store = createStore(reducer);
-
-// // the collection part of reducers
-// export const actionCreators = {
-//   addToQuestion,
-//   // TODO : puts other reducer here,
-// };
 
 export default reducer;
