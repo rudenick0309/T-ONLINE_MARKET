@@ -6,6 +6,7 @@ import TestPage from "../pages/TestPage";
 import TestPageNav from "../pages/TestPageNav";
 import Home from "../pages/Home";
 import QnAPlusEdit from '../pages/QnAPlusEdit'
+import QnAPlus from "../pages/QnAPlus";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ const GoodsDetailNavigator = () => {
       <Stack.Screen name="TestPage" component={TestPage}/>
       <Stack.Screen name="TestPageNav" component={TestPageNav}/>
       <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit}/>
+      <Stack.Screen name="QnAPlus" component={QnAPlus}/>
     </Stack.Navigator>
   );
 };
