@@ -2,7 +2,7 @@ import axios from "axios";
 import {POST_RESIGN_REQUEST,
     POST_RESIGN_SUCCESS,
     POST_RESIGN_FAILURE,
-} from "../reducers/login";
+} from "../reducers/resign";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
 // 4
