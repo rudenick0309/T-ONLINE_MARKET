@@ -51,14 +51,15 @@ const QnAContentTextInput = styled.TextInput`
 
 // function part
 const QnAPlus = (props) => {
-
+  console.log('In QnAPlus, props : ', props.route.params);
   const [userName, onChangeUserName] = useState("");
   const [title, onChangeTitle] = useState("");
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
+  const id = props.route.params;
   const qna = useSelector((state) => state.goods?.qna);
 
-  console.log('In QnAPlus, qna : ', qna);
+  console.log('In QnAPlus, id : ', id);
 
   useEffect(() => {
     // TODO: take the bucket list to axios
@@ -67,10 +68,11 @@ const QnAPlus = (props) => {
   const text = {
     title: title,
     contents: content,
-    // goods_id:
+    goods_id:id.id,
   };
 
   const onPressQuestion = useCallback(() => {
+    console.log('In QnAPlus, text: ', text);
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
     props.navigation.goBack();
   }, [userName, content]);
