@@ -58,17 +58,16 @@ const QnAPlus = (props) => {
   const dispatch = useDispatch();
   const qna = useSelector((state) => state.goods?.qna);
 
-  // console.log('In QnAPlus, qna : ', qna);
+  console.log('In QnAPlus, qna : ', qna);
 
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
 
   const text = {
-    userName,
-    title,
-    content,
-    id: shortid.generate(),
+    title: title,
+    contents: content,
+    // goods_id:
   };
 
   const onPressQuestion = useCallback(() => {
