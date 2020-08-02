@@ -12,25 +12,41 @@ import {
   LOAD_QUESTION_SUCCESS,
   LOAD_QUESTION_FAILURE,
   PATCH_QUESTION_REQUEST,
-  HOME_REQUEST, HOME_SUCCESS, HOME_FAILURE
+  HOME_REQUEST,
+  HOME_SUCCESS,
+  HOME_FAILURE,
+  LOAD_GOODSINFO_REQUEST,
+  LOAD_GOODSINFO_SUCCESS,
+  LOAD_GOODSINFO_FAILURE,
+  LOAD_GOODSLIST_REQUEST, LOAD_GOODSLIST_SUCCESS, LOAD_GOODSLIST_FAILURE,
 } from "../reducers/goods";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
 // console.log('In saga, at 0 : ', 'saga executes');
+
 // 4
 function homeAPI() {
-  console.log("In SAGA, homeAPI, executes")
   return axios.get("/home")
 }
 
+function goodsListAPI() {
+  console.log("In SAGA, goodsListAPI, executes")
+  return axios.get(`/goods/list?max=40000`)
+}
+
+function goodsInfoAPI(data) {
+  console.log("In SAGA, goodsInfoAPI, data : ", data)
+  return axios.get(`/goods/info?goods_id=${data.id}`)
+}
+
 function loadQnAAPI(data) {
-  // TODO: return axios.post("/post/", data)
+  // console.log('In GOODS of SAGA, loadQnAAPI', data);
+  return axios.get(`/goods/info/qa_lists?goods_id=${data}`)
 }
 
 function addQnAAPI(data) {
-  // console.log('In goods of SAGA 4, : ', data);
-  // return axios.post("/goods/info/qa_lists", data)
-  return axios.post("http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000/goods/info/qa_lists", data)
+  // console.log('In GOODS of SAGA, addQnAAPI', data);
+  return axios.post("goods/info/qa_lists", data)
 }
 
 function deleteQnAAPI(data) {
@@ -43,12 +59,10 @@ function patchQnAAPI(data) {
 
 // 3
 function* home() {
-  console.log("In SAGA, home, executes")
   try {
     const result = yield call(homeAPI);
     yield put({
       type: HOME_SUCCESS,
-      // TODO : data: result.data,
       data: result.data,
     });
   } catch (err) {
@@ -60,14 +74,57 @@ function* home() {
   }
 }
 
-function* loadQnA(action) {
+// goodsList
+function* goodsList() {
+  console.log("In SAGA, goodsList, executes ")
   try {
-    yield delay(1000);
-    // const result = yield call(loadQnAAPI, action.data);
+    const result = yield call(goodsListAPI); // TODO : max params?
+    console.log("In SAGA, goodsList, result : ", result)
     yield put({
+      type: LOAD_GOODSLIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_GOODSLIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// goodsInfo
+function* goodsInfo(action) {
+  // console.log("In SAGA, goodsInfo, executes, action : ", String(action.id))
+  console.log("In SAGA, goodsInfo, executes, action : ", action)
+  // let data = action.id
+  try {
+    const result = yield call(goodsInfoAPI, action.id);
+    yield put({
+      type: LOAD_GOODSINFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_GOODSINFO_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* loadQnA(action) {
+  // console.log('In GOODS of SAGA, loadQnA, action : ', action);
+  try {
+    // yield delay(1000);
+
+    const result = yield call(loadQnAAPI, action.id);
+    // console.log('IN GOODSOFSAGA loadQnA, result : ', result);
+    yield put({
+
       type: LOAD_QUESTION_SUCCESS,
       // TODO : data: result.data,
-      id: action.data,
+      data: result.data[0],
     });
   } catch (err) {
     console.log(err);
@@ -79,10 +136,9 @@ function* loadQnA(action) {
 }
 
 function* addQnA(action) {
-  // console.log('In goods of SAGA, at 3 : ', action);
-
+  // console.log('In GOODS of SAGA, addQnA, action : ', action);
   try {
-    // TODO: const result = yield call(addQnAAPI, action.data);  no 'data', It's 'text'.
+    const result = yield call(addQnAAPI, action.data);
     yield put({
       type: ADD_QUESTION_SUCCESS,
       data: action.text,
@@ -132,15 +188,26 @@ function* patchQnA(action) {
 
 // 2
 function* watchHome() {
-  console.log('In SAGA, watchHome');
   yield takeLatest(HOME_REQUEST, home);
 }
 
+function* watchGoodsList() {
+  console.log("In SAGA, goodsList, executes ")
+  yield takeLatest(LOAD_GOODSLIST_REQUEST, goodsList);
+}
+
+function* watchGoodsInfo() {
+  console.log("In SAGA, goodsInfo, executes ")
+  yield takeLatest(LOAD_GOODSINFO_REQUEST, goodsInfo);
+}
+
 function* watchLoadQnA() {
+  // console.log('In GOODS of SAGA, watchLoadQnA');
   yield takeLatest(LOAD_QUESTION_REQUEST, loadQnA);
 }
 
 function* watchAddQnA() {
+  // console.log('In GOODS of SAGA, watchAddQnA');
   yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
 }
 
@@ -154,9 +221,11 @@ function* watchPatchQnA() {
 
 // 1
 export default function* goodsSaga() {
-  console.log('In SAGA, goodsSaga');
+  console.log('In GOODS of SAGA, goodsSaga');
   yield all([
     fork(watchHome),
+    fork(watchGoodsList),
+    fork(watchGoodsInfo),
     fork(watchLoadQnA),
     fork(watchAddQnA),
     fork(watchDeleteQnA),

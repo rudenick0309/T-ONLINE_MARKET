@@ -10,6 +10,8 @@ import {
   BestFlowerImageView,
   BestFlowerTextView
 } from "../components/BestFlower";
+import {useDispatch, useSelector} from "react-redux";
+import {loadGoodsList} from "../reducers/goods";
 
 // css part
 const Container = styled.ScrollView`
@@ -18,17 +20,19 @@ const Container = styled.ScrollView`
 `;
 
 const InContainer = styled.TouchableOpacity`
-  border: 3px solid ivory
+  flex:1;
+  border: 3px solid ivory;
 `;
 
 const Contents = styled.View`
-  flex: 1;
-  height: 150px;
-  border: 3px solid grey;
+  height: 300px;
+  border: 3px solid red;
 `;
 
 const ImageView = styled.Image`
-  flex:1
+  flex:1;
+  
+  resize-mode: contain;
   border: 2px solid yellow;
 `;
 
@@ -36,72 +40,47 @@ const TextView = styled.Text`
   color : red;
 `;
 
-// dummy data part
-let goodsList = [];
-
-function Fake() {
-  return {
-    id: faker.random.number(),
-    title: faker.random.word(),
-    img: faker.image.imageUrl(),
-    contents: faker.name.jobTitle(),
-    // not add to price, Use the contents property
-  };
-}
-
-for (let i = 0; i < 30; i++) {
-  goodsList.push(Fake());
-}
-
-
 // function part
 const GoodsList = (props) => {
-  // TODO: changes the state name : const [checkList, setCheckList] = useState(null);
+  console.log("In GOODSLIST, props : ", props);
+  const dispatch = useDispatch();
+  const goodsList = useSelector(state => state.goods?.goodsList);
+  console.log("In GOODSLIST, goodslist : ", goodsList);
 
+  // needs modify why not conclded in GoodsList.
   useEffect(() => {
     // TODO: axios to list
-    // GET?, NOT POST?
-    // try {
-    //   let test = await axios.post(http://localhost:4000/goods/list, props.route.params.id )
-    // } catch (error => console.error(error))
+    dispatch(loadGoodsList());
+
   }, []);
 
   return (
     <Container>
       <Header props={props}/>
-      {goodsList.map((el) => {
+
+      {goodsList.length !== 0 && goodsList.map((el) => {
         return (
-          <InContainer
-            onPress={() => {
-              props.navigation.navigate("GoodsDetail");
-            }}>
-            {/*TODO : onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>*/}
-            <Contents>
-              <ImageView source={el.img}></ImageView>
-              <TextView>{el.contents}</TextView>
-            </Contents>
-          </InContainer>
+          // <Contents>
+            <InContainer
+              key={el.goods_id}
+              onPress={() => {
+                // props.navigation.navigate("GoodsDetail", {goods_id: el.goods_id});
+                props.navigation.navigate("GoodsDetail", {id: el.goods_id});
+              }}>
+              {/*TODO : onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>*/}
+              <Contents>
+                <ImageView source={{uri: el.goods_img}}></ImageView>
+                <TextView>{el.goods_name}</TextView>
+                <TextView>{el.goods_price}</TextView>
+              </Contents>
+            </InContainer>
+          // </Contents>
         );
       })}
+
       <Nav props={props}/>
     </Container>
   );
 };
 
 export default GoodsList;
-
-
-// [
-//   {
-//     goods_id: "Int",
-//     goods_name: "Stirng",
-//     goods_img: "String",
-//     goods_price: "Int",
-//   },
-//   {
-//     goods_id: "Int",
-//     goods_name: "Stirng",
-//     goods_img: "String",
-//     goods_price: "Int",
-//   },
-// ]
