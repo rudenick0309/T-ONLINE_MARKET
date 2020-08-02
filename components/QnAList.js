@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
 import {View, Text, TouchableOpacity, Button, Pressable} from "react-native";
 import styled from "styled-components";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteToQuestion} from "../reducers/goods";
 import QnAPlusEdit from "../pages/QnAPlusEdit";
 
@@ -10,7 +10,7 @@ import QnAPlusEdit from "../pages/QnAPlusEdit";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid brown;
+  border: 2px solid black;
 `;
 
 const Contents = styled.ScrollView`
@@ -52,22 +52,6 @@ const ButtonStyled = styled.Button`
 `;
 
 
-// dummy data
-var dummy = {
-  "reply":
-    [
-      {
-        "username": "정코딩",
-        "text": "생화입니다",
-        "createdAt": "2020-07-29T07:40:19.000Z"
-      },
-      {
-        "username": "박코딩",
-        "text": "조화인듯;;",
-        "createdAt": "2020-07-29T07:40:19.000Z"
-      }
-    ]
-};
 
 //
 const QnAList = (props) => {
@@ -78,9 +62,12 @@ const QnAList = (props) => {
   const {contents} = props.list;
   const {id} = props.list;
   const {reply} = props.list;
+  const qna = useSelector(state => state.goods?.qna);
   console.log('In QnAList, reply : ', reply)
 
   const {prop} = props.prop;  // for Route
+  console.log('In QnAList, prop : ', prop)  //TODO: 1. When qna is empty, or full -> First, empty
+
   // dummy = {...dummy, id}; // TODO: this line will be commented
   // const {reply} = dummy;
 
@@ -109,7 +96,7 @@ const QnAList = (props) => {
                 }
               </TextStyled>
               <ButtonStyled title={"수정"} onPress={() => {
-                props.prop.navigation.navigate("QnAPlusEdit", {id, title, contents, username});
+                prop.navigation.navigate("QnAPlusEdit", {id, title, contents, username});
               }}/>
               <ButtonStyled title={"삭제"} onPress={deleteQnA}/>
             </TopViewStyled>

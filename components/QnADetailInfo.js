@@ -25,18 +25,22 @@ const QnAButtonDetailInfoOfBottom = styled.Button`
 
 // function part
 const QnADetailInfo = (props) => {
-
-  const qna = useSelector(state => state.goods?.qna);
-  const id = props.prop.route.params.id
+  console.log('In QnADetailInfo, props : ', props);
+  const id = props.prop?.route.params.id
   const dispatch = useDispatch();
-  console.log('In QnADetailInfo, qna : ', qna);
+  const loadQnAError = useSelector((state) => state.goods?.loadQnAError);
+  console.log('In QnADetailInfo, loadQnAError : ', loadQnAError);
 
-  // const goodsId = {
-  //   goods_id: id,
-  // }
+  var qna = useSelector(state => state.goods?.qna);
+  console.log('In QnADetailInfo, qna : ', qna);
+  if (loadQnAError) {
+    console.log('In QnADetailInfo At IF, id : ', id)  //id : 9,
+    qna = [];
+  }
 
  useEffect(() => {
     dispatch(loadToQuestion(id))
+
  },[])
 
   return (
@@ -46,7 +50,7 @@ const QnADetailInfo = (props) => {
         <QnAButtonDetailInfoOfBottom
           title={"글쓰기"}
           onPress={() => {
-            props.prop.navigation.navigate("QnAPlus");
+            props.prop.navigation.navigate("QnAPlus", {id:id});
           }}
         />
       </QnAheader>

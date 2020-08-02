@@ -16,17 +16,17 @@ import {loadGoodsList} from "../reducers/goods";
 // css part
 const Container = styled.ScrollView`
   flex: 1;
-  border: 3px solid blue
+  
 `;
 
 const InContainer = styled.TouchableOpacity`
   flex:1;
-  border: 3px solid ivory;
+  
 `;
 
 const Contents = styled.View`
   height: 300px;
-  border: 3px solid red;
+  
 `;
 
 const ImageView = styled.Image`
@@ -46,11 +46,12 @@ const GoodsList = (props) => {
   const dispatch = useDispatch();
   const goodsList = useSelector(state => state.goods?.goodsList);
   console.log("In GOODSLIST, goodslist : ", goodsList);
+  const filterValue = props.route.params?.filter;
 
   // needs modify why not conclded in GoodsList.
   useEffect(() => {
     // TODO: axios to list
-    dispatch(loadGoodsList());
+    dispatch(loadGoodsList(filterValue));
 
   }, []);
 

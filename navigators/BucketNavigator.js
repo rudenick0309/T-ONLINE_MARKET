@@ -1,9 +1,10 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import Bucket from "../pages/Bucket";
-import RecommendedFlower from "../components/RecommendedFlower";
-import BestFlower from "../components/BestFlower";
+
 import Home from "../pages/Home";
+import QnAPlusEdit from "../pages/QnAPlusEdit";
+import QnAPlus from "../pages/QnAPlus";
 
 const Stack = createStackNavigator();
 
@@ -12,6 +13,8 @@ const BucketNavigator = () => {
 
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Bucket" component={Bucket}/>
+      <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit}/>
+      <Stack.Screen name="QnAPlus" component={QnAPlus}/>
     </Stack.Navigator>
 
   );
