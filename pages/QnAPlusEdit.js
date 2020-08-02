@@ -36,15 +36,15 @@ const TextInputStyled = styled.TextInput`
 
 
 const QnAPlusEdit = (props) => {
-  const {id, title, content, userName} = props.route.params;
-  console.log("In QnAPlusEdit props id, title, content: ", userName);   //TODO : must check console.log for study
+  const {id, title, contents, username} = props.route.params;
+  console.log("In QnAPlusEdit props  : ", props);   //TODO : must check console.log for study
   const dispatch = useDispatch();
   const {patchQnADone} = useSelector(state => state.goods)
   console.log('In QnAEdidPlus patchQnADone : ', patchQnADone);
 
   const [editTitle, onChangeTextTitle] = useState(title);
-  const [editContent, onChangeTextContent] = useState(content);
-  const [nonEditUserName, setNonEditUserName] = useState(userName);
+  const [editContent, onChangeTextContent] = useState(contents);
+  const [nonEditUserName, setNonEditUserName] = useState(username);
 
 
   const onChangeTextUserName = (text) => {
@@ -52,7 +52,7 @@ const QnAPlusEdit = (props) => {
   };
 
   const modifiedQnA = {
-    userName,
+    username,
     title: editTitle,
     content: editContent,
     id,
@@ -62,7 +62,7 @@ const QnAPlusEdit = (props) => {
     console.log('In QnAPluseEdit modifiedQnA : ', id);
     dispatch(patchToQuestion(modifiedQnA))
     onChangeTextTitle(title)
-    onChangeTextContent(content)
+    onChangeTextContent(contents)
     props.navigation.goBack();
   }
 
