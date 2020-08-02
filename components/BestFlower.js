@@ -23,6 +23,7 @@ export const BestFlowerContents = styled.ScrollView`
 export const BestFlowerImageView = styled.Image`
   flex:1
   height: 160px;
+  resize-mode: contain;
   border: 2px solid yellow;
 `;
 
