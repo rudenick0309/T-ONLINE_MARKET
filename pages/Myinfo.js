@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {StyleSheet, Text, Button, View} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from '../components/Nav'
+import { TextInput } from "react-native-gesture-handler";
+import { useDispatch } from 'react-redux';
+import {editinfoAction} from '../reducers/myinfochange';
 
 
 // css part
@@ -21,26 +24,67 @@ const Contents = styled.ScrollView`
 const Myinfo = (props) => {
   // TODO : changes the state name :  const [checkList, setCheckList] = useState(null);
  
-  const [userInfo, setuserInfo] = useState([])
+  
+    
+  const [username, onChangeUsername] = useState('')
+  const [password, onChangePassword] = useState('')
+  const [email, onChangeEmail] = useState('')
+  const [phone, onChangePhone] = useState('')
+  const [address, onChangeAddress] = useState('')
+  
+
+  const dispatch = useDispatch();
+  // const qna = useSelector((state) => state?.qna);
 
   useEffect(() => {
-    axios.get("http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000/user/info")
-      .then((result) => {
-        setuserInfo(result.data)
-        console.log(result.data, 'data')
-      });
+    // TODO: take the bucket list to axios
   }, []);
+
+  const text = {
+username,
+password,
+email,
+phone,
+address,
+user_type,
+};
+
+const onPressMyinfo = useCallback(() => {
+dispatch(editinfoAction(text));  //TODO : 1. text  or  2. (name, content)
+props.navigation.navigation('Mypage');
+}, [username, password, email, phone, address, user_type]);
+
+
 
   return (
     <Container>
       <Header props={props}/>
       <Contents>
+      <Text> Name : {userInfo? userInfo.username: ''} </Text>
+          <TextInput
+          placeholder = "NameChange"
+          value={username}
+          onChangeText={(text) => onChangeUsername(text)} ></TextInput>
           <Text> Email : {userInfo? userInfo.email: ''} </Text>
-          <Text> Name : {userInfo? userInfo.name: ''}</Text>
+          <TextInput
+          placeholder = "Email"
+          value={email}
+          onChangeText={(text) => onChangeEmail(text)} ></TextInput>
+          <Text> Password : {userInfo? userInfo.password: ''} </Text>
+          <TextInput
+          placeholder = "Password"
+          value={password}
+          onChangeText={(text) => onChangePassword(text)} ></TextInput>
           <Text> Phone : {userInfo? userInfo.phone: ''}</Text>
+          <TextInput placeholder = "Phone"
+      value={phone}
+      onChangeText={(text) => onChangePhone(text)} ></TextInput>
           <Text> Address : {userInfo? userInfo.address: ''}</Text>
-          <Button title="비밀번호 변경" onPress={ () => {props.navigation.navigate('PasswordChange')}}/>
-      <Button title ="수정하기" onPress={ () => {props.navigation.navigate('Myinfocheck')} } />
+          <TextInput placeholder = "Address"
+      value={address}
+      onChangeText={(text) => onChangeAddress(text)} ></TextInput>
+         
+      <Button title ="수정하기" onPress={onPressMyinfo} />
       <Button title ="탈퇴하기" onPress={ () => {props.navigation.navigate('Resign')} } />
       </Contents>
       <Nav props={props}/>
