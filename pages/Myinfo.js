@@ -46,13 +46,13 @@ password,
 email,
 phone,
 address,
-user_type,
+// user_type,
 };
 
 const onPressMyinfo = useCallback(() => {
 dispatch(editinfoAction(text));  //TODO : 1. text  or  2. (name, content)
 props.navigation.navigation('Mypage');
-}, [username, password, email, phone, address, user_type]);
+}, [username, password, email, phone, address]);
 
 
 

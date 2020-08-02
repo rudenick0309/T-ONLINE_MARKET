@@ -2,7 +2,7 @@ import {all, fork} from 'redux-saga/effects';
 import axios from 'axios';
 
 import goodsSaga from './goods';
-import loginSaga from './loginsaga'
+import loginSaga from './loginsaga';
 import signupSaga from './signupsaga';
 import EditInfoSaga from './infosaga';
 import resignSaga from './resignsaga';

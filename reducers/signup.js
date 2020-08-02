@@ -11,7 +11,7 @@ export const initialState = {
 
 export const POST_SIGNUP_REQUEST = 'POST_SIGNUP_REQUEST';
 export const POST_SIGNUP_SUCCESS = 'POST_SIGNUP_SUCCESS';
-export const POST_SIGNUP_FAILURE = 'POST_SIGNUP_FAILUER';
+export const POST_SIGNUP_FAILURE = 'POST_SIGNUP_FAILURE';
 
 
 

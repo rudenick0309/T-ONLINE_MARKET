@@ -5,7 +5,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 // import reducer from "../reducers/goods";
 
 
-import reducer from '../reducers'
+import reducer from '../reducers/'
 
 import rootSaga from "../sagas";
 

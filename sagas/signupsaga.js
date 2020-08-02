@@ -1,8 +1,8 @@
 import axios from "axios";
-import {POST_RESIGN_REQUEST,
-    POST_RESIGN_SUCCESS,
-    POST_RESIGN_FAILURE
-} from "../reducers/resign";
+import {POST_SIGNUP_REQUEST,
+    POST_SIGNUP_SUCCESS,
+    POST_SIGNUP_FAILURE
+} from "../reducers/signup";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
 console.log('In saga, at 0 : ', 'saga executes');
