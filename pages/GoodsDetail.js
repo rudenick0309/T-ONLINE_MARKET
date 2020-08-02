@@ -16,17 +16,17 @@ import QnADetailInfo from "../components/QnADetailInfo";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid blue;
+  
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid blue;
+  
 `;
 
 const DetailInfoOfUpper = styled.View`
   flex: 1;
-  border: 2px solid red;
+  
   flex-direction: row;
 `;
 
@@ -35,7 +35,7 @@ const LeftDetailInfoOfUpper = styled.View`
   flex: 1;
   width: 200px;
   height: 200px;
-  border: 2px solid skyblue;
+  
 `;
 
 const ImageOfUpperLeft = styled.Image`
@@ -43,7 +43,7 @@ const ImageOfUpperLeft = styled.Image`
   width:100%;
   height: 100%;
   resize-mode: contain;
-  border: 2px solid skyblue;
+  
 `;
 
 // upper right part
@@ -51,71 +51,69 @@ const RightDetailInfoOfUpper = styled.View`
   flex: 1;
   width: 200px;
   height: 200px;
-  border: 2px solid green;
+ 
 `;
 
 const TextOfUpperRight = styled.Text`
   flex: 1;
-  border: 2px solid green;
+ 
 `;
 
 
 // bottom components
 const DetailInfoOfBottom = styled.View`
   flex: 1;
-  border: 2px solid pink;
+  
 `;
 
 // info detail part
 const InfoDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
-  border: 2px solid pink;
+  
 `;
 
 const ImageInfoOfBottom = styled.Image`
   flex: 1;
   height: 500px;
   resize-mode: contain;
-  border: 2px solid pink;
+  
 `;
 
+// qna detail part
+const QnADetailInfoOfBottom = styled.ScrollView`
+  flex: 1;
+  height: 500px;
+  border: 5px solid green;
+`;
 
-// // qna detail part
-// const QnADetail = styled.ScrollView`
-//   flex: 1;
-//   height: 500px;
-//   border: 5px solid green;
-// `;
-//
-// const QnAheader = styled.View`
-//   flex-direction : row;
-//   justify-content : space-around;
-// `;
-//
-// const QnAButtonDetailInfoOfBottom = styled.Button`
-//   height: 150px;
-//   width : 400px;
-//   border: 20px solid black;
-// `;
+const QnAheader = styled.View`
+  flex-direction : row;
+  justify-content : space-around;
+`;
 
+const QnAButtonDetailInfoOfBottom = styled.Button`
+  height: 150px;
+  width : 400px;
+  border: 20px solid black;
+`;
 
 // review detail part
 const ReviewButtonDetailInfoOfBottom = styled.Button`
   height: 50px;
-  border: 2px solid pink;
+
 `;
 
 const ReviewDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
-  border: 2px solid pink;
+
 `;
 
 const ViewDetailInfoOfBottom = styled.View`
   flex: 1;
   flex-direction: row;
-  border : 4px solid green;
+
   justify-content:space-around;
   
   
@@ -134,11 +132,9 @@ const GoodsDetail = (props) => {
   const [review, setReview] = useState(false);
   const dispatch = useDispatch();
   const qna = useSelector(state => state.goods?.qna);
-  console.log("In GOODS_DETAIL, props : ", props);
   const id = props.route.params;
   const goodsInfo = useSelector((state) => state.goods?.goodsInfo);
-  console.log("In GOODSDETAIL, goodsInfo : ", goodsInfo);
-
+  // console.log("In GOODS_DETAIL, props : ", props);
   const goods_name = goodsInfo?.goods_name;
   const goods_img = goodsInfo?.goods_img;
   const goods_price = goodsInfo?.goods_price;
@@ -146,7 +142,7 @@ const GoodsDetail = (props) => {
 
   useEffect(() => {
     // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!
-    console.log('In GOODSDETAIL, final ID : ', id);
+    // console.log("In GOODSDETAIL, final ID : ", id);
     dispatch(loadGoodsInfo(id));
   }, []);
 
@@ -221,27 +217,7 @@ const GoodsDetail = (props) => {
             : userQnA
               ?
               (
-                <View>
-                  <QnADetailInfo prop={props} />
-
-                  {/*  <QnAheader>*/}
-                  {/*    <Text>궁금한 점을 남겨주세요.</Text>*/}
-                  {/*    <QnAButtonDetailInfoOfBottom*/}
-                  {/*      title={"글쓰기"}*/}
-                  {/*      onPress={() => {*/}
-                  {/*        props.navigation.navigate("QnAPlus");*/}
-                  {/*      }}*/}
-                  {/*    />*/}
-                  {/*  </QnAheader>*/}
-                  {/*  {qna && qna.length === 0*/}
-                  {/*    ? <Text>등록된 QnA가 없습니다</Text>*/}
-                  {/*    : qna.map(el => {*/}
-                  {/*      return <QnAList key={el.id} list={el} prop={props}/>;*/}
-                  {/*    })*/}
-                  {/*  }*/}
-
-                  {/*</QnADetail>*/}
-                </View>
+                <QnADetailInfo prop={props} />
               )
               : review
                 ?
