@@ -29,9 +29,9 @@ function homeAPI() {
   return axios.get("/home")
 }
 
-function goodsListAPI() {
-  console.log("In SAGA, goodsListAPI, executes")
-  return axios.get(`/goods/list?max=40000`)
+function goodsListAPI(data) {
+  // console.log("In SAGA, goodsListAPI, data : ", data)
+  return axios.get(`/goods/list?min=3000&max=40000&filter=${data}`)
 }
 
 function goodsInfoAPI(data) {
@@ -40,12 +40,12 @@ function goodsInfoAPI(data) {
 }
 
 function loadQnAAPI(data) {
-  // console.log('In GOODS of SAGA, loadQnAAPI', data);
+  console.log('In GOODS of SAGA, loadQnAAPI', data);
   return axios.get(`/goods/info/qa_lists?goods_id=${data}`)
 }
 
 function addQnAAPI(data) {
-  // console.log('In GOODS of SAGA, addQnAAPI', data);
+  console.log('In GOODS of SAGA, addQnAAPI', data);
   return axios.post("goods/info/qa_lists", data)
 }
 
@@ -75,11 +75,11 @@ function* home() {
 }
 
 // goodsList
-function* goodsList() {
-  console.log("In SAGA, goodsList, executes ")
+function* goodsList(action) {
+  // console.log("In SAGA, goodsList, action : ", action)
   try {
-    const result = yield call(goodsListAPI); // TODO : max params?
-    console.log("In SAGA, goodsList, result : ", result)
+    const result = yield call(goodsListAPI, action.data); // TODO : max params?
+    // console.log("In SAGA, goodsList, result : ", result)
     yield put({
       type: LOAD_GOODSLIST_SUCCESS,
       data: result.data,
@@ -96,7 +96,7 @@ function* goodsList() {
 // goodsInfo
 function* goodsInfo(action) {
   // console.log("In SAGA, goodsInfo, executes, action : ", String(action.id))
-  console.log("In SAGA, goodsInfo, executes, action : ", action)
+  // console.log("In SAGA, goodsInfo, executes, action : ", action)
   // let data = action.id
   try {
     const result = yield call(goodsInfoAPI, action.id);
@@ -114,12 +114,12 @@ function* goodsInfo(action) {
 }
 
 function* loadQnA(action) {
-  // console.log('In GOODS of SAGA, loadQnA, action : ', action);
+  console.log('In GOODS of SAGA, loadQnA, action : ', action);
   try {
     // yield delay(1000);
 
     const result = yield call(loadQnAAPI, action.id);
-    // console.log('IN GOODSOFSAGA loadQnA, result : ', result);
+    console.log('IN GOODS OF SAGA loadQnA, result : ', result);
     yield put({
 
       type: LOAD_QUESTION_SUCCESS,
@@ -135,10 +135,12 @@ function* loadQnA(action) {
   }
 }
 
+// login function is not executes. QnA login has all the dummy.
 function* addQnA(action) {
   // console.log('In GOODS of SAGA, addQnA, action : ', action);
   try {
-    const result = yield call(addQnAAPI, action.data);
+    // const result = yield call(addQnAAPI, action.text);
+    // console.log('In SAGA of addQnA, result : ', result)
     yield put({
       type: ADD_QUESTION_SUCCESS,
       data: action.text,
@@ -202,12 +204,12 @@ function* watchGoodsInfo() {
 }
 
 function* watchLoadQnA() {
-  // console.log('In GOODS of SAGA, watchLoadQnA');
+  console.log('In GOODS of SAGA, watchLoadQnA');
   yield takeLatest(LOAD_QUESTION_REQUEST, loadQnA);
 }
 
 function* watchAddQnA() {
-  // console.log('In GOODS of SAGA, watchAddQnA');
+  console.log('In GOODS of SAGA, watchAddQnA');
   yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
 }
 
