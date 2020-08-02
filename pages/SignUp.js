@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from '../components/Nav'
@@ -6,6 +6,9 @@ import { StyleSheet,Button, Text, View, ScrollView, TextInput } from 'react-nati
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import axios from 'axios';
+import { signupAction } from '../reducers/signup';
+import { useDispatch } from 'react-redux';
+
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -17,71 +20,44 @@ const Contents = styled.ScrollView`
   border : 2px solid blue
 `;
 
-const InputText = styled.TextInput`
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        pedding : 10`
 
-const InputButton = styled.Button`
+
+const InButton = styled.Button`
   width: 100px;
   border: 2px solid yellow;
 `;
 
 const SignUp = (props) => {
 
-    const [userInfo, setUserInfo] = useState({
-      username: "",
-      email:"",
-      password:"",
-      phone:"",
-      address:"",
-      user_type:"",
-      });
+    
+      const [username, onChangeUsername] = useState('')
+      const [email, onChangeEmail] = useState('')
+      const [password, onChangePassword] = useState('')
+      const [phone, onChangePhone] = useState('')
+      const [address, onChangeAddress] = useState('')
+      const [user_type, onChangeUserType] = useState('')
 
-      const handleInputValue = (key) => (e) => {
-        setUserInfo({ ...userInfo, [key]: e.target.value });
-      };
-      const handleOpen = () => {
-        setOpen(true);
-      };
+      const dispatch = useDispatch();
+      // const qna = useSelector((state) => state?.qna);
+    
+      useEffect(() => {
+        // TODO: take the bucket list to axios
+      }, []);
 
-      const handleClose = () => {
-        setOpen(false);
-      };
+      const text = {
+    username,
+    email,
+    password,
+    phone,
+    address,
+    user_type
+  };
 
-      const handleIsAllow = () => {
-        setIsAllow(!isAllow);
-        if (isAllow) {
-        }
-      };
+  const onPressSingup = useCallback(() => {
+    dispatch(signupAction(text));  //TODO : 1. text  or  2. (name, content)
+    props.navigation.navigate('Home');
+  }, [username, email, password, phone, address, user_type]);
 
-      const [open, setOpen] = useState(false);
-
-      const [isAllow, setIsAllow] = useState(false);
-
-      const [transition, setTransition] = useState(undefined);
-
-     const handleSubmit = (Transition) => {
-      setTransition(() => Transition);
-      const apiUrl = "http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000";
-      
-      axios.post(apiUrl + "/user/signup", {withCredentials: true}, userInfo).then((data) => {
-        // console.log(aa, 'url')
-        // axios.post(aa, userInfo).then((data) => {
-      
-        console.log(data, "data");
-        if (data.status === 200) {
-          alert("회원가입에 성공하셨습니다");
-          handleClose();
-      
-        } else {
-          alert("회원가입에 실패하였습니다");
-         
-          // props.history.push('/');
-        }
-      });
-    }
 
       return (
         <Container>
@@ -89,19 +65,21 @@ const SignUp = (props) => {
             <Contents>
             <Text>Sign Up</Text>
             <Button title="Go back" onPress={() => props.navigation.goBack()} />
-            <InputText
+            <TextInput
       placeholder = "Username"
-      onChange={handleInputValue("username")} >
+      value={username}
+      onChangeText={(text) => onChangeUsername(text)} >
 
-      </InputText>
+      </TextInput>
 
-      <InputText
+      <TextInput
       textContentType='emailAddress'
       // autoCompleteType = "email"
       placeholder = "Email"
-      onChange={handleInputValue("email")} >
+      value={email}
+      onChangeText={(text) => onChangeEmail(text)} >
 
-      </InputText>
+      </TextInput>
 
       <TextInput
       style={{
@@ -111,12 +89,15 @@ const SignUp = (props) => {
       }}
       textContentType = "password"
       placeholder = "Password"
-      onChange={handleInputValue("password")}>
+      secureTextEntry={true} 
+      value={password}
+      onChangeText={(text) => onChangePassword(text)}>
       </TextInput>
 
-      <InputText
+      <TextInput
       textContentType="password"
       placeholder = "Password 확인"
+      secureTextEntry={true} 
       // onChange={(value) => {
       //   if(value === password){
       //   handleInputValue("password")
@@ -125,25 +106,35 @@ const SignUp = (props) => {
       //   }
       //  }
       // }
-      onChange={handleInputValue("password")}>
-      </InputText>
+      onChangeText={(text) => onChangePassword(text)}>
+      </TextInput>
 
-      <InputText
+      <TextInput
       placeholder = "Phone"
-      onChange={(value) => {
-       let num = Number(value)
+      value={phone}
+      onChangeText={(text) => {
+       let num = Number(text)
      if(isNaN(num)){
         alert("숫자만 입력해주세요")
      }else{
-         handleInputValue("phone")}
+         onChangePhone(text)}
        }
       }>
-      </InputText>
+      </TextInput>
 
-      <InputText
+      <TextInput
       placeholder = "Address"
-      onChange={handleInputValue("address")}>
-      </InputText>
+      value={address}
+      onChangeText={(text) => onChangeAddress(text)}>
+      </TextInput>
+
+      <Switch
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={isEnabled ? onChangeUserType(1) :onChangeUserType(2)}
+        value={user_type}
+      />
 
       {/* <TextInput
       style={{
@@ -200,10 +191,9 @@ const SignUp = (props) => {
                     </tr>
                   </table> */}
 
-      <InputButton
+      <InButton
         onPress={() => {
-          handleSubmit(props);
-        }}
+          onPressSingup}}
         title='Sign Up'
         // disabled={!isLogin}
         // title={isLogin ? "Log in" : "Log out"}
