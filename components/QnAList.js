@@ -73,13 +73,16 @@ var dummy = {
 const QnAList = (props) => {
   const [replies, setReplies] = useState(false);
   const dispatch = useDispatch();
-  const {userName} = props.list;
+  const {username} = props.list;
   const {title} = props.list;
-  const {content} = props.list;
+  const {contents} = props.list;
   const {id} = props.list;
+  const {reply} = props.list;
+  console.log('In QnAList, reply : ', reply)
+
   const {prop} = props.prop;  // for Route
-  dummy = {...dummy, id}; // TODO: this line will be commented
-  const {reply} = dummy;
+  // dummy = {...dummy, id}; // TODO: this line will be commented
+  // const {reply} = dummy;
 
   // TODO : key props is undefined, Why?
 
@@ -102,18 +105,18 @@ const QnAList = (props) => {
             <TopViewStyled>
               <TextStyled>
                 {
-                  `제목: ${title} 이름: ${userName}`
+                  `제목: ${title} 이름: ${username}`
                 }
               </TextStyled>
               <ButtonStyled title={"수정"} onPress={() => {
-                props.prop.navigation.navigate("QnAPlusEdit", {id, title, content});
+                props.prop.navigation.navigate("QnAPlusEdit", {id, title, contents, username});
               }}/>
               <ButtonStyled title={"삭제"} onPress={deleteQnA}/>
             </TopViewStyled>
 
             <TextStyled>
               {
-                `내용 : ${content}`
+                `내용 : ${contents}`
               }
             </TextStyled>
 

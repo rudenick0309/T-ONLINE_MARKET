@@ -23,52 +23,10 @@ export const BestFlowerContents = styled.ScrollView`
 export const BestFlowerImageView = styled.Image`
   flex:1
   height: 160px;
+  resize-mode: contain;
   border: 2px solid yellow;
 `;
 
 export const BestFlowerTextView = styled.Text`
   color : red;
 `;
-//
-// // function part
-// const RecommendedFlower = ({data}) => {
-//   // const data = data;
-//   const {title, img, contents} = data;
-//   // const {onPress} = this.props
-//
-//   return (
-//     <Container >
-//       <Contents>
-//         <ImageView source={img}/>
-//         <TextView>{contents}</TextView>
-//         {/*<View>*/}
-//         {/*</View>*/}
-//         <TextView>{title}</TextView>
-//       </Contents>
-//       {/*<Contents>{data.title}</Contents>*/}
-//     </Container>
-//   );
-// };
-//
-// export default RecommendedFlower;
-
-
-/*
-* {
-  recommendation: [
-    {
-      id: "Int",
-      title: "String",
-      img: "String",
-      contents: "String",
-    },
-    {
-      id: "Int",
-      title: "String",
-      img: "String",
-      contents: "String",
-    },
-  ], // max = 4 ~ 5
-
-}
-* */

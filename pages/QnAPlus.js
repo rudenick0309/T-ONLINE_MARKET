@@ -56,7 +56,7 @@ const QnAPlus = (props) => {
   const [title, onChangeTitle] = useState("");
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
-  const qna = useSelector((state) => state?.qna);
+  const qna = useSelector((state) => state.goods?.qna);
 
   console.log('In QnAPlus, qna : ', qna);
 
@@ -65,10 +65,9 @@ const QnAPlus = (props) => {
   }, []);
 
   const text = {
-    userName,
-    title,
-    content,
-    id: shortid.generate(),
+    title: title,
+    contents: content,
+    // goods_id:
   };
 
   const onPressQuestion = useCallback(() => {

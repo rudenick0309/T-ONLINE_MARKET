@@ -1,20 +1,29 @@
 import React, {useEffect, useState} from "react";
-import {StyleSheet, Text, View, TextInput , TouchableOpacity,Image} from "react-native";
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from "react-native";
 import styled from "styled-components";
 import axios from "axios";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
-import faker from 'faker';
+import faker from "faker";
 // import RecommendedFlower from "../components/RecommendedFlower";
 import GoodsDetail from "./GoodsDetail";
-import { RecommendedFlowerContainer,
+import {
+  RecommendedFlowerContainer,
   RecommendedFlowerContents,
   RecommendedFlowerImageView,
-  RecommendedFlowerTextView} from "../components/RecommendedFlower";
-import { BestFlowerContainer,
+  RecommendedFlowerTextView
+} from "../components/RecommendedFlower";
+import {
+  BestFlowerContainer,
   BestFlowerContents,
   BestFlowerImageView,
-  BestFlowerTextView } from "../components/BestFlower";
+  BestFlowerTextView
+} from "../components/BestFlower";
+import {useDispatch, useSelector} from "react-redux";
+import {homeToLoad} from "../reducers/goods";
+// import CaroseulTest from "./CaroseulTest";
+import Carousel from "react-native-carousel-view";
+import ViewPager from "@react-native-community/viewpager";
 
 // TODO: import {ActivityIndicator} from "react-native";    This is a Ellipse Loading image, I will use this later.
 
@@ -31,48 +40,44 @@ const Contents = styled.ScrollView`
 
 const TextStyled = styled.Text`
   margin-top: 20px
-`
+`;
 
-// dummy data part
-let homeData = []
-
-function Fake() {
-  return {
-    id: faker.random.number(),
-    title: faker.random.word(),
-    img:faker.image.imageUrl(),
-    contents:faker.name.jobTitle(),
-    // not add to price, Use the contents property
-  };
-}
-
-for(let i = 0; i < 30; i++) {
-  homeData.push(Fake())
-}
-
-// random Index
-const getRandomIndex = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+const ViewPagerStyled = styled(ViewPager)`
+  border : 3px solid yellow;
+  height:300px;
+`;
+const TextPagerStyled = styled.Text`
+  border : 3px solid red;
+  height : 200px;
+  font-size: 50px;
+`;
+const TouchablePagerStyled = styled.TouchableOpacity`
+  border : 3px solid blue;
+  height : 200px;
+`;
 
 // function part
 const Home = (props) => {
   // later, under state are changed in api res.
-  const RecommendedFlowerData = homeData[getRandomIndex(0, homeData.length)]
-  const BestFlowerData = homeData;
-  const [text, onChangeText] = React.useState('Here is Search part');
+  const [text, onChangeText] = React.useState("Here is Search part");
+  const dispatch = useDispatch();
+  const home = useSelector(state => state.goods?.home);
+  const recommendation = useSelector((state) => state.goods.home?.recommendation);
+  const best = useSelector((state) => state.goods.home?.best);
+  // console.log("In HOME COMPONENT, home : ", home);
+  // console.log("In HOME COMPONENT, recommendation : ", recommendation);
+  // console.log("In HOME COMPONENT, best : ", best);
 
-  // useEffect(() => {
-  //   /* TODO: axios.get('url~~~')
-  //   *   try {} catch {}
-  //   *   1. RecommendedFlower api -> GoodsDetail
-  //   *   2. BestFlower api -> GoodsDetail
-  //   */
-  // }, []);
+  useEffect(() => {
+    dispatch(homeToLoad());
+    // console.log("In HOME, useEffect, home : ", home);
+    // recommendation = home.recommendation;
+    // best = home.best;
+
+  }, []);
 
   return (
+
     <Container>
 
       <Header props={props}/>
@@ -84,25 +89,34 @@ const Home = (props) => {
           value={text}
         />
 
-        <RecommendedFlowerContainer
-          // onPress={ () => {props.navigation.navigate("GoodsList")} }>
-          onPress={ () => {props.navigation.navigate("GoodsList", {id : RecommendedFlowerData.id} )} }>
-          <RecommendedFlowerContents>
-            <RecommendedFlowerImageView source={RecommendedFlowerData.img}></RecommendedFlowerImageView>
-            <RecommendedFlowerTextView>{RecommendedFlowerData.contents}</RecommendedFlowerTextView>
-          </RecommendedFlowerContents>
-        </RecommendedFlowerContainer>
+        <ViewPagerStyled initialPage={0}>
+          {recommendation && recommendation.map( (el) => {
+            return (
+              <View key={el.id}>
+                <RecommendedFlowerContainer
+                  onPress={ () => {props.navigation.navigate("GoodsList", {id : el.id} )} }
+                >
+                  <RecommendedFlowerContents>
+                    <RecommendedFlowerImageView
+                      source={{ uri: el.img }}
+                    />
+                    <RecommendedFlowerTextView>{el.title}</RecommendedFlowerTextView>
+                  </RecommendedFlowerContents>
+                </RecommendedFlowerContainer>
+              </View>
+            )
+          })}
+        </ViewPagerStyled>
 
         <TextStyled >Best Seller</TextStyled>
 
-        {BestFlowerData.map((el) => {
+        {best && best.map((el) => {
           return (
             <BestFlowerContainer
-              // onPress={ () => {props.navigation.navigate("GoodsDetail")} }>
               onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>
               <BestFlowerContents>
-                <BestFlowerImageView source={el.img}></BestFlowerImageView>
-                <BestFlowerTextView>{el.contents}</BestFlowerTextView>
+                <BestFlowerImageView source={{ uri: el.img }}></BestFlowerImageView>
+                <BestFlowerTextView>{el.title}</BestFlowerTextView>
               </BestFlowerContents>
             </BestFlowerContainer>
             )
@@ -118,14 +132,13 @@ const Home = (props) => {
 
 export default Home;
 
-/*
-* TODO:예를들어서 클라이언트 화면에
-*      2:31
-*    최소 : [입력할 부분]
-*     최대 : [입력할 부분]
-*      이렇게 보여주고 저기다가 입력한 값을
-*      요청보낼때 같이 쿼리파라미터로 넘겨주면 어떨까 합니당
-*     http://localhost:4000/goods/lists?min=1000&max=8000
-*
-*
-* */
+
+const styles = StyleSheet.create({
+  viewPager: {
+    flex: 1,
+    borderColor: "green",
+    // border
+    borderWidth: 100,
+    borderStyle: "solid",
+  },
+});
