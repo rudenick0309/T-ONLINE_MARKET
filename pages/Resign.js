@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect,useCallback} from "react";
 import {StyleSheet, Text, Button, View, TextInput} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from '../components/Nav'
+import { useDispatch } from 'react-redux';
+import { resignAction } from "../reducers/resign";
 
 
 // css part
@@ -24,39 +26,42 @@ const InputText = styled.TextInput`
 
 // function part
 const Resign = (props) => {
-    // const [userInfo, setUserInfo] = useState({
-    //     email: "",
-    //     password: "",
-    //   });
+  const [email, onChangeEmail] = useState('')
+  const [password, onChangePassword] = useState('')
+ 
 
-      const handleInputValue = (key) => (e) => {
-        setUserInfo({ ...userInfo, [key]: e.target.value });
-      };
-
-    //   const handleOpen = () => {
-    //     setOpen(true);
-    //   };
-    
-    //   const handleClose = () => {
-    //     setOpen(false);
-    //   };
-  // TODO : changes the state name :  const [checkList, setCheckList] = useState(null);
+  const dispatch = useDispatch();
+  // const qna = useSelector((state) => state?.qna);
 
   useEffect(() => {
     // TODO: take the bucket list to axios
   }, []);
 
+  const text = {
+email,
+password,
+};
+
+const onPressResign = useCallback(() => {
+dispatch( resignAction(text));  //TODO : 1. text  or  2. (name, content)
+props.navigation.navigate('ResignCheck');
+}, [email, password]);
+
   return (
     <Container>
       <Header props={props}/>
       <Contents>
-          <Text>ID : </Text>
+      <InputText
+      placeholder = "Email"
+      type = "email"
+      onChangeText={ (text) => onChangeEmail(text)}>
+      </InputText>
       <InputText
       placeholder = "Password"
       type = "password"
-      onChange={handleInputValue("password")}>
+      onChangeText={ (text) => onChangePassword(text)}>
       </InputText>
-      <Button title="탈퇴하기" onPress={ () => {props.navigation.navigate('ResignCheck')} }/>
+      <Button title="탈퇴하기" onPress={onPressResign }/>
       </Contents>
       <Nav props={props}/>
     </Container>
