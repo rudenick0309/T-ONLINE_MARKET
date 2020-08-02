@@ -30,12 +30,12 @@ import ViewPager from "@react-native-community/viewpager";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 3px solid red
+  
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 3px solid grey;
+  
 `;
 
 const TextStyled = styled.Text`
@@ -43,16 +43,16 @@ const TextStyled = styled.Text`
 `;
 
 const ViewPagerStyled = styled(ViewPager)`
-  border : 3px solid yellow;
+  
   height:300px;
 `;
 const TextPagerStyled = styled.Text`
-  border : 3px solid red;
+  
   height : 200px;
   font-size: 50px;
 `;
 const TouchablePagerStyled = styled.TouchableOpacity`
-  border : 3px solid blue;
+  
   height : 200px;
 `;
 
@@ -64,7 +64,7 @@ const Home = (props) => {
   const home = useSelector(state => state.goods?.home);
   const recommendation = useSelector((state) => state.goods.home?.recommendation);
   const best = useSelector((state) => state.goods.home?.best);
-  // console.log("In HOME COMPONENT, home : ", home);
+  console.log("In HOME COMPONENT, home : ", home);
   // console.log("In HOME COMPONENT, recommendation : ", recommendation);
   // console.log("In HOME COMPONENT, best : ", best);
 
@@ -94,7 +94,7 @@ const Home = (props) => {
             return (
               <View key={el.id}>
                 <RecommendedFlowerContainer
-                  onPress={ () => {props.navigation.navigate("GoodsList", {id : el.id} )} }
+                  onPress={ () => {props.navigation.navigate("GoodsList", {id : el.id, filter:el.filter} )} }
                 >
                   <RecommendedFlowerContents>
                     <RecommendedFlowerImageView
