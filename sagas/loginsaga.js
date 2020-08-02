@@ -1,8 +1,8 @@
 import axios from "axios";
 import {POST_LOGIN_REQUEST,
     POST_LOGIN_SUCCESS,
-    POST_LOGIN_FAILURE,
-    LOGOUT
+    POST_LOGIN_FAILURE
+    // LOGOUT
 } from "../reducers/login";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
@@ -11,16 +11,16 @@ function postLoginAPI(data) {
   // TODO: return axios.post("/post/", data)
 }
 
-function logoutAPI(data) {
+function postLogoutAPI(data) {
   // TODO: return axios.post("/post/", data)
 }
 
 
 // 3
 function* postLogin(action) {
+  console.log("postlogin saga", action);
   try {
-    yield delay(1000);
-    // TODO : const result = yield call(loadQnAAPI, action.data);
+    // TODO : const result = yield call(postLoginAPI, action.data);
     yield put({
       type: POST_LOGIN_SUCCESS,
       // TODO : data: result.data,
@@ -35,35 +35,38 @@ function* postLogin(action) {
   }
 }
 
-function* postLogout(action) {
-  try {
-    // TODO : const result = yield call(addQnAAPI, action.data);
-    yield put({
-      type: LOGOUT,
-      // TODO : data: result.data,
-    });
-  } catch (err) {
-    console.log(err);
+// function* postLogout(action) {
+//   try {
+//     // TODO : const result = yield call(addQnAAPI, action.data);
+//     yield put({
+//       type: POST_LOGOUT_SUCCESS,
+//       // TODO : data: result.data,
+//     });
+//   } catch (err) {
+//     type: POST_LOGOUT_FAILURE,
+//     console.log(err);,
     
-  }
-}
+//   }
+// }
 
 
 // 2
 function* watchPostLogin() {
-  yield takeLatest(POST_LOGIN_REQUEST, login);
+  console.log("watchPostlogin", postLogin)
+  yield takeLatest(POST_LOGIN_REQUEST, postLogin);
 }
 
-function* watchLogout() {
-  yield takeLatest(ADD_QUESTION_REQUEST, logout);
-}
+// function* watchLogout() {
+  // console.log("watchPostlogout", postLogout)
+//   yield takeLatest(POST_LOGOUT_REQUEST, postLogout);
+// }
 
 
 // 1
 export default function* loginSaga() {
   yield all([
     fork(watchPostLogin),
-    fork(watchLogout),
+    // fork(watchLogout),
     
     // fork(watchLoadReview),
     // fork(watchAddQnA),
