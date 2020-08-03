@@ -23,14 +23,18 @@ const SearchIcon = styled.TextInput`
 const Header = ({props}) => {
   const [text, onChangeText] = useState("Here is Search part");
 
+
+
   return (
     <HeaderView>
       <HeaderIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>로고</Text></HeaderIcon>
 
+      {/* Find like the onClick event*/}
       <SearchIcon
         onChangeText={text => onChangeText(text)}
         value={text}
       />
+
 
       <HeaderIcon onPress={ () => {props.navigation.navigate('SignIn')} }><Text>로그인</Text></HeaderIcon>
     </HeaderView>
