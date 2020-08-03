@@ -59,7 +59,6 @@ const TouchablePagerStyled = styled.TouchableOpacity`
 // function part
 const Home = (props) => {
   // later, under state are changed in api res.
-  const [text, onChangeText] = React.useState("Here is Search part");
   const dispatch = useDispatch();
   const home = useSelector(state => state.goods?.home);
   const recommendation = useSelector((state) => state.goods.home?.recommendation);
@@ -84,10 +83,7 @@ const Home = (props) => {
 
       <Contents>
         {/*  TODO: <Search></Search>*/}
-        <TextInput
-          onChangeText={text => onChangeText(text)}
-          value={text}
-        />
+
 
         <ViewPagerStyled initialPage={0}>
           {recommendation && recommendation.map( (el) => {

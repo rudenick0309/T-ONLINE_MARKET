@@ -1,4 +1,4 @@
-// import {createStore} from "redux";
+
 
 // initialState part
 export const initialState = {
@@ -6,10 +6,28 @@ export const initialState = {
   goodsInfo: [], // change
   goodsList: [],
   qna: [],  // load -> add 까지
+  review: [],
+  count : 1,
 
   homeLoading: false,     // home rendering
   homeQnADone: false,
   homeQnAError: null,
+
+  loadReviewLoading : false,   // review read
+  loadReviewDone: false,
+  loadReviewError:null,
+
+  addReviewLoading: false,    // review create
+  addReviewDone: false,
+  addReviewError: null,
+
+  deleteReviewLoading: false,    // review delete
+  deleteReviewDone: false,
+  deleteReviewError: null,
+
+  patchReviewLoading: false,    // review update
+  patchReviewDone: false,
+  patchReviewError: null,
 
   loadGoodsListLoading: false,     // goods list
   loadGoodsListDone: false,
@@ -19,7 +37,7 @@ export const initialState = {
   loadGoodsInfoDone: false,
   loadGoodsInfoError: null,
 
-  loadQnALoading: false,    // QnA load
+  loadQnALoading: false,    // QnA read
   loadQnADone: false,
   loadQnAError: null,
 
@@ -43,9 +61,29 @@ export const initialState = {
 
 // the part of action definition
 
+export const COUNT_DEFAULT_REQUEST = "COUNT_DEFAULT_REQUEST";             // count
+export const COUNT_PLUS_REQUEST = "COUNT_PLUS_REQUEST";             // count
+export const COUNT_MINUS_REQUEST = "COUNT_MINUS_REQUEST";
+
 export const HOME_REQUEST = "HOME_REQUEST";                        // home
 export const HOME_SUCCESS = "HOME_SUCCESS";
 export const HOME_FAILURE = "HOME_FAILURE";
+
+export const LOAD_REVIEW_REQUEST = "LOAD_REVIEW_REQUEST";    // load review
+export const LOAD_REVIEW_SUCCESS = "LOAD_REVIEW_SUCCESS";
+export const LOAD_REVIEW_FAILURE = "LOAD_REVIEW_REQUEST";
+
+export const ADD_REVIEW_REQUEST = "ADD_REVIEW_REQUEST";     // add review
+export const ADD_REVIEW_SUCCESS = "ADD_REVIEW_SUCCESS";
+export const ADD_REVIEW_FAILURE = "ADD_REVIEW_FAILURE";
+
+export const DELETE_REVIEW_REQUEST = "DELETE_REVIEW_REQUEST";   //delete review
+export const DELETE_REVIEW_SUCCESS = "DELETE_REVIEW_SUCCESS";
+export const DELETE_REVIEW_FAILURE = "DELETE_REVIEW_FAILURE";
+
+export const PATCH_REVIEW_REQUEST = "PATCH_REVIEW_REQUEST";       // patch review
+export const PATCH_REVIEW_SUCCESS = "PATCH_REVIEW_SUCCESS";
+export const PATCH_REVIEW_FAILURE = "PATCH_REVIEW_FAILURE";
 
 export const LOAD_GOODSLIST_REQUEST = "LOAD_GOODSLIST_REQUEST";    // goods Info
 export const LOAD_GOODSLIST_SUCCESS = "LOAD_GOODSLIST_SUCCESS";
@@ -74,6 +112,24 @@ export const PATCH_QUESTION_FAILURE = "PATCH_QUESTION_FAILURE";
 
 // the part of action creator definition
 
+export const countDefault = () => {
+  return {
+    type: COUNT_DEFAULT_REQUEST,
+  };
+};
+
+export const countPlus = () => {
+  return {
+    type: COUNT_PLUS_REQUEST,
+  };
+};
+
+export const countMinus = () => {
+  return {
+    type: COUNT_MINUS_REQUEST,
+  };
+};
+
 export const homeToLoad = () => {
   return {
     type: HOME_REQUEST,
@@ -98,6 +154,43 @@ export const loadGoodsInfo = (id) => {
   };
 };
 
+// review
+
+export const loadToReview = (id) => {
+  console.log("In REDUCER, loadToReview, id : ", id);
+  return {
+    type: LOAD_REVIEW_REQUEST,
+    id,
+  };
+};
+
+export const addToReview = (text) => {
+ console.log("In REDUCER, addToReview, id : ", id);
+  return {
+    type: ADD_REVIEW_REQUEST,
+    text,
+  };
+};
+
+export const deleteToReview = (id) => {
+  console.log("In REDUCER, deleteToReview, id : ", id);
+  return {
+    type: DELETE_REVIEW_REQUEST,
+    // TODO : id : parseInt(id),
+    id,
+  };
+};
+
+export const patchToReview = (text) => {
+  // console.log("In REDUCER, patchToReview, id : ", id);
+  return {
+    type: PATCH_REVIEW_REQUEST,
+    // id,
+    text,
+  };
+};
+
+// question
 export const loadToQuestion = (id) => {
   // console.log("In GOODS OF REDUCER, id : ", id);
   return {
@@ -135,6 +228,28 @@ export const patchToQuestion = (text) => { // TODO: advanced
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
+    // count calculate
+    case COUNT_DEFAULT_REQUEST :
+      return {
+        ...state,
+        count : 1,
+      }
+
+    case COUNT_PLUS_REQUEST :
+      return {
+        ...state,
+        count: state.count + 1,
+      }
+    case COUNT_MINUS_REQUEST :
+      if (state.count < 2) {
+        alert('수량은 1개 이상이어야 합니다')
+        state.count = 1;
+      }
+      return {
+        ...state,
+        count: state.count - 1,
+      }
+
     // home rendering
     case HOME_REQUEST:
       // console.log("In REDUX, HOME_REQUEST, executes")
@@ -159,6 +274,8 @@ const reducer = (state = initialState, action) => {
         homeQnAError: action.error,
       };
 
+      //
+
     // load goods list
     case LOAD_GOODSLIST_REQUEST:
       // console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
@@ -174,13 +291,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadGoodsListLoading: false,     // goods list
         loadGoodsListDone: true,
-       goodsList : action.data,
+        goodsList: action.data,
       };
     case LOAD_GOODSLIST_FAILURE:
       // console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action)
       return {
         ...state,
-        loadGoodsListLoading:false,
+        loadGoodsListLoading: false,
         loadGoodsListError: action.error,     // home rendering
       };
 
@@ -209,9 +326,126 @@ const reducer = (state = initialState, action) => {
         homeQnAError: action.error,
       };
 
+      //
+    // load review
+    case LOAD_REVIEW_REQUEST:
+      console.log("In REDUCER, LOAD_REVIEW_REQUEST, action : ", action);
+      return {
+        ...state,
+        loadReviewLoading : true,   // review read
+        loadReviewDone: false,
+        loadReviewError:null,
+      };
+    case LOAD_REVIEW_SUCCESS:
+      console.log("In REDUCER, LOAD_REVIEW_SUCCESS, action : ", action.data);
+      return {
+        ...state,
+        loadReviewLoading : false,   // review read
+        loadReviewDone: true,
+        loadReviewError:null,
+        review: [action.data],
+      };
+    case LOAD_REVIEW_FAILURE:
+      console.log("In REDUCER, LOAD_REVIEW_FAILURE action : ", action);
+      return {
+        ...state,
+        loadReviewLoading : false,
+        loadReviewError:action.error,
+        review: state.qna.filter((el) => el.id !== "everyDBdelete")  //TODO: Or, if qna equals '[]' in component ?
+      };
+
+    // add review
+    case ADD_REVIEW_REQUEST:
+      console.log("In REDUCERS OF ADD_REVIEW_REQUEST, action : ", action);
+      return {
+        ...state,
+        addReviewLoading: true,
+        addReviewDone: false,
+        addReviewError: null,
+      };
+    case ADD_REVIEW_SUCCESS:
+      console.log("In REDUCERS OF ADD_REVIEW_SUCCESS, action : ", action);
+      return {
+        ...state,
+        addReviewLoading: false,
+        addReviewDone: true,
+        review: [action.data, ...state.review],
+
+      };
+    case ADD_REVIEW_FAILURE:
+      console.log("In REDUCERS OF ADD_REVIEW_FAILURE, action : ", action);
+      return {
+        ...state,
+        addReviewLoading: true,
+        addReviewDone: false,
+        addReviewError: action.error,
+      };
+
+    // delete review
+    case DELETE_REVIEW_REQUEST:
+      console.log("In REDUCERS OF DELETE_REVIEW_REQUEST, action : ", action);
+      return {
+        ...state,
+        deleteReviewLoading: true,
+        deleteReviewDone: false,
+        deleteReviewError: null,
+      };
+    case DELETE_REVIEW_SUCCESS:
+      console.log("In REDUCERS OF DELETE_REVIEW_SUCCESS, action : ", action);
+      return {
+        ...state,
+        deleteReviewLoading: false,
+        deleteReviewDone: true,
+        review: state.review.filter((el) => el.id !== action.data),
+      };
+    case DELETE_REVIEW_FAILURE:
+      console.log("In REDUCERS OF DELETE_REVIEW_FAILURE, action : ", action);
+      return {
+        ...state,
+        deleteReviewLoading: true,
+        deleteReviewDone: false,
+        deleteReviewError: action.error,
+      };
+
+    // patch review
+    case PATCH_REVIEW_REQUEST:
+      console.log("In REDUCERS OF PATCH_REVIEW_REQUEST, action : ", action);
+      return {
+        ...state,
+        patchReviewLoading: true,
+        patchReviewDone: false,
+        patchReviewError: null,
+      };
+    case PATCH_REVIEW_SUCCESS:
+      console.log("In REDUCERS OF PATCH_REVIEW_SUCCESS, action : ", action);
+      let reviewIndex = 0;
+      state.review.forEach((el, index) => {
+        if (action.data.id === el.id) {
+          reviewIndex = index;
+        }
+      });
+
+      let reviewForehand = state.review.slice(0, reviewIndex);
+      let reviewBackhand = state.review.slice(reviewIndex + 1);
+
+      return {
+        ...state,
+        patchReviewLoading: false,
+        patchReviewDone: true,
+        review: reviewForehand.concat(action.data, reviewBackhand)
+      };
+    case PATCH_REVIEW_FAILURE:
+      console.log("In REDUCERS OF PATCH_REVIEW_FAILURE, action : ", action);
+      return {
+        ...state,
+        patchReviewLoading: false,
+        patchReviewDone: false,
+        patchReviewError: action.error,
+      };
+
     // load question
     case LOAD_QUESTION_REQUEST:
-      console.log("In REDUX, LOAD_QUESTION_REQUEST, action : ")
+      console.log("In REDUX, LOAD_QUESTION_REQUEST, action : ");
       return {
         ...state,
         loadQnALoading: true,
@@ -219,7 +453,7 @@ const reducer = (state = initialState, action) => {
         loadQnAError: null,
       };
     case LOAD_QUESTION_SUCCESS:
-      console.log("In REDUX, LOAD_question SUCCESS, action : ", action.data)
+      console.log("In REDUX, LOAD_QUESTION_SUCCESS, action : ", action.data);
       return {
         ...state,
         loadQnALoading: false,
@@ -227,13 +461,13 @@ const reducer = (state = initialState, action) => {
         qna: [action.data],
       };
     case LOAD_QUESTION_FAILURE:
-      console.log("In REDUX, LOAD_question FAILURE action : ", action)
+      console.log("In REDUX, LOAD_QUESTION_FAILURE, action : ", action);
       return {
         ...state,
         loadQnALoading: true,
         loadQnADone: false,
         loadQnAError: action.error,
-        qna:state.qna.filter((el) => el.id !== 'delete')  //TODO: Or, if qna equals '[]' in component ?
+        qna: state.qna.filter((el) => el.id !== "delete")  //TODO: Or, if qna equals '[]' in component ?
       };
 
     // add question
@@ -293,7 +527,6 @@ const reducer = (state = initialState, action) => {
       // console.log("In reducers, PATCH REQUEST");
       return {
         ...state,
-        patchQnALoading: true,
         patchQnADone: false,
         patchQnAError: null,
       };
@@ -302,6 +535,7 @@ const reducer = (state = initialState, action) => {
       let qnaIndex = 0;
       state.qna.forEach((el, index) => {
         if (action.data.id === el.id) {
+        patchQnALoading: true,
           qnaIndex = index;
         }
       });

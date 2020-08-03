@@ -17,11 +17,9 @@ const NavIcon = styled.TouchableOpacity`
 const Nav = ({props}) => {
   return (
     <NavView>
-      <NavIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>홈</Text></NavIcon>
-      <NavIcon onPress={ () => {props.navigation.navigate('Mypage')} }><Text>마이페이지</Text></NavIcon>
-      <NavIcon onPress={ () => {props.navigation.navigate('GoodsList')}} >
-        <Text>카테고리</Text>
-      </NavIcon>
+      <NavIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>Home Icon</Text></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.navigate('Mypage')} }><Text>My page Icon</Text></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.goBack()}} ><Text>back</Text></NavIcon>
     </NavView>
   )
 }

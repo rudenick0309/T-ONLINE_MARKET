@@ -40,7 +40,6 @@ const QnADetailInfo = (props) => {
 
  useEffect(() => {
     dispatch(loadToQuestion(id))
-
  },[])
 
   return (
