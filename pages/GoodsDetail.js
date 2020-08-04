@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 // import Icon from 'react-native-vector-icons/AntDesign';
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Colors from "react-native-svg";
+// import {Fonts} from "../src/fonts/Fonts";
 
 
 // css part
@@ -57,6 +58,7 @@ const RightDetailInfoOfUpper = styled.View`
 `;
 
 const TextOfUpperRight = styled.Text`
+  font-family: 'DancingScript-Regular';
   font-size: 20px;
   margin-top:15px;
 `;

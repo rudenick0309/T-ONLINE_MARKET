@@ -166,6 +166,7 @@ export const homeToLoad = () => {
 };
 
 export const loadGoodsList = (data) => {
+  console.log('In REDUCER, loadGoodsList, data : ', data);
   return {
     type: LOAD_GOODSLIST_REQUEST,
     data,
@@ -329,7 +330,7 @@ const reducer = (state = initialState, action) => {
 
     // load goods list
     case LOAD_GOODSLIST_REQUEST:
-      // console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
+      console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
       return {
         ...state,
         loadGoodsListLoading: true, // goods list
@@ -337,15 +338,15 @@ const reducer = (state = initialState, action) => {
         loadGoodsListError: null,
       };
     case LOAD_GOODSLIST_SUCCESS:
-      // console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action)
+      console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action)
       return {
         ...state,
         loadGoodsListLoading: false, // goods list
         loadGoodsListDone: true,
-        goodsList: action.data,
+        goodsList: [action.data, ...state.goodsList],
       };
     case LOAD_GOODSLIST_FAILURE:
-      // console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action)
+      console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action)
       return {
         ...state,
         loadGoodsListLoading: false,

@@ -40,8 +40,8 @@ function homeAPI() {
 }
 
 function goodsListAPI(data) {
-  // console.log("In SAGA, goodsListAPI, data : ", data)
-  return axios.get(`/goods/list?filter=${data}`)
+  console.log("In SAGA, goodsListAPI, data : ", data)
+  return axios.get(`/goods/list?keyword=${data}`)
 }
 
 function goodsInfoAPI(data) {
@@ -111,10 +111,10 @@ function* home() {
 
 // goodsList
 function* goodsList(action) {
-  // console.log("In SAGA, goodsList, action : ", action)
+  console.log("In SAGA, goodsList, action : ", action)
   try {
     const result = yield call(goodsListAPI, action.data); // TODO : max params?
-    // console.log("In SAGA, goodsList, result : ", result)
+    console.log("In SAGA, goodsList, result : ", result)
     yield put({
       type: LOAD_GOODSLIST_SUCCESS,
       data: result.data,
@@ -150,10 +150,10 @@ function* goodsInfo(action) {
 
 // review
 function* loadReview(action) {
-  console.log('In SAGA, loadReview, action : ', action);
+  // console.log('In SAGA, loadReview, action : ', action);
   try {
     const result = yield call(loadReviewAPI, action.id);
-    console.log('IN GOODS OF SAGA loadQnA, result : ', result);
+    // console.log('IN GOODS OF SAGA loadQnA, result : ', result);
     yield put({
       type: LOAD_REVIEW_SUCCESS,
       // TODO : data: result.data,
@@ -169,7 +169,7 @@ function* loadReview(action) {
 }
 
 function* addReview(action) {
-  console.log('In SAGA, addReview, action : ', action);
+  // console.log('In SAGA, addReview, action : ', action);
   try {
     // const result = yield call(addQnAAPI, action.text);
     // console.log('In SAGA of addQnA, result : ', result)
