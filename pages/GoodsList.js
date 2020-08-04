@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, View, SafeAreaView} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {loadGoodsList} from "../reducers/goods";
 
 // css part
-const Container = styled.ScrollView`
+const Container = styled.SafeAreaView`
   flex: 1;
   
 `;
@@ -22,18 +22,18 @@ const Container = styled.ScrollView`
 const InContainer = styled.TouchableOpacity`
   flex:1;
   
+  margin-top:30px;
 `;
 
 const Contents = styled.View`
-  height: 300px;
-  
+  height: 500px;
+  border-radius: 30px;
 `;
 
 const ImageView = styled.Image`
   flex:1;
-  
+  background-color:white;
   resize-mode: contain;
-  border: 2px solid yellow;
 `;
 
 const TextView = styled.Text`
