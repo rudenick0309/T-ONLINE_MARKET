@@ -1,21 +1,19 @@
-import axios from "axios";
-import {POST_RESIGN_REQUEST,
-    POST_RESIGN_SUCCESS,
-    POST_RESIGN_FAILURE,
-} from "../reducers/login";
-import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
+import axios from 'axios';
+import {
+  POST_RESIGN_REQUEST,
+  POST_RESIGN_SUCCESS,
+  POST_RESIGN_FAILURE,
+} from '../reducers/resign';
+import {all, fork, call, put, takeLatest, throttle} from 'redux-saga/effects';
 
 // 4
 function postResignAPI(data) {
-  // TODO: return axios.post("/post/", data)
+  return axios.post('/user/resign', data);
 }
-
-
-
 
 // 3
 function* postResign(action) {
-  console.log("postResign saga", action);
+  console.log('postResign saga', action);
   try {
     // TODO : const result = yield call(postLoginAPI, action.data);
     yield put({
@@ -42,29 +40,27 @@ function* postResign(action) {
 //   } catch (err) {
 //     type: POST_LOGOUT_FAILURE,
 //     console.log(err);,
-    
+
 //   }
 // }
 
-
 // 2
 function* watchPostResign() {
-  console.log("watchPostResign", postResign)
+  console.log('watchPostResign', postResign);
   yield takeLatest(POST_RESIGN_REQUEST, postResign);
 }
 
 // function* watchLogout() {
-  // console.log("watchPostlogout", postLogout)
+// console.log("watchPostlogout", postLogout)
 //   yield takeLatest(POST_LOGOUT_REQUEST, postLogout);
 // }
-
 
 // 1
 export default function* resignSaga() {
   yield all([
     fork(watchPostResign),
     // fork(watchLogout),
-    
+
     // fork(watchLoadReview),
     // fork(watchAddQnA),
     // fork(watchDeleteQnA),

@@ -30,7 +30,7 @@ import ViewPager from "@react-native-community/viewpager";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  padding: 0px 10px;
+  
 `;
 
 const Contents = styled.ScrollView`
@@ -43,7 +43,7 @@ const TextStyled = styled.Text`
 `;
 
 const ViewPagerStyled = styled(ViewPager)`
-  margin-top:15px;
+  
   height:300px;
 `;
 const TextPagerStyled = styled.Text`
@@ -54,19 +54,6 @@ const TextPagerStyled = styled.Text`
 const TouchablePagerStyled = styled.TouchableOpacity`
   
   height : 200px;
-`;
-
-const TextCssStyled = styled.Text`
-  font-weight: bold;
-  font-size: 30px;
-  padding-left:20px;
-  margin-top : 0px;
-`;
-const BestTextCssStyled = styled.Text`
-  margin-top : 30px;
-  padding-left:20px;
-  font-weight: bold;
-  font-size: 30px;
 `;
 
 // function part
@@ -89,67 +76,53 @@ const Home = (props) => {
   }, []);
 
   return (
-    <>
+
+    <Container>
+
       <Header props={props}/>
 
-      <Container>
-
-        <Contents>
-          {/*  TODO: <Search></Search>*/}
+      <Contents>
+        {/*  TODO: <Search></Search>*/}
 
 
-          <ViewPagerStyled initialPage={0}>
-            {recommendation && recommendation.map((el) => {
-              return (
-                <View key={el.id}>
-                  <TextCssStyled>
-                    MD PICK !
-                  </TextCssStyled>
-                  <RecommendedFlowerContainer
-                    onPress={() => {
-                      props.navigation.navigate("GoodsList", {id: el.id, filter: el.filter});
-                    }}
-                  >
-                    <RecommendedFlowerContents>
-                      <RecommendedFlowerImageView
-                        source={{uri: el.img}}
-                      />
-                      <RecommendedFlowerTextView>{el.title}</RecommendedFlowerTextView>
-                    </RecommendedFlowerContents>
-                  </RecommendedFlowerContainer>
-                </View>
-              );
-            })}
-          </ViewPagerStyled>
-
-          <BestTextCssStyled>Best Seller</BestTextCssStyled>
-
-          {best && best.map((el) => {
+        <ViewPagerStyled initialPage={0}>
+          {recommendation && recommendation.map( (el) => {
             return (
-              <BestFlowerContainer
-                onPress={() => {
-                  props.navigation.navigate("GoodsDetail", {id: el.id});
-                }}>
-
-                <BestFlowerContents>
-                  <BestFlowerImageView source={{uri: el.img}}></BestFlowerImageView>
-                  <View>
-                    <BestFlowerTextView>{el.title}</BestFlowerTextView>
-                    <BestFlowerTextView>{el.price}원</BestFlowerTextView>
-                  </View>
-                </BestFlowerContents>
-
-              </BestFlowerContainer>
-            );
+              <View key={el.id}>
+                <RecommendedFlowerContainer
+                  onPress={ () => {props.navigation.navigate("GoodsList", {id : el.id, filter:el.filter} )} }
+                >
+                  <RecommendedFlowerContents>
+                    <RecommendedFlowerImageView
+                      source={{ uri: el.img }}
+                    />
+                    <RecommendedFlowerTextView>{el.title}</RecommendedFlowerTextView>
+                  </RecommendedFlowerContents>
+                </RecommendedFlowerContainer>
+              </View>
+            )
           })}
+        </ViewPagerStyled>
 
-        </Contents>
+        <TextStyled >Best Seller</TextStyled>
 
+        {best && best.map((el) => {
+          return (
+            <BestFlowerContainer
+              onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>
+              <BestFlowerContents>
+                <BestFlowerImageView source={{ uri: el.img }}></BestFlowerImageView>
+                <BestFlowerTextView>{el.title}</BestFlowerTextView>
+              </BestFlowerContents>
+            </BestFlowerContainer>
+            )
+        })}
 
-      </Container>
+      </Contents>
+
       <Nav props={props}/>
-    </>
 
+    </Container>
   );
 };
 
