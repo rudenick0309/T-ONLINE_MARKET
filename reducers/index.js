@@ -1,10 +1,20 @@
-import {combineReducers} from "redux";
-import goods from './goods'
+import {combineReducers} from 'redux';
+import goods from './goods';
+import login from './login';
+import signup from './signup';
+import myinfochange from './myinfochange';
+import myinfocheck from './myinfocheck';
+import resign from './resign';
 // TODO : here is the other reducer import
 
 const rootReducer = combineReducers({
   goods,
+  login,
+  signup,
+  myinfochange,
+  myinfocheck,
+  resign,
   // TODO : here is the other reducer
 });
 
-export default rootReducer
+export default rootReducer;
