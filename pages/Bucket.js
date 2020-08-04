@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import shortid from "shortid";
 import {useDispatch, useSelector} from "react-redux";
 import {addToBucket} from "../reducers/goods";
+import BucketList from "../components/BucketList";
 
 // css part
 const Container = styled.SafeAreaView`
@@ -90,7 +91,11 @@ const Bucket = (props) => {
 
     <Container>
       <Header props={props}/>
-      <Contents><Text>장바구니 페이지</Text></Contents>
+      <Contents>
+        {reduxData && reduxData.map( (el) => {
+          return <BucketList key={shortid.generate()} data={el} props={props}/>
+        } )}
+      </Contents>
       <Nav props={props}/>
     </Container>
   );
