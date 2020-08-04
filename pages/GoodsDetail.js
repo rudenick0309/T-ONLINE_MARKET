@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {StyleSheet, Text, View, Button} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -8,9 +8,13 @@ import Payment from "./Payment";
 import Bucket from "./Bucket";
 import {useSelector, useDispatch} from "react-redux";
 import QnAList from "../components/QnAList";
-import {loadGoodsInfo} from "../reducers/goods";
+import {countDefault, countPlus, countMinus, loadGoodsInfo} from "../reducers/goods";
 import goods from "../sagas/goods";
 import QnADetailInfo from "../components/QnADetailInfo";
+import ReviewDetailInfo from "../components/ReviewDetailInfo";
+import AsyncStorage from "@react-native-community/async-storage";
+
+
 
 
 // css part
@@ -43,7 +47,6 @@ const ImageOfUpperLeft = styled.Image`
   width:100%;
   height: 100%;
   resize-mode: contain;
-  
 `;
 
 // upper right part
@@ -98,30 +101,32 @@ const QnAButtonDetailInfoOfBottom = styled.Button`
   border: 20px solid black;
 `;
 
-// review detail part
-const ReviewButtonDetailInfoOfBottom = styled.Button`
-  height: 50px;
-
-`;
-
-const ReviewDetailInfoOfBottom = styled.ScrollView`
-  flex: 1;
-  height: 500px;
-
-`;
-
+// // review detail part
+// const ReviewButtonDetailInfoOfBottom = styled.Button`
+//   height: 50px;
+//
+// `;
+//
+// const ReviewDetailInfoOfBottom = styled.ScrollView`
+//   flex: 1;
+//   height: 500px;
+//
+// `;
+//
 const ViewDetailInfoOfBottom = styled.View`
   flex: 1;
   flex-direction: row;
-
   justify-content:space-around;
-  
-  
 `;
 
-// TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
+const ViewRowStyled = styled.View`
+  flex-direction : row;
+`;
+
+
+// // TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
 const ButtonDetailInfoOfBottom = styled.Button`
-  
+
   border: 3px solid red;
 `;
 
@@ -139,12 +144,36 @@ const GoodsDetail = (props) => {
   const goods_img = goodsInfo?.goods_img;
   const goods_price = goodsInfo?.goods_price;
   const info_img = goodsInfo?.info_img;
+  const count = useSelector((state) => state.goods?.count);
+
+  const data = {
+    count : count,
+    id : id,
+    goods_name : goods_name,
+    goods_img :goods_img,
+    goods_price : goods_price,
+  }
+
+
+
+
+
+  console.log("In GOODSDETAIL, count : ", count);
 
   useEffect(() => {
     // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!
     // console.log("In GOODSDETAIL, final ID : ", id);
+    dispatch(countDefault());
     dispatch(loadGoodsInfo(id));
   }, []);
+
+  const onPressPlus = useCallback(() => {
+    dispatch(countPlus())
+  }, [])
+
+  const onPressMinus = useCallback(() => {
+    dispatch(countMinus())
+  }, [])
 
   return (
     <Container>
@@ -152,6 +181,7 @@ const GoodsDetail = (props) => {
 
       <Contents>
         <DetailInfoOfUpper>
+
           <LeftDetailInfoOfUpper>
             <ImageOfUpperLeft source={{uri: goods_img}}/>
           </LeftDetailInfoOfUpper>
@@ -160,18 +190,27 @@ const GoodsDetail = (props) => {
             <TextOfUpperRight>{goods_name}</TextOfUpperRight>
             <TextOfUpperRight>{goods_price}</TextOfUpperRight>
             <TextOfUpperRight>{"꽃말"}</TextOfUpperRight>
-            <Button
-              title={"구매하기"}
-              onPress={() => {
-                return props.navigation.navigate("Payment");
-              }}
-            />
-            <Button
-              title={"장바구니 담기"}
-              onPress={() => {
-                props.navigation.navigate("Bucket");
-              }}
-            />
+
+            <ViewRowStyled>
+              <Button title={"수량 감소"} onPress={onPressMinus}/>
+              <Text>{count}</Text>
+              <Button title={"수량 증가"} onPress={onPressPlus}/>
+            </ViewRowStyled>
+
+            <ViewRowStyled>
+              <Button
+                title={"구매하기"}
+                onPress={() => {
+                  return props.navigation.navigate("Payment");
+                }}
+              />
+              <Button
+                title={"장바구니 담기"}
+                onPress={() => {
+                  props.navigation.navigate("Bucket", data);
+                }}
+              />
+            </ViewRowStyled>
           </RightDetailInfoOfUpper>
         </DetailInfoOfUpper>
 
@@ -217,21 +256,14 @@ const GoodsDetail = (props) => {
             : userQnA
               ?
               (
-                <QnADetailInfo prop={props} />
+                <QnADetailInfo prop={props}/>
               )
               : review
                 ?
+
                 (
-                  <ReviewDetailInfoOfBottom>
-                    <Text>review part</Text>
-                    <ReviewButtonDetailInfoOfBottom
-                      title={"+"}
-                      onPress={() => {
-                        props.navigation.navigate("ReviewPlus");
-                      }}
-                    />
-                    {/*  TODO: Should this function(write a text) is a page? or component?*/}
-                  </ReviewDetailInfoOfBottom>
+                  <ReviewDetailInfo prop={props}/>
+
                 )
                 :
                 (
