@@ -41,7 +41,7 @@ function homeAPI() {
 
 function goodsListAPI(data) {
   // console.log("In SAGA, goodsListAPI, data : ", data)
-  return axios.get(`/goods/list?min=3000&max=40000&filter=${data}`)
+  return axios.get(`/goods/list?filter=${data}`)
 }
 
 function goodsInfoAPI(data) {
