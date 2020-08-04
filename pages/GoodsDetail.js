@@ -130,7 +130,6 @@ const ButtonDetailInfoOfBottom = styled.Button`
 
 const ButtonNavStyled = styled.Button`
   flex:1;
-  
 `
 
 // function part
