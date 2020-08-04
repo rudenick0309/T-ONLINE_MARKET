@@ -1,6 +1,6 @@
 
 import React, {useState, useCallback} from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {logoutAction} from '../reducers/login';
@@ -8,6 +8,8 @@ import Search from "../pages/Search";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
+// import { Fonts } from "../src/fonts/Fonts";
+// console.log('In Header, Fonts : ', Fonts);
 
 const HeaderView = styled.View`
   height: 50px;
@@ -33,7 +35,8 @@ const HeaderIconText = styled.Text`
 
 const HeaderCenterText = styled.Text`
   color: #464e46;
-  font-weight : bold;
+  font-family: "DancingScript-Regular";
+  letter-spacing: 5px;
   font-size: 23px;
 `;
 
@@ -43,7 +46,7 @@ const Header = ({props}) => {
   const loginDone = useSelector((state) => state.login?.loginDone);
 
   const dispatch = useDispatch();
-
+  // const font_rubik = Fonts["Rubik-Regular"]
   const onPressSignout = useCallback(() => {
     dispatch(logoutAction());
     alert('로그아웃 하셨습니다');
@@ -60,7 +63,7 @@ const Header = ({props}) => {
 
       </HeaderIcon>
 
-      <HeaderCenterText>T MARKET</HeaderCenterText>
+      <HeaderCenterText >T - MARKET</HeaderCenterText>
 
       {loginDone === true ? (
         <HeaderIcon onPress={onPressSignout}>
