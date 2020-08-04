@@ -4,7 +4,9 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import AsyncStorage from "@react-native-community/async-storage";
-import shortid from 'shortid';
+import shortid from "shortid";
+import {useDispatch, useSelector} from "react-redux";
+import {addToBucket} from "../reducers/goods";
 
 // css part
 const Container = styled.SafeAreaView`
@@ -21,70 +23,64 @@ const Contents = styled.ScrollView`
 // function part
 const Bucket = (props) => {
   console.log("In Bucket, props : ", props);
-  const [useParsedData, setUseParsedData] = useState('');
   const count = props.route.params.count;
   const goods_img = props.route.params.goods_img;
   const goods_name = props.route.params.goods_name;
   const goods_price = props.route.params.goods_price;
   const id = props.route.params.id.id;
+
+  const dispatch = useDispatch();
   const data = props.route.params;
   const strId = String(shortid.generate());
+  const [useParsedData, setUseParsedData] = useState("");
+  const reduxData = useSelector((state) => state.goods?.bucket);   // asyncStorage get data -> reduxData
 
-  console.log('In Bucket data : ', strId);
-  let strData = JSON.stringify(data);
 
-  const storeData = async ( value) => {
-    try {
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem(strId, jsonValue)
-      console.log('In Bucket, storing success')
-    } catch (e) {
-      // saving error
-      console.log(e);
-    }
+  if (typeof useParsedData === "object") {
+    console.log("In Bucket, IF state, useParsedData : ", useParsedData);   // asyncStorage get data
+    // dispatch(addToBucket(useParsedData));   //TODO : Why this dispatch sparkes the infinity-loop?
+    reduxData.unshift(useParsedData);
+    console.log("In Bucket, reduxData : ", reduxData);
   }
-  storeData(strData);
 
+  //   **********************************************************************   storing
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+
+      await AsyncStorage.setItem(strId, jsonValue);
+
+      let datas = AsyncStorage.getItem(strId);
+      if (datas !== null) {
+        console.log("In Bucket, storeData, datas : ", datas);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  storeData(data);
+
+
+  // **************************************************************************    get
   useEffect(() => {
+
     const getData = async () => {
-      console.log('In Bucket, getData : 1')
       try {
-        console.log('In Bucket, getData : 2')
-        const jsonValue = await AsyncStorage.getItem(strId)
-        console.log('In Bucket, getData : 3')
+        const jsonValue = await AsyncStorage.getItem(strId);
+
         if (jsonValue != null) {
-          console.log('In Bucket, getData : 4', jsonValue)
-          let parsedData = JSON.parse(jsonValue)
-          setUseParsedData(parsedData)
-          console.log('In Bucket, useParsedData : ', useParsedData)
+          let parsedData = JSON.parse(jsonValue);
+          setUseParsedData(parsedData);
         } else {
-          console.log('In Bucket, getData : error')
           return null;
         }
-      } catch(error) {
-        // error reading value
+      } catch (error) {
         console.log(error);
       }
-    }
+    };
     getData();
-  }, [])
-
-  useEffect(() => {
-    // storeData(strData);
-    console.log('In Bucket, useEffect, useParsdData : ', useParsedData);
   }, []);
 
-  // useEffect(() => {
-  //   // getData();
-  // }, [useParsedData])
-
-  // useEffect(() => {
-  //     setUseParsedData(JSON.parse(useParsedData));
-  // console.log('In Bucket, out, useEffect,  2 result : ', useParsedData);
-
-  // }, [useParsedData])
-
-  console.log('In Bucket, out, 1 useParsdData : ', useParsedData);
 
   // TODO : first, How add accmulated data in AsyncStorage at the same key? Array? just how?
   // TODO : second, What shall is the key?

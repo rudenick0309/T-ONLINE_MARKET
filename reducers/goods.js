@@ -9,6 +9,7 @@ export const initialState = {
   qna: [],  // load -> add 까지
   review: [],
   count : 1,
+  bucket : [],
 
 
   homeLoading: false, // home rendering
@@ -65,6 +66,12 @@ export const initialState = {
 // the part of action definition
 
 
+
+export const LOAD_BUCKET_REQUEST = "LOAD_BUCKET_REQUEST";           //  bucket, not yet patch in quantity
+export const ADD_BUCKET_REQUEST = "ADD_BUCKET_REQUEST";             //
+export const DELETE_BUCKET_REQUEST = "DELETE_BUCKET_REQUEST";
+
+
 export const COUNT_DEFAULT_REQUEST = "COUNT_DEFAULT_REQUEST";             // count
 export const COUNT_PLUS_REQUEST = "COUNT_PLUS_REQUEST";             // count
 export const COUNT_MINUS_REQUEST = "COUNT_MINUS_REQUEST";
@@ -119,6 +126,25 @@ export const PATCH_QUESTION_FAILURE = 'PATCH_QUESTION_FAILURE';
 
 // the part of action creator definition
 
+export const loadToBucket = () => {
+  return {
+    type: LOAD_BUCKET_REQUEST,
+  };
+};
+export const addToBucket = (data) => {
+  console.log('In REDUCER, addToBucket, data : ', data)
+  return {
+    type: ADD_BUCKET_REQUEST,
+    data,
+  };
+};
+export const deleteToBucket = () => {
+  return {
+    type: DELETE_BUCKET_REQUEST,
+  };
+};
+
+// count
 export const countDefault = () => {
   return {
     type: COUNT_DEFAULT_REQUEST,
@@ -236,6 +262,26 @@ export const patchToQuestion = (text) => {
 // TODO : First, test code in the situation what there are no 'immer code', Second, apply immer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+
+
+    // bucket
+    case LOAD_BUCKET_REQUEST :    // What is the LOAD BUCKET REQUEST? When i should this? think.
+      return {
+        ...state,
+      }
+
+    case ADD_BUCKET_REQUEST :
+      console.log('In REDUCER, ADD_BUCKET_REQUEST, action : ', action)
+      return {
+        ...state,
+        // bucket: []
+      }
+    case DELETE_BUCKET_REQUEST :
+      console.log('In REDUCER, DELETE_BUCKET_REQUEST, action : ', action)
+      return {
+        ...state,
+        // count: state.count - 1,
+      }
 
 
     // count calculate
