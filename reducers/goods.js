@@ -2,16 +2,19 @@
 
 // initialState part
 export const initialState = {
-  home: [],  // change
+  home: [], // change
   goodsInfo: [], // change
   goodsList: [],
+
   qna: [],  // load -> add 까지
   review: [],
   count : 1,
 
-  homeLoading: false,     // home rendering
+
+  homeLoading: false, // home rendering
   homeQnADone: false,
   homeQnAError: null,
+
 
   loadReviewLoading : false,   // review read
   loadReviewDone: false,
@@ -33,33 +36,34 @@ export const initialState = {
   loadGoodsListDone: false,
   loadGoodsListError: null,
 
-  loadGoodsInfoLoading: true,     // goods info
+  loadGoodsInfoLoading: true, // goods info
   loadGoodsInfoDone: false,
   loadGoodsInfoError: null,
+
 
   loadQnALoading: false,    // QnA read
   loadQnADone: false,
   loadQnAError: null,
 
-  addQnALoading: false,    // QnA create
+  addQnALoading: false, // QnA create
   addQnADone: false,
   addQnAError: null,
 
-  deleteQnALoading: false,    // QnA delete
+  deleteQnALoading: false, // QnA delete
   deleteQnADone: false,
   deleteQnAError: null,
 
-  patchQnALoading: false,    // QnA update
+  patchQnALoading: false, // QnA update
   patchQnADone: false,
   patchQnAError: null,
   //TODO: needs other state
 
   // the states saved and accmulated
-
 };
 // console.log("In REDUCERS, initialState : ", initialState);
 
 // the part of action definition
+
 
 export const COUNT_DEFAULT_REQUEST = "COUNT_DEFAULT_REQUEST";             // count
 export const COUNT_PLUS_REQUEST = "COUNT_PLUS_REQUEST";             // count
@@ -89,26 +93,29 @@ export const LOAD_GOODSLIST_REQUEST = "LOAD_GOODSLIST_REQUEST";    // goods Info
 export const LOAD_GOODSLIST_SUCCESS = "LOAD_GOODSLIST_SUCCESS";
 export const LOAD_GOODSLIST_FAILURE = "LOAD_GOODSLIST_REQUEST";
 
-export const LOAD_GOODSINFO_REQUEST = "LOAD_GOODSINFO_REQUEST";    // goods Info
-export const LOAD_GOODSINFO_SUCCESS = "LOAD_GOODSINFO_SUCCESS";
-export const LOAD_GOODSINFO_FAILURE = "LOAD_GOODSINFO_FAILURE";
+export const LOAD_GOODSLIST_REQUEST = 'LOAD_GOODSLIST_REQUEST'; // goods Info
+export const LOAD_GOODSLIST_SUCCESS = 'LOAD_GOODSLIST_SUCCESS';
+export const LOAD_GOODSLIST_FAILURE = 'LOAD_GOODSLIST_REQUEST';
 
-export const LOAD_QUESTION_REQUEST = "LOAD_QUESTION_REQUEST";     // qna  load
-export const LOAD_QUESTION_SUCCESS = "LOAD_QUESTION_SUCCESS";
-export const LOAD_QUESTION_FAILURE = "LOAD_QUESTION_FAILURE";
+export const LOAD_GOODSINFO_REQUEST = 'LOAD_GOODSINFO_REQUEST'; // goods Info
+export const LOAD_GOODSINFO_SUCCESS = 'LOAD_GOODSINFO_SUCCESS';
+export const LOAD_GOODSINFO_FAILURE = 'LOAD_GOODSINFO_FAILURE';
 
-export const ADD_QUESTION_REQUEST = "ADD_QUESTION_REQUEST";     // qna add
-export const ADD_QUESTION_SUCCESS = "ADD_QUESTION_SUCCESS";
-export const ADD_QUESTION_FAILURE = "ADD_QUESTION_FAILURE";
+export const LOAD_QUESTION_REQUEST = 'LOAD_QUESTION_REQUEST'; // qna  load
+export const LOAD_QUESTION_SUCCESS = 'LOAD_QUESTION_SUCCESS';
+export const LOAD_QUESTION_FAILURE = 'LOAD_QUESTION_FAILURE';
 
-export const DELETE_QUESTION_REQUEST = "DELETE_QUESTION_REQUEST";   //qna  delete
-export const DELETE_QUESTION_SUCCESS = "DELETE_QUESTION_SUCCESS";
-export const DELETE_QUESTION_FAILURE = "DELETE_QUESTION_FAILURE";
+export const ADD_QUESTION_REQUEST = 'ADD_QUESTION_REQUEST'; // qna add
+export const ADD_QUESTION_SUCCESS = 'ADD_QUESTION_SUCCESS';
+export const ADD_QUESTION_FAILURE = 'ADD_QUESTION_FAILURE';
 
-export const PATCH_QUESTION_REQUEST = "PATCH_QUESTION_REQUEST";       // qna patch
-export const PATCH_QUESTION_SUCCESS = "PATCH_QUESTION_SUCCESS";
-export const PATCH_QUESTION_FAILURE = "PATCH_QUESTION_FAILURE";
+export const DELETE_QUESTION_REQUEST = 'DELETE_QUESTION_REQUEST'; //qna  delete
+export const DELETE_QUESTION_SUCCESS = 'DELETE_QUESTION_SUCCESS';
+export const DELETE_QUESTION_FAILURE = 'DELETE_QUESTION_FAILURE';
 
+export const PATCH_QUESTION_REQUEST = 'PATCH_QUESTION_REQUEST'; // qna patch
+export const PATCH_QUESTION_SUCCESS = 'PATCH_QUESTION_SUCCESS';
+export const PATCH_QUESTION_FAILURE = 'PATCH_QUESTION_FAILURE';
 
 // the part of action creator definition
 
@@ -199,8 +206,9 @@ export const loadToQuestion = (id) => {
   };
 };
 
-export const addToQuestion = (text) => { // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
-  console.log("In REDUCER, GOODS , text : ", text);
+export const addToQuestion = (text) => {
+  // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
+  console.log('In REDUCER, GOODS , text : ', text);
   return {
     type: ADD_QUESTION_REQUEST,
     text,
@@ -215,7 +223,8 @@ export const deleteToQuestion = (id) => {
   };
 };
 
-export const patchToQuestion = (text) => { // TODO: advanced
+export const patchToQuestion = (text) => {
+  // TODO: advanced
   return {
     type: PATCH_QUESTION_REQUEST,
     // id,   //TODO : Note , action creators takes a one parameter!
@@ -227,6 +236,7 @@ export const patchToQuestion = (text) => { // TODO: advanced
 // TODO : First, test code in the situation what there are no 'immer code', Second, apply immer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+
 
     // count calculate
     case COUNT_DEFAULT_REQUEST :
@@ -250,12 +260,13 @@ const reducer = (state = initialState, action) => {
         count: state.count - 1,
       }
 
+
     // home rendering
     case HOME_REQUEST:
       // console.log("In REDUX, HOME_REQUEST, executes")
       return {
         ...state,
-        homeLoading: true,     // home rendering
+        homeLoading: true, // home rendering
         homeQnADone: false,
         homeQnAError: null,
       };
@@ -263,14 +274,14 @@ const reducer = (state = initialState, action) => {
       // console.log("In REDUX, HOME_SUCCESS, action : ", action)
       return {
         ...state,
-        homeLoading: false,     // home rendering
+        homeLoading: false, // home rendering
         homeQnADone: true,
         home: action.data,
       };
     case HOME_FAILURE:
       return {
         ...state,
-        homeLoading: false,     // home rendering
+        homeLoading: false, // home rendering
         homeQnAError: action.error,
       };
 
@@ -281,7 +292,7 @@ const reducer = (state = initialState, action) => {
       // console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
       return {
         ...state,
-        loadGoodsListLoading: true,     // goods list
+        loadGoodsListLoading: true, // goods list
         loadGoodsListDone: false,
         loadGoodsListError: null,
       };
@@ -289,7 +300,7 @@ const reducer = (state = initialState, action) => {
       // console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action)
       return {
         ...state,
-        loadGoodsListLoading: false,     // goods list
+        loadGoodsListLoading: false, // goods list
         loadGoodsListDone: true,
         goodsList: action.data,
       };
@@ -306,7 +317,7 @@ const reducer = (state = initialState, action) => {
       // console.log("In REDUX, LOAD_GOODSINFO_REQUEST, executes, action : ", action)
       return {
         ...state,
-        loadGoodsInfoLoading: true,     // goods info
+        loadGoodsInfoLoading: true, // goods info
         loadGoodsInfoDone: false,
         loadGoodsInfoError: null,
       };
@@ -314,7 +325,7 @@ const reducer = (state = initialState, action) => {
       // console.log("In REDUX, LOAD_GOODSINFO_SUCCESS, action : ", action)
       return {
         ...state,
-        loadGoodsInfoLoading: false,     // goods info
+        loadGoodsInfoLoading: false, // goods info
         loadGoodsInfoDone: true,
         goodsInfo: action.data,
       };
@@ -322,7 +333,7 @@ const reducer = (state = initialState, action) => {
       // console.log("In REDUX, LOAD_GOODSINFO_FAILURE, ")
       return {
         ...state,
-        homeLoading: false,     // home rendering
+        homeLoading: false, // home rendering
         homeQnAError: action.error,
       };
 
@@ -472,7 +483,7 @@ const reducer = (state = initialState, action) => {
 
     // add question
     case ADD_QUESTION_REQUEST:
-      console.log("In REDUCERS OF ADD_QUESTION_REQUEST, action : ", action);
+      console.log('In REDUCERS OF ADD_QUESTION_REQUEST, action : ', action);
       return {
         ...state,
         addQnALoading: true,
@@ -480,7 +491,7 @@ const reducer = (state = initialState, action) => {
         addQnAError: null,
       };
     case ADD_QUESTION_SUCCESS:
-      console.log("In REDUCERS OF ADD_QUESTION_SUCCESS, action : ", action);
+      console.log('In REDUCERS OF ADD_QUESTION_SUCCESS, action : ', action);
       return {
         ...state,
         addQnALoading: false,
@@ -489,7 +500,7 @@ const reducer = (state = initialState, action) => {
         // TODO: in immer ->  qna: state.qna.push(action.data),
       };
     case ADD_QUESTION_FAILURE:
-      console.log("In REDUCERS OF ADD_QUESTION_FAILURE, action : ", action);
+      console.log('In REDUCERS OF ADD_QUESTION_FAILURE, action : ', action);
       return {
         ...state,
         addQnALoading: true,
@@ -502,7 +513,7 @@ const reducer = (state = initialState, action) => {
       // console.log('In reducers, DELETE REQUEST')
       return {
         ...state,
-        deleteQnALoading: true,    // QnA Plus
+        deleteQnALoading: true, // QnA Plus
         deleteQnADone: false,
         deleteQnAError: null,
       };
@@ -547,7 +558,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         patchQnALoading: false,
         patchQnADone: true,
-        qna: forehand.concat(action.data, backhand)
+        qna: forehand.concat(action.data, backhand),
       };
     case PATCH_QUESTION_FAILURE:
       // console.log("In reducers, PATCH FAILURE");

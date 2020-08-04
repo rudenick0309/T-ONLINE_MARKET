@@ -1,21 +1,19 @@
-import axios from "axios";
-import {POST_EDITINFO_REQUEST,
-    POST_EDITINFO_SUCCESS,
-    POST_EDITINFO_FAILURE,
-} from "../reducers/myinfochange";
-import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
+import axios from 'axios';
+import {
+  POST_EDITINFO_REQUEST,
+  POST_EDITINFO_SUCCESS,
+  POST_EDITINFO_FAILURE,
+} from '../reducers/myinfochange';
+import {all, fork, call, put, takeLatest, throttle} from 'redux-saga/effects';
 
 // 4
 function postEditInfoAPI(data) {
-  // TODO: return axios.post("/post/", data)
+  return axios.post('/user/edituserinfo', data);
 }
-
-
-
 
 // 3
 function* postEditInfo(action) {
-  console.log("postedit saga", action);
+  console.log('postedit saga', action);
   try {
     // TODO : const result = yield call(postLoginAPI, action.data);
     yield put({
@@ -32,26 +30,23 @@ function* postEditInfo(action) {
   }
 }
 
-
-
 // 2
 function* watchPostEditInfo() {
-  console.log("watchPostEditInfo", postEditInfo)
+  console.log('watchPostEditInfo', postEditInfo);
   yield takeLatest(POST_EDITINFO_REQUEST, postEditInfo);
 }
 
 // function* watchLogout() {
-  // console.log("watchPostlogout", postLogout)
+// console.log("watchPostlogout", postLogout)
 //   yield takeLatest(POST_LOGOUT_REQUEST, postLogout);
 // }
-
 
 // 1
 export default function* EditInfoSaga() {
   yield all([
     fork(watchPostEditInfo),
     // fork(watchLogout),
-    
+
     // fork(watchLoadReview),
     // fork(watchAddQnA),
     // fork(watchDeleteQnA),

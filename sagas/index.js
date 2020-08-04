@@ -9,7 +9,8 @@ import resignSaga from './resignsaga';
 import infoCheckSaga from './infocheck';
 // TODO :  import userSaga from './user'   -> later
 
-axios.defaults.baseURL = 'http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000';  //TODO: backend port check
+axios.defaults.baseURL =
+  'http://ec2-15-164-219-204.ap-northeast-2.compute.amazonaws.com:4000'; //TODO: backend port check
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
@@ -19,6 +20,6 @@ export default function* rootSaga() {
     fork(signupSaga),
     fork(EditInfoSaga),
     fork(resignSaga),
-    fork(infoCheckSaga)
-  ])
+    fork(infoCheckSaga),
+  ]);
 }
