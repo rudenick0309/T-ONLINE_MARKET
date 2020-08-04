@@ -30,16 +30,14 @@ const Contents = styled.ScrollView`
 
 const DetailInfoOfUpper = styled.View`
   flex: 1;
-  
-  flex-direction: row;
 `;
 
 // upper-left part
 const LeftDetailInfoOfUpper = styled.View`
   flex: 1;
-  width: 200px;
-  height: 200px;
-  
+  width: 100%;
+  height: 400px;
+  border : 3px solid red;
 `;
 
 const ImageOfUpperLeft = styled.Image`
@@ -124,6 +122,7 @@ const ViewRowStyled = styled.View`
 `;
 
 
+
 // // TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
 const ButtonDetailInfoOfBottom = styled.Button`
 
@@ -188,6 +187,9 @@ const GoodsDetail = (props) => {
           </LeftDetailInfoOfUpper>
 
           <RightDetailInfoOfUpper>
+            <View>
+
+            </View>
             <TextOfUpperRight>{goods_name}</TextOfUpperRight>
             <TextOfUpperRight>{goods_price}</TextOfUpperRight>
             <TextOfUpperRight>{"꽃말"}</TextOfUpperRight>
