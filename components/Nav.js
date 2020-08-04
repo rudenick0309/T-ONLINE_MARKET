@@ -7,19 +7,37 @@ const NavView = styled.View`
   height: 50px;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 0px;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #05dfd7;
 `
 const NavIcon = styled.TouchableOpacity`
+  justify-content:center;
+  align-items:center;
   width : 50px;
   height : 50px;
-  border : 3px solid blue;
+`
+
+const NavText = styled.Text`
+  font-weight : bold;
+  font-size: 15px;
+  color: white;
+`;
+
+const NavCenterText = styled.Text`
+  font-weight : bold;
+  width: 70px;
+  font-size: 20px;
+  color: white;
 `
 
 const Nav = ({props}) => {
   return (
     <NavView>
-      <NavIcon onPress={ () => {props.navigation.navigate('Home')} } ><Text>Home Icon</Text></NavIcon>
-      <NavIcon onPress={ () => {props.navigation.navigate('Mypage')} }><Text>My page Icon</Text></NavIcon>
-      <NavIcon onPress={ () => {props.navigation.goBack()}} ><Text>back</Text></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.goBack()}} ><NavText>BACK</NavText></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.navigate('SignIn')} } ><NavCenterText>SignIn</NavCenterText></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.navigate('Mypage')} }><NavText>MY PAGE</NavText></NavIcon>
     </NavView>
   )
 }
