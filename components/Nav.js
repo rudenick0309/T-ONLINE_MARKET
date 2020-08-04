@@ -10,7 +10,7 @@ const NavView = styled.View`
   margin-bottom: 0px;
   align-items: center;
   border-radius: 50px;
-  background-color: #05dfd7;
+  background-color: #f5efef;
 `
 const NavIcon = styled.TouchableOpacity`
   justify-content:center;
@@ -22,21 +22,21 @@ const NavIcon = styled.TouchableOpacity`
 const NavText = styled.Text`
   font-weight : bold;
   font-size: 15px;
-  color: white;
+  color: #464e46;
 `;
 
 const NavCenterText = styled.Text`
   font-weight : bold;
   width: 70px;
   font-size: 20px;
-  color: white;
+  color: #464e46;
 `
 
 const Nav = ({props}) => {
   return (
     <NavView>
       <NavIcon onPress={ () => {props.navigation.goBack()}} ><NavText>BACK</NavText></NavIcon>
-      <NavIcon onPress={ () => {props.navigation.navigate('SignIn')} } ><NavCenterText>SignIn</NavCenterText></NavIcon>
+      <NavIcon onPress={ () => {props.navigation.navigate('LOGIN')} } ><NavCenterText>SignIn</NavCenterText></NavIcon>
       <NavIcon onPress={ () => {props.navigation.navigate('Mypage')} }><NavText>MY PAGE</NavText></NavIcon>
     </NavView>
   )
