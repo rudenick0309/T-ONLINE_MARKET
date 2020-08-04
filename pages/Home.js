@@ -52,9 +52,22 @@ const TextPagerStyled = styled.Text`
   font-size: 50px;
 `;
 const TouchablePagerStyled = styled.TouchableOpacity`
-  
   height : 200px;
 `;
+
+const RecommendTextStyled = styled.Text`
+  font-weight:bold;
+  font-size:25px;
+  color: #464e46;
+  margin: 20px 10px;
+`
+
+const BestTextStyled = styled.Text`
+  font-weight:bold;
+  font-size:25px;
+  color: #464e46;
+  margin: 30px 10px;
+`
 
 // function part
 const Home = (props) => {
@@ -64,15 +77,10 @@ const Home = (props) => {
   const recommendation = useSelector((state) => state.goods.home?.recommendation);
   const best = useSelector((state) => state.goods.home?.best);
   console.log("In HOME COMPONENT, home : ", home);
-  // console.log("In HOME COMPONENT, recommendation : ", recommendation);
-  // console.log("In HOME COMPONENT, best : ", best);
+
 
   useEffect(() => {
     dispatch(homeToLoad());
-    // console.log("In HOME, useEffect, home : ", home);
-    // recommendation = home.recommendation;
-    // best = home.best;
-
   }, []);
 
   return (
@@ -84,6 +92,7 @@ const Home = (props) => {
       <Contents>
         {/*  TODO: <Search></Search>*/}
 
+        <RecommendTextStyled>MD PICK's</RecommendTextStyled>
 
         <ViewPagerStyled initialPage={0}>
           {recommendation && recommendation.map( (el) => {
@@ -104,7 +113,7 @@ const Home = (props) => {
           })}
         </ViewPagerStyled>
 
-        <TextStyled >Best Seller</TextStyled>
+        <BestTextStyled>Best Seller</BestTextStyled>
 
         {best && best.map((el) => {
           return (
