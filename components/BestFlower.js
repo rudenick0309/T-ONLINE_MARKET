@@ -17,16 +17,19 @@ export const BestFlowerContainer = styled.TouchableOpacity`
 
 export const BestFlowerContents = styled.ScrollView`
   flex: 1;
-  
+  background-color:white;
+  border-radius: 30px;
+  margin-bottom: 15px;
 `;
 
 export const BestFlowerImageView = styled.Image`
   flex:1
   height: 160px;
   resize-mode: contain;
-  
 `;
 
 export const BestFlowerTextView = styled.Text`
-  color : red;
+  color : #222831;
+  padding-left : 20px;
+  margin-bottom: 5px;
 `;

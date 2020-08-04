@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useRef, useState, useEffect, useCallback} from "react";
 import {StyleSheet, Text, View, Button} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -8,13 +8,11 @@ import Payment from "./Payment";
 import Bucket from "./Bucket";
 import {useSelector, useDispatch} from "react-redux";
 import QnAList from "../components/QnAList";
-import {countDefault, countPlus, countMinus, loadGoodsInfo, addToBucket} from "../reducers/goods";
+import {countDefault, countPlus, countMinus, loadGoodsInfo} from "../reducers/goods";
 import goods from "../sagas/goods";
 import QnADetailInfo from "../components/QnADetailInfo";
 import ReviewDetailInfo from "../components/ReviewDetailInfo";
 import AsyncStorage from "@react-native-community/async-storage";
-
-
 
 
 // css part
@@ -31,15 +29,13 @@ const Contents = styled.ScrollView`
 const DetailInfoOfUpper = styled.View`
   flex: 1;
   
-  flex-direction: row;
 `;
 
 // upper-left part
 const LeftDetailInfoOfUpper = styled.View`
   flex: 1;
-  width: 200px;
-  height: 200px;
-  
+  width: 100%;
+  height: 450px;
 `;
 
 const ImageOfUpperLeft = styled.Image`
@@ -59,21 +55,19 @@ const RightDetailInfoOfUpper = styled.View`
 
 const TextOfUpperRight = styled.Text`
   flex: 1;
- 
+  font-size: 20px;
 `;
 
 
 // bottom components
 const DetailInfoOfBottom = styled.View`
   flex: 1;
-  
 `;
 
 // info detail part
 const InfoDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
-  
 `;
 
 const ImageInfoOfBottom = styled.Image`
@@ -123,12 +117,21 @@ const ViewRowStyled = styled.View`
   flex-direction : row;
 `;
 
-
-// // TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
-const ButtonDetailInfoOfBottom = styled.Button`
-
+const ViewNavRowStyled = styled.View`
+  
+  width: 100%;
   border: 3px solid red;
 `;
+
+// TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
+const ButtonDetailInfoOfBottom = styled.Button`
+  border: 3px solid red;
+`;
+
+const ButtonNavStyled = styled.Button`
+  flex:1;
+  
+`
 
 // function part
 const GoodsDetail = (props) => {
@@ -145,18 +148,22 @@ const GoodsDetail = (props) => {
   const goods_price = goodsInfo?.goods_price;
   const info_img = goodsInfo?.info_img;
   const count = useSelector((state) => state.goods?.count);
+  const scrollRef = useRef();
+
 
   const data = {
-    count : count,
-    id : id,
-    goods_name : goods_name,
-    goods_img :goods_img,
-    goods_price : goods_price,
-  }
+    count: count,
+    id: id,
+    goods_name: goods_name,
+    goods_img: goods_img,
+    goods_price: goods_price,
+  };
 
-
-
-
+  // const onPressInfoHeight = (number) => {
+  //   scrollRef.current.ScrollTo({
+  //     y: (100 * number),
+  //     animated: true,
+  // })};
 
   console.log("In GOODSDETAIL, count : ", count);
 
@@ -165,16 +172,15 @@ const GoodsDetail = (props) => {
     // console.log("In GOODSDETAIL, final ID : ", id);
     dispatch(countDefault());
     dispatch(loadGoodsInfo(id));
-    // dispatch(addToBucket(data))
   }, []);
 
   const onPressPlus = useCallback(() => {
-    dispatch(countPlus())
-  }, [])
+    dispatch(countPlus());
+  }, []);
 
   const onPressMinus = useCallback(() => {
-    dispatch(countMinus())
-  }, [])
+    dispatch(countMinus());
+  }, []);
 
   return (
     <Container>
@@ -198,20 +204,20 @@ const GoodsDetail = (props) => {
               <Button title={"수량 증가"} onPress={onPressPlus}/>
             </ViewRowStyled>
 
-            <ViewRowStyled>
-              <Button
-                title={"구매하기"}
-                onPress={() => {
-                  return props.navigation.navigate("Payment");
-                }}
-              />
-              <Button
-                title={"장바구니 담기"}
-                onPress={() => {
-                  props.navigation.navigate("Bucket", data)
-                }}
-              />
-            </ViewRowStyled>
+            {/*<ViewRowStyled>*/}
+            {/*  <Button*/}
+            {/*    title={"구매하기"}*/}
+            {/*    onPress={() => {*/}
+            {/*      return props.navigation.navigate("Payment");*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*  <Button*/}
+            {/*    title={"장바구니 담기"}*/}
+            {/*    onPress={() => {*/}
+            {/*      props.navigation.navigate("Bucket", data);*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*</ViewRowStyled>*/}
           </RightDetailInfoOfUpper>
         </DetailInfoOfUpper>
 
@@ -247,6 +253,15 @@ const GoodsDetail = (props) => {
             />
           </ViewDetailInfoOfBottom>
 
+          {/*ref - scroollTo*/}
+          {/*<InfoDetailInfoOfBottom>*/}
+          {/*  <ImageInfoOfBottom source={{uri: info_img}}/>*/}
+          {/*</InfoDetailInfoOfBottom>*/}
+
+          {/*<QnADetailInfo prop={props}/>*/}
+
+          {/*<ReviewDetailInfo prop={props}/>*/}
+
           {info
             ?
             (
@@ -261,10 +276,8 @@ const GoodsDetail = (props) => {
               )
               : review
                 ?
-
                 (
                   <ReviewDetailInfo prop={props}/>
-
                 )
                 :
                 (
@@ -274,7 +287,27 @@ const GoodsDetail = (props) => {
 
       </Contents>
 
-      <Nav props={props}/>
+      {!info || !userQnA || !review
+        ?
+        (
+          <ViewNavRowStyled>
+            <ButtonNavStyled
+              title={"구매하기"}
+              onPress={() => {
+                return props.navigation.navigate("Payment");
+              }}
+            />
+            <Button
+              title={"장바구니 담기"}
+              onPress={() => {
+                props.navigation.navigate("Bucket", data);
+              }}
+            />
+          </ViewNavRowStyled>
+        )
+        : (<Nav props={props}/>)
+      }
+
     </Container>
   );
 };

@@ -19,7 +19,7 @@ const Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: "#ffffff",
+    background: "#fbf5f5",
   },
 };
 
@@ -37,10 +37,3 @@ const App: () => React$Node = () => {
 
 export default App;
 
-// import {
-//   Header,
-//   LearnMoreLinks,
-//   Colors,
-//   DebugInstructions,
-//   ReloadInstructions,
-// } from 'react-native/Libraries/NewAppScreen';
