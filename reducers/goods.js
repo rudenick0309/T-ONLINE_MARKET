@@ -269,7 +269,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
       }
-
     case ADD_BUCKET_REQUEST :
       console.log('In REDUCER, ADD_BUCKET_REQUEST, action : ', action)
       return {
@@ -282,7 +281,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         // count: state.count - 1,
       }
-
 
     // count calculate
     case COUNT_DEFAULT_REQUEST :
@@ -618,5 +616,5 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
-
+//
 export default reducer;
