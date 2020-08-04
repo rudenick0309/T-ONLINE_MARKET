@@ -16,12 +16,10 @@ import {loadGoodsList} from "../reducers/goods";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  
 `;
 
 const InContainer = styled.TouchableOpacity`
   flex:1;
-  
   margin-top:30px;
 `;
 
@@ -37,7 +35,7 @@ const ImageView = styled.Image`
 `;
 
 const TextView = styled.Text`
-  color : red;
+  color : #464e46;
 `;
 
 // function part
@@ -52,7 +50,6 @@ const GoodsList = (props) => {
   useEffect(() => {
     // TODO: axios to list
     dispatch(loadGoodsList(filterValue));
-
   }, []);
 
   return (
