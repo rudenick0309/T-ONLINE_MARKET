@@ -40,9 +40,22 @@ function homeAPI() {
 }
 
 function goodsListAPI(data) {
-  console.log("In SAGA, goodsListAPI, data : ", data)
-  return axios.get(`/goods/list?keyword=${data}`)
+  console.log("In SAGA, goodsListAPI, data : ", data)     //recommendation
+  for (let key in data) {
+    console.log('In SAGA, goodsListAPI, key : ', key, '/', typeof data[key]);
+    if ( key === 'keyword') {
+      return axios.get(`/goods/list?keyword=${data[key]}`)
+    } else if (key ==='filter' ) {
+      return axios.get(`/goods/list?filter=${data[key]}`)
+    }
+  }
 }
+
+// function searchListAPI(data) {
+//   console.log("In SAGA, searchListAPI, data : ", data)    // search
+//   return axios.get(`/goods/list?keyword=${data}`)
+// }
+
 
 function goodsInfoAPI(data) {
   console.log("In SAGA, goodsInfoAPI, data : ", data)
@@ -109,11 +122,30 @@ function* home() {
   }
 }
 
+// // searchList
+// function* searchList(action) {
+//   console.log("In SAGA, goodsList, action : ", action)
+//   try {
+//     const result = yield call(goodsListAPI, action.data); // TODO : max params?
+//     console.log("In SAGA, goodsList, result : ", result)
+//     yield put({
+//       type: LOAD_GOODSLIST_SUCCESS,
+//       data: result.data,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     yield put({
+//       type: LOAD_GOODSLIST_FAILURE,
+//       error: err.response.data,
+//     });
+//   }
+// }
+
 // goodsList
 function* goodsList(action) {
   console.log("In SAGA, goodsList, action : ", action)
   try {
-    const result = yield call(goodsListAPI, action.data); // TODO : max params?
+    const result = yield call(goodsListAPI, action.actualData); // TODO : max params?
     console.log("In SAGA, goodsList, result : ", result)
     yield put({
       type: LOAD_GOODSLIST_SUCCESS,
@@ -123,7 +155,7 @@ function* goodsList(action) {
     console.log(err);
     yield put({
       type: LOAD_GOODSLIST_FAILURE,
-      error: err.response.data,
+      error: err.data,
     });
   }
 }
