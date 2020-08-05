@@ -4,6 +4,7 @@ import QnAList from "./QnAList";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {LOAD_QUESTION_REQUEST, loadToQuestion} from "../reducers/goods";
+import shortId from 'shortid'
 
 // qna detail part
 const QnADetailInfoOfBottom = styled.ScrollView`
@@ -33,10 +34,10 @@ const QnADetailInfo = (props) => {
 
   var qna = useSelector(state => state.goods?.qna);
   console.log('In QnADetailInfo, qna : ', qna);
-  if (loadQnAError) {
-    console.log('In QnADetailInfo At IF, id : ', id)  //id : 9,
-    qna = [];
-  }
+  // if (loadQnAError) {
+  //   console.log('In QnADetailInfo At IF, id : ', id)  //id : 9,
+  //   qna = [];
+  // }
 
  useEffect(() => {
     dispatch(loadToQuestion(id))
@@ -56,7 +57,7 @@ const QnADetailInfo = (props) => {
       { qna && qna.length === 0
         ? <Text>등록된 QnA가 없습니다</Text>
         : (qna.map(el => {
-          return <QnAList key={el.id} list={el} prop={props}/>;
+          return <QnAList key={shortId.generate()} list={el} prop={props}/>;
         }))
       }
     </QnADetailInfoOfBottom>
