@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {LOAD_QUESTION_REQUEST, loadToQuestion, loadToReview} from "../reducers/goods";
 import ReviewPlus from "../pages/ReviewPlus";
 import ReviewList from "./ReviewList";
+import shortId from 'shortid'
 
 // review detail part
 const ReviewDetailInfoOfBottom = styled.ScrollView`
@@ -57,7 +58,7 @@ const ReviewDetailInfo = (props) => {
       { review.length === 0
         ? <Text>등록된 Review가 없습니다</Text>
         : (review.map(el => {
-          return <ReviewList key={el.id} list={el} prop={props}/>;
+          return <ReviewList key={shortId.generate()} list={el} prop={props}/>;
         }))
       }
     </ReviewDetailInfoOfBottom>

@@ -32,7 +32,7 @@ const StyledTextInput = styled.TextInput`
   align-items: center;
   width:70%;
   margin-bottom: 20px;
- 
+  ime-mode:active;
 `;
 
 const StyledTouchableOpacity = styled.TouchableOpacity`

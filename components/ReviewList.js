@@ -82,7 +82,7 @@ const ReviewList = (props) => {
 
   const deleteReview = useCallback(() => {
     // console.log("In deleteQnA", id);
-    // dispatch(deleteToQuestion(id));
+    dispatch(deleteToQuestion(id));
   }, []);
 
   return (

@@ -199,7 +199,7 @@ export const loadToReview = (id) => {
 };
 
 export const addToReview = (text) => {
-  console.log("In REDUCER, addToReview, id : ", id);
+  console.log("In REDUCER, addToReview, text : ", text);
   return {
     type: ADD_REVIEW_REQUEST,
     text,
@@ -514,7 +514,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadQnALoading: false,
         loadQnADone: true,
-        qna: [action.data],
+        qna: [action.data, ...state.qna],
       };
     case LOAD_QUESTION_FAILURE:
       console.log("In REDUX, LOAD_QUESTION_FAILURE, action : ", action);
@@ -545,12 +545,12 @@ const reducer = (state = initialState, action) => {
         // TODO: in immer ->  qna: state.qna.push(action.data),
       };
     case ADD_QUESTION_FAILURE:
-      console.log("In REDUCERS OF ADD_QUESTION_FAILURE, action : ", action);
+      console.log("In REDUCERS OF ADD_QUESTION_FAILURE, action : ", action.error.message);
       return {
         ...state,
         addQnALoading: true,
         addQnADone: false,
-        addQnAError: action.error,
+        addQnAError: action.error.message,
       };
 
     // delete question
