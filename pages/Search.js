@@ -6,7 +6,7 @@ import Nav from "../components/Nav";
 import {connect, useDispatch, useSelector} from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Colors from "react-native-svg";
-import {loadGoodsList} from "../reducers/goods";
+import {loadGoodsList, loadSearchList} from "../reducers/goods";
 import shortId from 'shortid'
 import SearchList from "../components/SearchList";
 
@@ -27,13 +27,15 @@ const RowView = styled.View`
   margin: 30px 0px;
 `;
 
+// ime-mode:active;
 const StyledTextInput = styled.TextInput`
   justify-content: center;
   align-items: center;
   width:70%;
   margin-bottom: 20px;
-  ime-mode:active;
 `;
+
+
 
 const StyledTouchableOpacity = styled.TouchableOpacity`
   justify-content: center;
@@ -47,28 +49,29 @@ const StyledTouchableOpacity = styled.TouchableOpacity`
 const Search = (props) => {
   console.log("In Search, props : ", props.route.params);
   const dispatch = useDispatch();
-  const [value, onChangeText] = React.useState("");
-  var resultOfSearching = useSelector((state) => state.goods?.goodsList[0]);
-  console.log('In Search, resultOfSearching, : ',resultOfSearching)
+  const [value, onChangeText] = useState("");
+  var searchList = useSelector((state) => state.goods?.searchList[0]);
+  console.log('In Search, searchList, : ',searchList)
 
 
   useEffect(() => {
-    if (resultOfSearching && resultOfSearching.length > 0) {
-      resultOfSearching = [];
+    if (searchList && searchList.length > 0) {
+      searchList = [];
     }
-  }, [resultOfSearching]);
+  // }, [searchList]);
+  }, [searchList]);
 
   const onChangeTextSearch = useCallback((text) => {
     onChangeText(text);
-  }, []);
+  }, [value]);
 
   const onPressSearch = useCallback(() => {
     console.log('In Search, onPressSearch, value : ', value)
-    var data = {
-      keyword: value,
-      filter : null,
-    }
-    dispatch(loadGoodsList(data));
+    // var data = {
+    //   keyword: value,
+    //   filter : null,
+    // }
+    dispatch(loadSearchList(value));
   }, [value])
 
   return (
@@ -79,19 +82,19 @@ const Search = (props) => {
 
       <RowView style={styles.border}>
         <StyledTextInput
-          style={{height: 40, borderColor: "gray", borderWidth: 1, imeMode:"active"}}
+          style={{height: 40, borderColor: "gray", borderWidth: 1}}
           onChangeText={text => onChangeText(text)}
           value={value}
         />
 
         <StyledTouchableOpacity onPress={onPressSearch}>
-          <Icon name="ios-book-outline" size={30} color={"black"}></Icon>
+          <Icon name="ios-book-outline" size={30} color={"black"} />
         </StyledTouchableOpacity>
 
       </RowView>
 
       <Contents>
-        {resultOfSearching&&resultOfSearching.map((el) => {
+        {searchList&&searchList.map((el) => {
           return (
             <SearchList key={shortId.generate()} data={el}/>
           )
