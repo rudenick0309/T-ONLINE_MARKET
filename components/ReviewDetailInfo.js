@@ -50,6 +50,7 @@ const ReviewDetailInfo = (props) => {
         <Text>호갱님의 소중한 리뷰는 상업용으로 쓰일거에요.</Text>
         <ReviewButtonDetailInfoOfBottom
           title={"글쓰기"}
+          color={"#535204"}
           onPress={() => {
             props.prop.navigation.navigate("ReviewPlus", {id:id});
           }}
