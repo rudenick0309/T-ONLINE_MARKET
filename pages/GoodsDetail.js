@@ -100,11 +100,35 @@ const QnAButtonDetailInfoOfBottom = styled.Button`
 
 
 const ViewDetailInfoOfBottom = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content:space-around;
+flex:1;
+  flex-direction:row;
   margin-bottom: 30px;
+  height: 50px;
+  justify-content: space-between;
+  background-color : #cdb30c;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
 `;
+
+// TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
+const ButtonDetailInfoOfBottom = styled.TouchableOpacity`
+  flex:1
+  justify-content:center;
+  align-items:center;
+  flex-direction:row;
+`;
+
+const TextInTouchableOpacityStyled = styled.Text`
+  color:white;
+  font-size:20px;
+  flex:1;
+  width:100%;
+  height: 100%;
+  text-align:center;
+  letter-spacing:3px;
+  
+`
 
 const ViewRowStyled = styled.View`
   flex-direction : row;
@@ -116,13 +140,8 @@ const ViewRowStyled = styled.View`
 
 const ViewNavRowStyled = styled.View`
   width: 100%;
-
 `;
 
-// TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
-const ButtonDetailInfoOfBottom = styled.Button`
-  margin-bottom: 30px;
-`;
 
 const ButtonNavStyled = styled.Button`
   background-color:black;
@@ -255,32 +274,47 @@ const GoodsDetail = (props) => {
         <DetailInfoOfBottom>
           <ViewDetailInfoOfBottom>
             <ButtonDetailInfoOfBottom
-              title={"info"}
-              color={"#464e46"}
+
+              color={"#535204"}
               onPress={() => {
                 setQnA(false);
                 setInfo(true);
                 setReview(false);
               }}
-            />
+            >
+              <TextInTouchableOpacityStyled>
+                info
+              </TextInTouchableOpacityStyled>
+            </ButtonDetailInfoOfBottom>
+
             <ButtonDetailInfoOfBottom
               title={"userQnA"}
-              color={"#464e46"}
+              flex={1}
+              color={"#535204"}
               onPress={() => {
                 setQnA(true);
                 setInfo(false);
                 setReview(false);
               }}
-            />
+            >
+              <TextInTouchableOpacityStyled>
+                userQnA
+              </TextInTouchableOpacityStyled>
+            </ButtonDetailInfoOfBottom>
+
             <ButtonDetailInfoOfBottom
               title={"review"}
-              color={"#464e46"}
+              color={"#535204"}
               onPress={() => {
                 setQnA(false);
                 setInfo(false);
                 setReview(true);
               }}
-            />
+            >
+              <TextInTouchableOpacityStyled>
+                review
+              </TextInTouchableOpacityStyled>
+            </ButtonDetailInfoOfBottom>
           </ViewDetailInfoOfBottom>
 
           {info

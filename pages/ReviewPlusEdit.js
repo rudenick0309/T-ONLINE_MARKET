@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {patchToQuestion} from "../reducers/goods";
+import {patchToReview} from "../reducers/goods";
 
 // css part
 const Container = styled.ScrollView`
@@ -35,12 +35,12 @@ const TextInputStyled = styled.TextInput`
 `;
 
 //
-const QnAPlusEdit = (props) => {
+const ReviewPlusEdit = (props) => {
   const {id, title, contents, username} = props.route.params;
-  console.log("In QnAPlusEdit props  : ", props);   //TODO : must check console.log for study
+  console.log("In ReviewPlusEdit props  : ", props);   //TODO : must check console.log for study
   const dispatch = useDispatch();
-  const {patchQnADone} = useSelector(state => state.goods)
-  console.log('In QnAEditPlus patchQnADone : ', patchQnADone);
+  const {patchReviewDone} = useSelector(state => state.goods)
+  console.log('In ReviewPlusEdit patchReviewDone : ', patchReviewDone);
 
   const [editTitle, onChangeTextTitle] = useState(title);
   const [editContent, onChangeTextContent] = useState(contents);
@@ -58,9 +58,9 @@ const QnAPlusEdit = (props) => {
     id,
   }
 
-  const onPressEditQnA = () => {
-    console.log('In QnAPluseEdit modifiedQnA : ', id);
-    dispatch(patchToQuestion(modifiedQnA))
+  const onPressEditReview = () => {
+    console.log('In ReviewPluseEdit modifiedReview : ', id);
+    dispatch(patchToReview(modifiedReview))
     onChangeTextTitle(title)
     onChangeTextContent(contents)
     props.navigation.goBack();
@@ -77,7 +77,7 @@ const QnAPlusEdit = (props) => {
           <TextInputStyled placeholder={editTitle} value={editTitle} onChangeText={(text) => onChangeTextTitle(text)} />
           <TextInputStyled placeholder={editContent} value={editContent} onChangeText={(text) => onChangeTextContent(text)} />
         </View>
-        <Button title={"수정"} onPress={onPressEditQnA} />
+        <Button title={"수정"} onPress={onPressEditReview} />
 
       </Contents>
 
@@ -86,4 +86,4 @@ const QnAPlusEdit = (props) => {
   );
 };
 
-export default QnAPlusEdit;
+export default ReviewPlusEdit;

@@ -42,18 +42,26 @@ const TextView = styled.Text`
 const GoodsList = (props) => {
   console.log("In GOODSLIST, props : ", props);
   const dispatch = useDispatch();
-  const goodsList = useSelector(state => state.goods?.goodsList[0]);
+  var goodsList = useSelector(state => state.goods?.goodsList[0]);
   console.log("In GOODSLIST, goodslist : ", goodsList);
   const filterValue = props.route.params?.filter;
+
+  useEffect(() => {
+    if (goodsList && goodsList.length > 0) {
+      goodsList = [];
+    }
+    // }, [searchList]);
+  }, [goodsList]);
 
   // needs modify why not conclded in GoodsList.
   useEffect(() => {
     // TODO: axios to list
-    let data = {
-      keyword: null,
-      filter: filterValue,
-    }
-    dispatch(loadGoodsList(data));
+    // let data = {
+    //   keyword: null,
+    //   filter: filterValue,
+    // }
+    dispatch(loadGoodsList(filterValue));
+    // dispatch(loadGoodsList(data));
   }, []);
 
   return (
@@ -67,10 +75,9 @@ const GoodsList = (props) => {
             <InContainer
               key={el.goods_id}
               onPress={() => {
-                // props.navigation.navigate("GoodsDetail", {goods_id: el.goods_id});
                 props.navigation.navigate("GoodsDetail", {id: el.goods_id});
               }}>
-              {/*TODO : onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>*/}
+
               <Contents>
                 <ImageView source={{uri: el.goods_img}}></ImageView>
                 <TextView>{el.goods_name}</TextView>
