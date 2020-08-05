@@ -42,7 +42,7 @@ function homeAPI() {
 function goodsListAPI(data) {
   console.log("In SAGA, goodsListAPI, data : ", data)     //recommendation
   for (let key in data) {
-    console.log('In SAGA, goodsListAPI, key : ', key, '/', typeof data[key]);
+    console.log('In SAGA, goodsListAPI, key : ', key, '/', data[key]);
     if ( key === 'keyword') {
       return axios.get(`/goods/list?keyword=${data[key]}`)
     } else if (key ==='filter' ) {
@@ -50,12 +50,6 @@ function goodsListAPI(data) {
     }
   }
 }
-
-// function searchListAPI(data) {
-//   console.log("In SAGA, searchListAPI, data : ", data)    // search
-//   return axios.get(`/goods/list?keyword=${data}`)
-// }
-
 
 function goodsInfoAPI(data) {
   console.log("In SAGA, goodsInfoAPI, data : ", data)
@@ -203,11 +197,11 @@ function* loadReview(action) {
 function* addReview(action) {
   // console.log('In SAGA, addReview, action : ', action);
   try {
-    // const result = yield call(addQnAAPI, action.text);
+    const result = yield call(addQnAAPI, action.text);
     // console.log('In SAGA of addQnA, result : ', result)
     yield put({
       type: ADD_REVIEW_SUCCESS,
-      data: action.text,
+      data: result.text,
     });
   } catch (err) {
     console.log(err);
@@ -280,11 +274,11 @@ function* loadQnA(action) {
 function* addQnA(action) {
   // console.log('In GOODS of SAGA, addQnA, action : ', action);
   try {
-    // const result = yield call(addQnAAPI, action.text);
-    // console.log('In SAGA of addQnA, result : ', result)
+    const result = yield call(addQnAAPI, action.text);
+    console.log('In SAGA of addQnA, result : ', result)
     yield put({
       type: ADD_QUESTION_SUCCESS,
-      data: action.text,
+      data: result,
     });
   } catch (err) {
     console.log(err);
@@ -297,10 +291,10 @@ function* addQnA(action) {
 
 function* deleteQnA(action) {
   try {
-    // TODO : const result = yield call(deleteQnAAPI, action.data);
+    const result = yield call(deleteQnAAPI, action.data);
     yield put({
       type: DELETE_QUESTION_SUCCESS,
-      data: action.id,
+      data: result.id,
     });
   } catch (err) {
     console.log(err);
@@ -314,11 +308,11 @@ function* deleteQnA(action) {
 function* patchQnA(action) {
   // console.log(' In goods of SAGA 3, : ', action);
   try {
-    // TODO : const result = yield call(patchQnAAPI, action.data);
+    const result = yield call(patchQnAAPI, action.data);
     yield put({
       type: PATCH_QUESTION_SUCCESS,
       // TODO : data: result.data,
-      data: action.text,
+      data: result.text,
     });
   } catch (err) {
     console.log(err);

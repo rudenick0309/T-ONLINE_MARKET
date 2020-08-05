@@ -53,7 +53,7 @@ const QnADetailInfo = (props) => {
           }}
         />
       </QnAheader>
-      { qna.length === 0
+      { qna && qna.length === 0
         ? <Text>등록된 QnA가 없습니다</Text>
         : (qna.map(el => {
           return <QnAList key={el.id} list={el} prop={props}/>;
