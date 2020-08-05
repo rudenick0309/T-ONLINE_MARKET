@@ -34,13 +34,13 @@ const TextInputStyled = styled.TextInput`
   border: 3px solid red;
 `;
 
-
+//
 const QnAPlusEdit = (props) => {
   const {id, title, contents, username} = props.route.params;
   console.log("In QnAPlusEdit props  : ", props);   //TODO : must check console.log for study
   const dispatch = useDispatch();
   const {patchQnADone} = useSelector(state => state.goods)
-  console.log('In QnAEdidPlus patchQnADone : ', patchQnADone);
+  console.log('In QnAEditPlus patchQnADone : ', patchQnADone);
 
   const [editTitle, onChangeTextTitle] = useState(title);
   const [editContent, onChangeTextContent] = useState(contents);
