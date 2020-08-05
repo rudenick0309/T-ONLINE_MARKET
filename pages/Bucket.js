@@ -12,14 +12,11 @@ import BucketList from "../components/BucketList";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border : 2px solid blue
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border : 2px solid blue
 `;
-
 
 // function part
 const Bucket = (props) => {

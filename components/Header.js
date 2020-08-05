@@ -35,9 +35,9 @@ const HeaderIconText = styled.Text`
 
 const HeaderCenterText = styled.Text`
   color: #464e46;
-  font-family: "DancingScript-Regular";
   letter-spacing: 5px;
   font-size: 23px;
+  font-family: Consola;
 `;
 
 

@@ -1,5 +1,3 @@
-
-
 // initialState part
 export const initialState = {
   home: [], // change
@@ -8,18 +6,17 @@ export const initialState = {
 
   qna: [],  // load -> add 까지
   review: [],
-  count : 1,
-  bucket : [],
+  count: 1,
+  bucket: [],
 
 
   homeLoading: false, // home rendering
   homeQnADone: false,
   homeQnAError: null,
 
-
-  loadReviewLoading : false,   // review read
+  loadReviewLoading: false,   // review read
   loadReviewDone: false,
-  loadReviewError:null,
+  loadReviewError: null,
 
   addReviewLoading: false,    // review create
   addReviewDone: false,
@@ -40,7 +37,6 @@ export const initialState = {
   loadGoodsInfoLoading: true, // goods info
   loadGoodsInfoDone: false,
   loadGoodsInfoError: null,
-
 
   loadQnALoading: false,    // QnA read
   loadQnADone: false,
@@ -64,7 +60,6 @@ export const initialState = {
 // console.log("In REDUCERS, initialState : ", initialState);
 
 // the part of action definition
-
 
 
 export const LOAD_BUCKET_REQUEST = "LOAD_BUCKET_REQUEST";           //  bucket, not yet patch in quantity
@@ -96,29 +91,29 @@ export const PATCH_REVIEW_REQUEST = "PATCH_REVIEW_REQUEST";       // patch revie
 export const PATCH_REVIEW_SUCCESS = "PATCH_REVIEW_SUCCESS";
 export const PATCH_REVIEW_FAILURE = "PATCH_REVIEW_FAILURE";
 
-export const LOAD_GOODSLIST_REQUEST = 'LOAD_GOODSLIST_REQUEST'; // goods Info
-export const LOAD_GOODSLIST_SUCCESS = 'LOAD_GOODSLIST_SUCCESS';
-export const LOAD_GOODSLIST_FAILURE = 'LOAD_GOODSLIST_REQUEST';
+export const LOAD_GOODSLIST_REQUEST = "LOAD_GOODSLIST_REQUEST"; // goods Info
+export const LOAD_GOODSLIST_SUCCESS = "LOAD_GOODSLIST_SUCCESS";
+export const LOAD_GOODSLIST_FAILURE = "LOAD_GOODSLIST_REQUEST";
 
-export const LOAD_GOODSINFO_REQUEST = 'LOAD_GOODSINFO_REQUEST'; // goods Info
-export const LOAD_GOODSINFO_SUCCESS = 'LOAD_GOODSINFO_SUCCESS';
-export const LOAD_GOODSINFO_FAILURE = 'LOAD_GOODSINFO_FAILURE';
+export const LOAD_GOODSINFO_REQUEST = "LOAD_GOODSINFO_REQUEST"; // goods Info
+export const LOAD_GOODSINFO_SUCCESS = "LOAD_GOODSINFO_SUCCESS";
+export const LOAD_GOODSINFO_FAILURE = "LOAD_GOODSINFO_FAILURE";
 
-export const LOAD_QUESTION_REQUEST = 'LOAD_QUESTION_REQUEST'; // qna  load
-export const LOAD_QUESTION_SUCCESS = 'LOAD_QUESTION_SUCCESS';
-export const LOAD_QUESTION_FAILURE = 'LOAD_QUESTION_FAILURE';
+export const LOAD_QUESTION_REQUEST = "LOAD_QUESTION_REQUEST"; // qna  load
+export const LOAD_QUESTION_SUCCESS = "LOAD_QUESTION_SUCCESS";
+export const LOAD_QUESTION_FAILURE = "LOAD_QUESTION_FAILURE";
 
-export const ADD_QUESTION_REQUEST = 'ADD_QUESTION_REQUEST'; // qna add
-export const ADD_QUESTION_SUCCESS = 'ADD_QUESTION_SUCCESS';
-export const ADD_QUESTION_FAILURE = 'ADD_QUESTION_FAILURE';
+export const ADD_QUESTION_REQUEST = "ADD_QUESTION_REQUEST"; // qna add
+export const ADD_QUESTION_SUCCESS = "ADD_QUESTION_SUCCESS";
+export const ADD_QUESTION_FAILURE = "ADD_QUESTION_FAILURE";
 
-export const DELETE_QUESTION_REQUEST = 'DELETE_QUESTION_REQUEST'; //qna  delete
-export const DELETE_QUESTION_SUCCESS = 'DELETE_QUESTION_SUCCESS';
-export const DELETE_QUESTION_FAILURE = 'DELETE_QUESTION_FAILURE';
+export const DELETE_QUESTION_REQUEST = "DELETE_QUESTION_REQUEST"; //qna  delete
+export const DELETE_QUESTION_SUCCESS = "DELETE_QUESTION_SUCCESS";
+export const DELETE_QUESTION_FAILURE = "DELETE_QUESTION_FAILURE";
 
-export const PATCH_QUESTION_REQUEST = 'PATCH_QUESTION_REQUEST'; // qna patch
-export const PATCH_QUESTION_SUCCESS = 'PATCH_QUESTION_SUCCESS';
-export const PATCH_QUESTION_FAILURE = 'PATCH_QUESTION_FAILURE';
+export const PATCH_QUESTION_REQUEST = "PATCH_QUESTION_REQUEST"; // qna patch
+export const PATCH_QUESTION_SUCCESS = "PATCH_QUESTION_SUCCESS";
+export const PATCH_QUESTION_FAILURE = "PATCH_QUESTION_FAILURE";
 
 // the part of action creator definition
 
@@ -128,7 +123,7 @@ export const loadToBucket = () => {
   };
 };
 export const addToBucket = (data) => {
-  console.log('In REDUCER, addToBucket, data : ', data)
+  console.log("In REDUCER, addToBucket, data : ", data);
   return {
     type: ADD_BUCKET_REQUEST,
     data,
@@ -166,10 +161,19 @@ export const homeToLoad = () => {
 };
 
 export const loadGoodsList = (data) => {
-  console.log('In REDUCER, loadGoodsList, data : ', data);
+  console.log("In REDUCER, loadGoodsList, data : ", data);
+  let actualData = {}
+  for (let key in data) {
+    if (data[key]) {
+      actualData[key] = data[key];
+    }
+  }
+
+  console.log("In REDUCER, loadGoodsList, actualData : ", actualData );
+
   return {
     type: LOAD_GOODSLIST_REQUEST,
-    data,
+    actualData,
     // TODO : whether add max param or just send TYPE;
   };
 };
@@ -195,7 +199,7 @@ export const loadToReview = (id) => {
 };
 
 export const addToReview = (text) => {
- console.log("In REDUCER, addToReview, id : ", id);
+  console.log("In REDUCER, addToReview, id : ", id);
   return {
     type: ADD_REVIEW_REQUEST,
     text,
@@ -231,7 +235,7 @@ export const loadToQuestion = (id) => {
 
 export const addToQuestion = (text) => {
   // TODO: Has a parameter one? Anyway, shall I give them(name, content) in QnAPlus components?
-  console.log('In REDUCER, GOODS , text : ', text);
+  console.log("In REDUCER, GOODS , text : ", text);
   return {
     type: ADD_QUESTION_REQUEST,
     text,
@@ -265,41 +269,41 @@ const reducer = (state = initialState, action) => {
     case LOAD_BUCKET_REQUEST :    // What is the LOAD BUCKET REQUEST? When i should this? think.
       return {
         ...state,
-      }
+      };
     case ADD_BUCKET_REQUEST :
-      console.log('In REDUCER, ADD_BUCKET_REQUEST, action : ', action)
+      console.log("In REDUCER, ADD_BUCKET_REQUEST, action : ", action);
       return {
         ...state,
         // bucket: []
-      }
+      };
     case DELETE_BUCKET_REQUEST :
-      console.log('In REDUCER, DELETE_BUCKET_REQUEST, action : ', action)
+      console.log("In REDUCER, DELETE_BUCKET_REQUEST, action : ", action);
       return {
         ...state,
         // count: state.count - 1,
-      }
+      };
 
     // count calculate
     case COUNT_DEFAULT_REQUEST :
       return {
         ...state,
-        count : 1,
-      }
+        count: 1,
+      };
 
     case COUNT_PLUS_REQUEST :
       return {
         ...state,
         count: state.count + 1,
-      }
+      };
     case COUNT_MINUS_REQUEST :
       if (state.count < 2) {
-        alert('수량은 1개 이상이어야 합니다')
+        alert("수량은 1개 이상이어야 합니다");
         state.count = 1;
       }
       return {
         ...state,
         count: state.count - 1,
-      }
+      };
 
 
     // home rendering
@@ -326,11 +330,11 @@ const reducer = (state = initialState, action) => {
         homeQnAError: action.error,
       };
 
-      //
+    //
 
     // load goods list
     case LOAD_GOODSLIST_REQUEST:
-      console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ")
+      console.log("In REDUX, LOA_GOODSLIST_REQUEST, executes ");
       return {
         ...state,
         loadGoodsListLoading: true, // goods list
@@ -338,7 +342,7 @@ const reducer = (state = initialState, action) => {
         loadGoodsListError: null,
       };
     case LOAD_GOODSLIST_SUCCESS:
-      console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action)
+      console.log("In REDUX, LOAD_GOODSLIST_SUCCESS, action : ", action);
       return {
         ...state,
         loadGoodsListLoading: false, // goods list
@@ -346,7 +350,7 @@ const reducer = (state = initialState, action) => {
         goodsList: [action.data, ...state.goodsList],
       };
     case LOAD_GOODSLIST_FAILURE:
-      console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action)
+      console.log("In REDUX, LOAD_GOODSLIST_FAILURE, action : ", action);
       return {
         ...state,
         loadGoodsListLoading: false,
@@ -378,31 +382,31 @@ const reducer = (state = initialState, action) => {
         homeQnAError: action.error,
       };
 
-      //
+    //
     // load review
     case LOAD_REVIEW_REQUEST:
       console.log("In REDUCER, LOAD_REVIEW_REQUEST, action : ", action);
       return {
         ...state,
-        loadReviewLoading : true,   // review read
+        loadReviewLoading: true,   // review read
         loadReviewDone: false,
-        loadReviewError:null,
+        loadReviewError: null,
       };
     case LOAD_REVIEW_SUCCESS:
       console.log("In REDUCER, LOAD_REVIEW_SUCCESS, action : ", action.data);
       return {
         ...state,
-        loadReviewLoading : false,   // review read
+        loadReviewLoading: false,   // review read
         loadReviewDone: true,
-        loadReviewError:null,
+        loadReviewError: null,
         review: [action.data],
       };
     case LOAD_REVIEW_FAILURE:
       console.log("In REDUCER, LOAD_REVIEW_FAILURE action : ", action);
       return {
         ...state,
-        loadReviewLoading : false,
-        loadReviewError:action.error,
+        loadReviewLoading: false,
+        loadReviewError: action.error,
         review: state.qna.filter((el) => el.id !== "everyDBdelete")  //TODO: Or, if qna equals '[]' in component ?
       };
 
@@ -524,7 +528,7 @@ const reducer = (state = initialState, action) => {
 
     // add question
     case ADD_QUESTION_REQUEST:
-      console.log('In REDUCERS OF ADD_QUESTION_REQUEST, action : ', action);
+      console.log("In REDUCERS OF ADD_QUESTION_REQUEST, action : ", action);
       return {
         ...state,
         addQnALoading: true,
@@ -532,7 +536,7 @@ const reducer = (state = initialState, action) => {
         addQnAError: null,
       };
     case ADD_QUESTION_SUCCESS:
-      console.log('In REDUCERS OF ADD_QUESTION_SUCCESS, action : ', action);
+      console.log("In REDUCERS OF ADD_QUESTION_SUCCESS, action : ", action);
       return {
         ...state,
         addQnALoading: false,
@@ -541,7 +545,7 @@ const reducer = (state = initialState, action) => {
         // TODO: in immer ->  qna: state.qna.push(action.data),
       };
     case ADD_QUESTION_FAILURE:
-      console.log('In REDUCERS OF ADD_QUESTION_FAILURE, action : ', action);
+      console.log("In REDUCERS OF ADD_QUESTION_FAILURE, action : ", action);
       return {
         ...state,
         addQnALoading: true,
@@ -587,8 +591,8 @@ const reducer = (state = initialState, action) => {
       let qnaIndex = 0;
       state.qna.forEach((el, index) => {
         if (action.data.id === el.id) {
-        patchQnALoading: true,
-          qnaIndex = index;
+          patchQnALoading: true,
+            qnaIndex = index;
         }
       });
 

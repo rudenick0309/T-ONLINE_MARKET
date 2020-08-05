@@ -13,13 +13,10 @@ import SearchList from "../components/SearchList";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid blue;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid blue;
-  
 `;
 
 const RowView = styled.View`
@@ -35,6 +32,7 @@ const StyledTextInput = styled.TextInput`
   align-items: center;
   width:70%;
   margin-bottom: 20px;
+ 
 `;
 
 const StyledTouchableOpacity = styled.TouchableOpacity`
@@ -51,10 +49,10 @@ const Search = (props) => {
   const dispatch = useDispatch();
   const [value, onChangeText] = React.useState("");
   var resultOfSearching = useSelector((state) => state.goods?.goodsList[0]);
-  console.log('In Search, resultofSearching, : ',resultOfSearching)
+  console.log('In Search, resultOfSearching, : ',resultOfSearching)
+
 
   useEffect(() => {
-    // TODO: take the bucket list to axios
     if (resultOfSearching && resultOfSearching.length > 0) {
       resultOfSearching = [];
     }
@@ -62,11 +60,16 @@ const Search = (props) => {
 
   const onChangeTextSearch = useCallback((text) => {
     onChangeText(text);
-  }, [value]);
+  }, []);
 
   const onPressSearch = useCallback(() => {
-    dispatch(loadGoodsList(value));
-  }, [])
+    console.log('In Search, onPressSearch, value : ', value)
+    var data = {
+      keyword: value,
+      filter : null,
+    }
+    dispatch(loadGoodsList(data));
+  }, [value])
 
   return (
 
@@ -76,7 +79,7 @@ const Search = (props) => {
 
       <RowView style={styles.border}>
         <StyledTextInput
-          style={{height: 40, borderColor: "gray", borderWidth: 1}}
+          style={{height: 40, borderColor: "gray", borderWidth: 1, imeMode:"active"}}
           onChangeText={text => onChangeText(text)}
           value={value}
         />

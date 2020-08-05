@@ -42,21 +42,26 @@ const TextView = styled.Text`
 const GoodsList = (props) => {
   console.log("In GOODSLIST, props : ", props);
   const dispatch = useDispatch();
-  const goodsList = useSelector(state => state.goods?.goodsList);
+  const goodsList = useSelector(state => state.goods?.goodsList[0]);
   console.log("In GOODSLIST, goodslist : ", goodsList);
   const filterValue = props.route.params?.filter;
 
   // needs modify why not conclded in GoodsList.
   useEffect(() => {
     // TODO: axios to list
-    dispatch(loadGoodsList(filterValue));
+    let data = {
+      keyword: null,
+      filter: filterValue,
+    }
+    dispatch(loadGoodsList(data));
   }, []);
 
   return (
     <Container>
       <Header props={props}/>
 
-      {goodsList.length !== 0 && goodsList.map((el) => {
+      {/*{goodsList.length !== 0 && goodsList.map((el) => {*/}
+      {goodsList && goodsList.map((el) => {
         return (
           // <Contents>
             <InContainer

@@ -24,7 +24,7 @@ import {homeToLoad} from "../reducers/goods";
 // import CaroseulTest from "./CaroseulTest";
 import Carousel from "react-native-carousel-view";
 import ViewPager from "@react-native-community/viewpager";
-
+import shortId from 'shortid'
 // TODO: import {ActivityIndicator} from "react-native";    This is a Ellipse Loading image, I will use this later.
 
 // css part
@@ -118,8 +118,9 @@ const Home = (props) => {
         {best && best.map((el) => {
           return (
             <BestFlowerContainer
+              key={shortId.generate()}
               onPress={ () => {props.navigation.navigate("GoodsDetail", {id : el.id} )} }>
-              <BestFlowerContents>
+              <BestFlowerContents key={shortId.generate()}>
                 <BestFlowerImageView source={{ uri: el.img }}></BestFlowerImageView>
                 <BestFlowerTextView>{el.title}</BestFlowerTextView>
               </BestFlowerContents>

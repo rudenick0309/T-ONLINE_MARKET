@@ -165,8 +165,7 @@ const GoodsDetail = (props) => {
   const goods_price = goodsInfo?.goods_price;
   const info_img = goodsInfo?.info_img;
   const count = useSelector((state) => state.goods?.count);
-  const scrollRef = useRef();
-
+  // const scrollRef = useRef();
 
   const data = {
     count: count,
