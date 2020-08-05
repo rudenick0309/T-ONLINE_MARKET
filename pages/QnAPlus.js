@@ -64,7 +64,7 @@ const QnAPlus = (props) => {
 
   useEffect(() => {
     // TODO: take the bucket list to axios
-    if (addQnAError !== null) {
+    if (addQnAError === null) {
       alert(addQnAError)
     }
   }, [addQnAError]);
