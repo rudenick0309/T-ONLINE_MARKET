@@ -3,16 +3,51 @@ import styled from 'styled-components';
 import {StyleSheet, Text, View, Input, TouchableOpacity} from 'react-native';
 import Home from '../pages/Home';
 import {useSelector} from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {faChevronLeft, faSearch,faHome} from "@fortawesome/free-solid-svg-icons";
+import {faAddressCard} from "@fortawesome/free-regular-svg-icons";
+
 
 const NavView = styled.View`
   height: 50px;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 0px;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #f5efef;
 `;
 const NavIcon = styled.TouchableOpacity`
-  width: 50px;
-  height: 50px;
-  border: 3px solid blue;
+  justify-content:center;
+  align-items:center;
+  width : 50px;
+  height : 50px;
+`;
+
+const NavText = styled.Text`
+  font-weight : bold;
+  font-size: 15px;
+  color: #464e46;
+`;
+
+const NavCenterText = styled.Text`
+  font-weight : bold;
+  width: 70px;
+  font-size: 20px;
+  color: #464e46;
+`;
+
+const HeaderIcon = styled.TouchableOpacity`
+  justify-content:center;
+  align-items:center;
+  width : 55px;
+  width : 50px;
+  height : 50px;
+`;
+
+const HeaderIconText = styled.Text`
+  color: #464e46;
+  font-weight : bold;
 `;
 
 const Nav = ({props}) => {
@@ -23,34 +58,38 @@ const Nav = ({props}) => {
 
   return (
     <NavView>
-      <NavIcon
-        onPress={() => {
-          props.navigation.navigate('Home');
-        }}>
-        <Text>Home Icon</Text>
+      <NavIcon onPress={() => {
+        props.navigation.goBack();
+      }}>
+        <FontAwesomeIcon icon={ faChevronLeft } color={ '#464e46' } size={ 25 }/>
       </NavIcon>
-      {loginDone && message ? (
+
+      <NavIcon onPress={() => {
+        props.navigation.navigate("LOGIN");
+      }}>
+        <NavCenterText>
+          <HeaderIcon onPress={() => {
+            props.navigation.navigate("Search");
+          }}>
+            <FontAwesomeIcon icon={ faSearch } color={ '#464e46' } size={ 25 }/>
+          </HeaderIcon>
+        </NavCenterText>
+      </NavIcon>
+ {loginDone && message ? (
         <NavIcon
           onPress={() => {
             props.navigation.navigate('MypageSeller');
           }}>
-          <Text>My page Seller Icon</Text>
+          
         </NavIcon>
       ) : (
-        <NavIcon
-          onPress={() => {
-            props.navigation.navigate('Mypage');
-          }}>
-          <Text>Msy page Icon</Text>
+        <NavIcon onPress={() => {
+        props.navigation.navigate("Mypage");
+      <FontAwesomeIcon icon={ faAddressCard } color={ '#464e46' } size={ 30 }/>
+      }}>
         </NavIcon>
       )}
-
-      <NavIcon
-        onPress={() => {
-          props.navigation.goBack();
-        }}>
-        <Text>back</Text>
-      </NavIcon>
+     
     </NavView>
   );
 };

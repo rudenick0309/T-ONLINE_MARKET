@@ -1,23 +1,24 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
-import styled from 'styled-components';
-import Header from '../components/Header';
-import Nav from '../components/Nav';
+import React, {useRef, useState, useEffect, useCallback} from "react";
+import {StyleSheet, TouchableOpacity, Text, View, Button} from "react-native";
+import styled from "styled-components";
+import Header from "../components/Header";
+import Nav from "../components/Nav";
 // import RecommendedFlower from "../components/RecommendedFlower";
-import Payment from './Payment';
-import Bucket from './Bucket';
-import {useSelector, useDispatch} from 'react-redux';
-import QnAList from '../components/QnAList';
-import {
-  countDefault,
-  countPlus,
-  countMinus,
-  loadGoodsInfo,
-} from '../reducers/goods';
-import goods from '../sagas/goods';
-import QnADetailInfo from '../components/QnADetailInfo';
-import ReviewDetailInfo from '../components/ReviewDetailInfo';
-import AsyncStorage from '@react-native-community/async-storage';
+import Payment from "./Payment";
+import Bucket from "./Bucket";
+import {useSelector, useDispatch} from "react-redux";
+import QnAList from "../components/QnAList";
+import {countDefault, countPlus, countMinus, loadGoodsInfo} from "../reducers/goods";
+import goods from "../sagas/goods";
+import QnADetailInfo from "../components/QnADetailInfo";
+import ReviewDetailInfo from "../components/ReviewDetailInfo";
+import AsyncStorage from "@react-native-community/async-storage";
+// import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+// import {faAngleUp, faAngleDown} from "@fortawesome/free-solid-svg-icons";
+// import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/Ionicons";
+import * as Colors from "react-native-svg";
+// import {Fonts} from "../src/fonts/Fonts";
 
 // css part
 const Container = styled.SafeAreaView`
@@ -30,15 +31,13 @@ const Contents = styled.ScrollView`
 
 const DetailInfoOfUpper = styled.View`
   flex: 1;
-
-  flex-direction: row;
 `;
 
 // upper-left part
 const LeftDetailInfoOfUpper = styled.View`
   flex: 1;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 450px;
 `;
 
 const ImageOfUpperLeft = styled.Image`
@@ -51,17 +50,22 @@ const ImageOfUpperLeft = styled.Image`
 // upper right part
 const RightDetailInfoOfUpper = styled.View`
   flex: 1;
-  width: 200px;
+  width: 100%;
   height: 200px;
+  flex-direction:row;
+  margin-top: 50px;
 `;
 
 const TextOfUpperRight = styled.Text`
-  flex: 1;
+  font-family: 'DancingScript-Regular';
+  font-size: 20px;
+  margin-top:15px;
 `;
 
 // bottom components
 const DetailInfoOfBottom = styled.View`
   flex: 1;
+  margin-top: 30px;
 `;
 
 // info detail part
@@ -80,7 +84,6 @@ const ImageInfoOfBottom = styled.Image`
 const QnADetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
-  border: 5px solid green;
 `;
 
 const QnAheader = styled.View`
@@ -90,36 +93,78 @@ const QnAheader = styled.View`
 
 const QnAButtonDetailInfoOfBottom = styled.Button`
   height: 150px;
-  width: 400px;
-  border: 20px solid black;
+  width : 400px;
 `;
 
-// // review detail part
-// const ReviewButtonDetailInfoOfBottom = styled.Button`
-//   height: 50px;
-//
-// `;
-//
-// const ReviewDetailInfoOfBottom = styled.ScrollView`
-//   flex: 1;
-//   height: 500px;
-//
-// `;
-//
+
 const ViewDetailInfoOfBottom = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-around;
+flex:1;
+  flex-direction:row;
+  margin-bottom: 30px;
+  height: 50px;
+  justify-content: space-between;
+  background-color : #cdb30c;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
 `;
+
+// TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
+const ButtonDetailInfoOfBottom = styled.TouchableOpacity`
+  flex:1
+  justify-content:center;
+  align-items:center;
+  flex-direction:row;
+`;
+
+const TextInTouchableOpacityStyled = styled.Text`
+  color:white;
+  font-size:20px;
+  flex:1;
+  width:100%;
+  height: 100%;
+  text-align:center;
+  letter-spacing:3px;
+  
+`
 
 const ViewRowStyled = styled.View`
-  flex-direction: row;
+  flex-direction : row;
+  text-align: center;
+  margin: 23px 0px;
+  justify-content: center;
+  align-items:center;
 `;
 
-// // TODO: position : fixed? -> always stay in right and bottom corner in a mobile view?
-const ButtonDetailInfoOfBottom = styled.Button`
-  border: 3px solid red;
+const ViewNavRowStyled = styled.View`
+  width: 100%;
 `;
+
+
+const ButtonNavStyled = styled.Button`
+  background-color:black;
+`;
+
+const TouchableStyled = styled.TouchableOpacity`
+  border: 1px solid grey;
+`;
+
+const ViewMiddleStyled = styled.View`
+  flex-direction:row;
+  justify-content: space-around;
+  flex:1;
+`;
+
+const TouchableText = styled.Text`
+  margin: 0px 10px;
+  text-align: center;
+  flex-direction: row;
+  justify-content:center;
+`
+
+const QuantityOfText = styled.Text`
+  margin-right: 10px;
+`
 
 // function part
 const GoodsDetail = (props) => {
@@ -130,12 +175,13 @@ const GoodsDetail = (props) => {
   const qna = useSelector((state) => state.goods?.qna);
   const id = props.route.params;
   const goodsInfo = useSelector((state) => state.goods?.goodsInfo);
-  // console.log("In GOODS_DETAIL, props : ", props);
+  console.log("In GOODS_DETAIL, goodsInfo : ", goodsInfo);
   const goods_name = goodsInfo?.goods_name;
   const goods_img = goodsInfo?.goods_img;
   const goods_price = goodsInfo?.goods_price;
   const info_img = goodsInfo?.info_img;
   const count = useSelector((state) => state.goods?.count);
+  // const scrollRef = useRef();
 
   const data = {
     count: count,
@@ -145,7 +191,7 @@ const GoodsDetail = (props) => {
     goods_price: goods_price,
   };
 
-  console.log('In GOODSDETAIL, count : ', count);
+  console.log("In GOODSDETAIL, count : ", count);
 
   useEffect(() => {
     // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!
@@ -173,82 +219,187 @@ const GoodsDetail = (props) => {
           </LeftDetailInfoOfUpper>
 
           <RightDetailInfoOfUpper>
-            <TextOfUpperRight>{goods_name}</TextOfUpperRight>
-            <TextOfUpperRight>{goods_price}</TextOfUpperRight>
-            <TextOfUpperRight>{'꽃말'}</TextOfUpperRight>
 
-            <ViewRowStyled>
-              <Button title={'수량 감소'} onPress={onPressMinus} />
-              <Text>{count}</Text>
-              <Button title={'수량 증가'} onPress={onPressPlus} />
-            </ViewRowStyled>
+            <ViewMiddleStyled style={styles.border} >
 
-            <ViewRowStyled>
-              <Button
-                title={'구매하기'}
-                onPress={() => {
-                  return props.navigation.navigate('Payment');
-                }}
-              />
-              <Button
-                title={'장바구니 담기'}
-                onPress={() => {
-                  props.navigation.navigate('Bucket', data);
-                }}
-              />
-            </ViewRowStyled>
+              <View>
+                <TextOfUpperRight>{goods_name}</TextOfUpperRight>
+                <TextOfUpperRight>{goods_price}원</TextOfUpperRight>
+                <TextOfUpperRight>{"꽃말"}</TextOfUpperRight>
+              </View>
+
+              <View>
+                <ViewRowStyled>
+                  {/*<Button title={'d'} onPress={onPressMinus}>*/}
+                  {/*  <Icon name={"arrowdown"} color={'black'} size={30}></Icon>*/}
+                  {/*</Button>*/}
+
+                  <QuantityOfText>수량</QuantityOfText>
+
+                  <TouchableStyled onPress={onPressMinus}>
+                    <Icon name="ios-arrow-down-outline" color={"black"} size={30}></Icon>
+                  </TouchableStyled>
+
+                  <TouchableText>{count}</TouchableText>
+                  {/*<Button title={"수량 증가"} onPress={onPressPlus}/>*/}
+
+                  <TouchableStyled onPress={onPressPlus}>
+                    <Icon name="ios-arrow-up-outline" color={"black"} size={30}></Icon>
+                  </TouchableStyled>
+
+                </ViewRowStyled>
+
+                <ViewNavRowStyled>
+                  <ButtonNavStyled
+                    title={"장바구니 담기"}
+                    color="#464e46"
+                    onPress={() => {
+                      props.navigation.navigate("Bucket", data);
+                    }}
+                  />
+                </ViewNavRowStyled>
+              </View>
+
+            </ViewMiddleStyled>
+
           </RightDetailInfoOfUpper>
+
         </DetailInfoOfUpper>
 
         {/* Distinct Line */}
         <DetailInfoOfBottom>
           <ViewDetailInfoOfBottom>
             <ButtonDetailInfoOfBottom
-              title={'info'}
-              color={'palevioletred'}
+              color={"#535204"}
               onPress={() => {
                 setQnA(false);
                 setInfo(true);
                 setReview(false);
               }}
-            />
+            >
+              <TextInTouchableOpacityStyled>
+                info
+              </TextInTouchableOpacityStyled>
+            </ButtonDetailInfoOfBottom>
+
             <ButtonDetailInfoOfBottom
-              title={'userQnA'}
-              color={'palevioletred'}
+              title={"userQnA"}
+              flex={1}
+              color={"#535204"}
               onPress={() => {
                 setQnA(true);
                 setInfo(false);
                 setReview(false);
               }}
-            />
+            >
+              <TextInTouchableOpacityStyled>
+                userQnA
+              </TextInTouchableOpacityStyled>
+            </ButtonDetailInfoOfBottom>
+
             <ButtonDetailInfoOfBottom
-              title={'review'}
-              color={'palevioletred'}
+              title={"review"}
+              color={"#535204"}
               onPress={() => {
                 setQnA(false);
                 setInfo(false);
                 setReview(true);
               }}
-            />
+            >
+              <TextInTouchableOpacityStyled>
+                review
+              </TextInTouchableOpacityStyled>
+            </ButtonDetailInfoOfBottom>
           </ViewDetailInfoOfBottom>
 
-          {info ? (
-            <InfoDetailInfoOfBottom>
-              <ImageInfoOfBottom source={{uri: info_img}} />
-            </InfoDetailInfoOfBottom>
-          ) : userQnA ? (
-            <QnADetailInfo prop={props} />
-          ) : review ? (
-            <ReviewDetailInfo prop={props} />
-          ) : (
-            <Text>empty part</Text>
-          )}
+          {info
+            ?
+            (
+              <InfoDetailInfoOfBottom>
+                <ImageInfoOfBottom source={{uri: info_img}}/>
+              </InfoDetailInfoOfBottom>
+            )
+            : userQnA
+              ?
+              (
+                <QnADetailInfo prop={props}/>
+              )
+              : review
+                ?
+                (
+                  <ReviewDetailInfo prop={props}/>
+                )
+                :
+                (
+                  <Text>empty part</Text>
+                )}
         </DetailInfoOfBottom>
       </Contents>
 
-      <Nav props={props} />
+      {!info || !userQnA || !review
+        ?
+        (
+          <ViewNavRowStyled>
+            <ButtonNavStyled
+              title={"구매하기"}
+              color="#464e46"
+              onPress={() => {
+                return props.navigation.navigate("Payment");
+              }}
+            />
+          </ViewNavRowStyled>
+        )
+        : (<Nav props={props}/>)
+      }
+
     </Container>
   );
 };
 
 export default GoodsDetail;
+
+//
+const styles = StyleSheet.create({
+  border: {
+    borderStyle: "solid",
+    margin: 10,
+    padding: 10,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "grey",
+  },
+  engine: {
+    position: 'absolute',
+    right: 0,
+  },
+  body: {
+    backgroundColor: Colors.white,
+  },
+})
+//   sectionContainer: {
+//     marginTop: 32,
+//     paddingHorizontal: 24,
+//   },
+//   sectionTitle: {
+//     fontSize: 24,
+//     fontWeight: '600',
+//     color: Colors.black,
+//   },
+//   sectionDescription: {
+//     marginTop: 8,
+//     fontSize: 18,
+//     fontWeight: '400',
+//     color: Colors.dark,
+//   },
+//   highlight: {
+//     fontWeight: '700',
+//   },
+//   footer: {
+//     color: Colors.dark,
+//     fontSize: 12,
+//     fontWeight: '600',
+//     padding: 4,
+//     paddingRight: 12,
+//     textAlign: 'right',
+//   },
+// });

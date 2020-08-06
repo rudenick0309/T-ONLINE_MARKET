@@ -16,6 +16,9 @@ import Resign from '../pages/Resign';
 import ResignCheck from '../pages/ResignCheck';
 import QnAPlusEdit from '../pages/QnAPlusEdit';
 import MypageSeller from '../pages/MypageSeller';
+import Search from "../pages/Search";
+import ReviewPlusEdit from "../pages/ReviewPlusEdit";
+
 
 const Stack = createStackNavigator();
 
@@ -23,17 +26,16 @@ const HomeNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={Home} />
-
-      <Stack.Screen name="GoodsDetail" component={GoodsDetail} />
-      <Stack.Screen name="GoodsList" component={GoodsList} />
-      <Stack.Screen name="Payment" component={Payment} />
-      <Stack.Screen name="Bucket" component={Bucket} />
-      <Stack.Screen name="QnAPlus" component={QnAPlus} />
-      <Stack.Screen name="ReviewPlus" component={ReviewPlus} />
-      <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit} />
-
-      <Stack.Screen name="SignIn" component={SignIn} />
-      {/* TODO: <Stack.Screen name="Logout" component={Logout}/>*/}
+      <Stack.Screen name="GoodsDetail" component={GoodsDetail}/>
+      <Stack.Screen name="GoodsList" component={GoodsList}/>
+      <Stack.Screen name="Payment" component={Payment}/>
+      <Stack.Screen name="Bucket" component={Bucket}/>
+      <Stack.Screen name="QnAPlus" component={QnAPlus}/>
+      <Stack.Screen name="ReviewPlus" component={ReviewPlus}/>
+      <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit}/>
+      <Stack.Screen name="Search" component={Search}/>
+      <Stack.Screen name="ReviewPlusEdit" component={ReviewPlusEdit}/>
+      <Stack.Screen name="SignIn" component={SignIn}/>
       <Stack.Screen name="Mypage" component={Mypage} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Myinfocheck" component={Myinfocheck} />

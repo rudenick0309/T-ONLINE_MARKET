@@ -28,7 +28,12 @@ import {
   LOAD_REVIEW_FAILURE,
   ADD_REVIEW_SUCCESS,
   ADD_REVIEW_FAILURE,
-  DELETE_REVIEW_SUCCESS, DELETE_REVIEW_FAILURE, PATCH_REVIEW_SUCCESS, PATCH_REVIEW_FAILURE, PATCH_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAILURE,
+  PATCH_REVIEW_SUCCESS,
+  PATCH_REVIEW_FAILURE,
+  PATCH_REVIEW_REQUEST,
+  LOAD_SEARCHLIST_REQUEST, LOAD_SEARCHLIST_SUCCESS, LOAD_SEARCHLIST_FAILURE,
 } from "../reducers/goods";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
@@ -36,60 +41,64 @@ import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
 // 4
 function homeAPI() {
-  return axios.get("/home")
+  return axios.get("/home");
+}
+
+function searchListAPI(data) {
+  console.log("In SAGA, searchListAPI, data : ", data);     // search
+  return axios.get(`/goods/list?keyword=${data}`);
 }
 
 function goodsListAPI(data) {
-  // console.log("In SAGA, goodsListAPI, data : ", data)
-  return axios.get(`/goods/list?min=3000&max=40000&filter=${data}`)
+  console.log("In SAGA, goodsListAPI, data : ", data);     //recommendation
+  return axios.get(`/goods/list?filter=${data}`);
 }
 
 function goodsInfoAPI(data) {
-  console.log("In SAGA, goodsInfoAPI, data : ", data)
-  return axios.get(`/goods/info?goods_id=${data.id}`)
+  console.log("In SAGA, goodsInfoAPI, data : ", data);
+  return axios.get(`/goods/info?goods_id=${data.id}`);
 }
 
 function loadQnAAPI(data) {
-  console.log("In SAGA, loadQnAAPI, data : ", data)
-  return axios.get(`/goods/info/qa_lists?goods_id=${data}`)
+  console.log("In SAGA, loadQnAAPI, data : ", data);
+  return axios.get(`/goods/info/qa_lists?goods_id=${data}`);
 }
 
 function addQnAAPI(data) {
-  console.log("In SAGA, addQnAAPI, data : ", data)
-  return axios.post("goods/info/qa_lists", data)
+  console.log("In SAGA, addQnAAPI, data : ", data);
+  return axios.post("goods/info/qa_lists", data);
 }
 
 function deleteQnAAPI(data) {
-  console.log("In SAGA, deleteQnAAPI, data : ", data)
-  return axios.post("goods/info/qa_lists", data)
+  console.log("In SAGA, deleteQnAAPI, data : ", data);
+  return axios.post("goods/info/qa_lists", data);
 }
 
 function patchQnAAPI(data) {
-  console.log("In SAGA, patchQnAAPI, data : ", data)
-  return axios.post("goods/info/qa_lists", data)
+  console.log("In SAGA, patchQnAAPI, data : ", data);
+  return axios.post("goods/info/qa_lists", data);
 }
 
 // review api
 function loadReviewAPI(data) {
-  console.log("In SAGA, loadReviewAPI, data : ", data)
-  return axios.get(`/goods/info/review?goods_id=${data}`)
+  console.log("In SAGA, loadReviewAPI, data : ", data);
+  return axios.get(`/goods/info/review?goods_id=${data}`);
 }
 
 function addReviewAPI(data) {
-  console.log("In SAGA, addReviewAPI, data : ", data)
-  return axios.post("/goods/info/review", data)
+  console.log("In SAGA, addReviewAPI, data : ", data);
+  return axios.post("/goods/info/review", data);
 }
 
 function deleteReviewAPI(data) {
-  console.log("In SAGA, deleteReviewAPI, data : ", data)
-  return axios.post("/goods/info/review", data)
+  console.log("In SAGA, deleteReviewAPI, data : ", data);
+  return axios.post("/goods/info/review", data);
 }
 
 function patchReviewAPI(data) {
-  console.log("In SAGA, patchReviewAPI, data : ", data)
-  return axios.post("/goods/info/review", data)
+  console.log("In SAGA, patchReviewAPI, data : ", data);
+  return axios.post("/goods/info/review", data);
 }
-
 
 
 // 3
@@ -109,12 +118,31 @@ function* home() {
   }
 }
 
+// searchList
+function* searchList(action) {
+  console.log("In SAGA, searchList, action : ", action);
+  try {
+    const result = yield call(searchListAPI, action.data); // TODO : max params?
+    console.log("In SAGA, searchList, result : ", result);
+    yield put({
+      type: LOAD_SEARCHLIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_SEARCHLIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 // goodsList
 function* goodsList(action) {
-  // console.log("In SAGA, goodsList, action : ", action)
+  console.log("In SAGA, goodsList, action : ", action);
   try {
     const result = yield call(goodsListAPI, action.data); // TODO : max params?
-    // console.log("In SAGA, goodsList, result : ", result)
+    console.log("In SAGA, goodsList, result : ", result);
     yield put({
       type: LOAD_GOODSLIST_SUCCESS,
       data: result.data,
@@ -123,7 +151,7 @@ function* goodsList(action) {
     console.log(err);
     yield put({
       type: LOAD_GOODSLIST_FAILURE,
-      error: err.response.data,
+      error: err.data,
     });
   }
 }
@@ -150,10 +178,10 @@ function* goodsInfo(action) {
 
 // review
 function* loadReview(action) {
-  console.log('In SAGA, loadReview, action : ', action);
+  // console.log('In SAGA, loadReview, action : ', action);
   try {
     const result = yield call(loadReviewAPI, action.id);
-    console.log('IN GOODS OF SAGA loadQnA, result : ', result);
+    console.log('In SAGA loadReview, result : ', result);
     yield put({
       type: LOAD_REVIEW_SUCCESS,
       // TODO : data: result.data,
@@ -169,13 +197,13 @@ function* loadReview(action) {
 }
 
 function* addReview(action) {
-  console.log('In SAGA, addReview, action : ', action);
+  // console.log('In SAGA, addReview, action : ', action);
   try {
-    // const result = yield call(addQnAAPI, action.text);
+    const result = yield call(addQnAAPI, action.text);
     // console.log('In SAGA of addQnA, result : ', result)
     yield put({
       type: ADD_REVIEW_SUCCESS,
-      data: action.text,
+      data: result.text,
     });
   } catch (err) {
     console.log(err);
@@ -187,7 +215,7 @@ function* addReview(action) {
 }
 
 function* deleteReview(action) {
-  console.log('In SAGA, deleteReview, action : ', action);
+  console.log("In SAGA, deleteReview, action : ", action);
   try {
     // TODO : const result = yield call(deleteQnAAPI, action.data);
     yield put({
@@ -204,7 +232,7 @@ function* deleteReview(action) {
 }
 
 function* patchReview(action) {
-  console.log('In SAGA, patchReview, action : ', action);
+  console.log("In SAGA, patchReview, action : ", action);
   try {
     // TODO : const result = yield call(patchReviewAPI, action.data);
     yield put({
@@ -223,12 +251,12 @@ function* patchReview(action) {
 
 //  qna
 function* loadQnA(action) {
-  console.log('In GOODS of SAGA, loadQnA, action : ', action);
+  console.log("In GOODS of SAGA, loadQnA, action : ", action);
   try {
     // yield delay(1000);
 
     const result = yield call(loadQnAAPI, action.id);
-    console.log('IN GOODS OF SAGA loadQnA, result : ', result);
+    console.log("IN GOODS OF SAGA loadQnA, result : ", result);
     yield put({
 
       type: LOAD_QUESTION_SUCCESS,
@@ -248,11 +276,11 @@ function* loadQnA(action) {
 function* addQnA(action) {
   // console.log('In GOODS of SAGA, addQnA, action : ', action);
   try {
-    // const result = yield call(addQnAAPI, action.text);
-    // console.log('In SAGA of addQnA, result : ', result)
+    const result = yield call(addQnAAPI, action.text);
+    console.log("In SAGA of addQnA, result : ", result);
     yield put({
       type: ADD_QUESTION_SUCCESS,
-      data: action.text,
+      data: result,
     });
   } catch (err) {
     console.log(err);
@@ -265,10 +293,10 @@ function* addQnA(action) {
 
 function* deleteQnA(action) {
   try {
-    // TODO : const result = yield call(deleteQnAAPI, action.data);
+    const result = yield call(deleteQnAAPI, action.data);
     yield put({
       type: DELETE_QUESTION_SUCCESS,
-      data: action.id,
+      data: result.id,
     });
   } catch (err) {
     console.log(err);
@@ -282,11 +310,11 @@ function* deleteQnA(action) {
 function* patchQnA(action) {
   // console.log(' In goods of SAGA 3, : ', action);
   try {
-    // TODO : const result = yield call(patchQnAAPI, action.data);
+    const result = yield call(patchQnAAPI, action.data);
     yield put({
       type: PATCH_QUESTION_SUCCESS,
       // TODO : data: result.data,
-      data: action.text,
+      data: result.text,
     });
   } catch (err) {
     console.log(err);
@@ -303,42 +331,49 @@ function* watchHome() {
 }
 
 function* watchGoodsList() {
-  console.log("In SAGA, goodsList, executes ")
+  console.log("In SAGA, goodsList, executes ");
   yield takeLatest(LOAD_GOODSLIST_REQUEST, goodsList);
 }
 
+
+function* watchSearchList() {
+  console.log("In SAGA, watchSearchList, executes ");
+  yield takeLatest(LOAD_SEARCHLIST_REQUEST, searchList);
+}
+
+
 function* watchGoodsInfo() {
-  console.log("In SAGA, goodsInfo, executes ")
+  console.log("In SAGA, goodsInfo, executes ");
   yield takeLatest(LOAD_GOODSINFO_REQUEST, goodsInfo);
 }
 
 function* watchLoadReview() {
-  console.log('In SAGA, loadReview, watchLoadReview');
+  console.log("In SAGA, loadReview, watchLoadReview");
   yield takeLatest(LOAD_REVIEW_REQUEST, loadReview);
 }
 
 function* watchAddReview() {
-  console.log('In SAGA, addReivew, watchAddReview');
+  console.log("In SAGA, addReivew, watchAddReview");
   yield takeLatest(ADD_REVIEW_REQUEST, addReview);
 }
 
 function* watchDeleteReview() {
-  console.log('In SAGA, deleteReview, watchDeleteReview');
+  console.log("In SAGA, deleteReview, watchDeleteReview");
   yield takeLatest(DELETE_REVIEW_REQUEST, deleteReview);
 }
 
 function* watchPatchReview() {
-  console.log('In SAGA, patchReview, watchPatchReview');
+  console.log("In SAGA, patchReview, watchPatchReview");
   yield takeLatest(PATCH_REVIEW_REQUEST, patchReview);
 }
 
 function* watchLoadQnA() {
-  console.log('In GOODS of SAGA, watchLoadQnA');
+  console.log("In GOODS of SAGA, watchLoadQnA");
   yield takeLatest(LOAD_QUESTION_REQUEST, loadQnA);
 }
 
 function* watchAddQnA() {
-  console.log('In GOODS of SAGA, watchAddQnA');
+  console.log("In GOODS of SAGA, watchAddQnA");
   yield takeLatest(ADD_QUESTION_REQUEST, addQnA);
 }
 
@@ -352,10 +387,11 @@ function* watchPatchQnA() {
 
 // 1
 export default function* goodsSaga() {
-  console.log('In GOODS of SAGA, goodsSaga');
+  console.log("In GOODS of SAGA, goodsSaga");
   yield all([
     fork(watchHome),
     fork(watchGoodsList),
+    fork(watchSearchList),
     fork(watchGoodsInfo),
     fork(watchLoadQnA),
     fork(watchAddQnA),

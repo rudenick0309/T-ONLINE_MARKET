@@ -58,12 +58,16 @@ const QnAPlus = (props) => {
   const dispatch = useDispatch();
   const id = props.route.params;
   const qna = useSelector((state) => state.goods?.qna);
+  const addQnAError = useSelector((state) => state.goods?.addQnAError);
 
-  console.log('In QnAPlus, id : ', id);
+  console.log('In QnAPlus, addQnAError : ', addQnAError);
 
   useEffect(() => {
     // TODO: take the bucket list to axios
-  }, []);
+    if (addQnAError === null) {
+      alert(addQnAError)
+    }
+  }, [addQnAError]);
 
   const text = {
     title: title,
