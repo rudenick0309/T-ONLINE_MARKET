@@ -103,7 +103,6 @@ const Home = (props) => {
       <Contents>
         {/*  TODO: <Search></Search>*/}
 
-
         <ViewPagerStyled initialPage={0}>
           {recommendation &&
             recommendation.map((el) => {
