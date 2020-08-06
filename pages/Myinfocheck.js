@@ -28,10 +28,10 @@ const Contents = styled.ScrollView`
 // function part
 const Myinfocheck = (props) => {
   const userInfo = useSelector((state) => state.login.data?.userInfo);
-
+  const loginDone = useSelector((state) => state.login?.loginDone);
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
-
+  const data = useSelector((state) => state.login?.data);
   console.log('myinfocheck info', userInfo);
   const dispatch = useDispatch();
   // const qna = useSelector((state) => state?.qna);
@@ -54,13 +54,23 @@ const Myinfocheck = (props) => {
     <Container>
       <Header props={props} />
       <Contents>
-        <Text>{props.email} : </Text>
-        <TextInput
-          placeholder="Password"
-          type="password"
-          secureTextEntry={true}
-          onChangeText={(text) => onChangePassword(text)}></TextInput>
-        <Button title="수정하기" onPress={onPressInfoCheck} />
+        {loginDone ? (
+          <View>
+            <Text>Email : {data === undefined ? 'None' : userInfo.email} </Text>
+            <TextInput
+              placeholder="Password"
+              type="password"
+              secureTextEntry={true}
+              onChangeText={(text) => onChangePassword(text)}></TextInput>
+            <Button title="수정하기" onPress={onPressInfoCheck} />
+          </View>
+        ) : (
+          <View>
+            <Button
+              title="로그인 후 이용 가능한 서비스입니다"
+              onPress={() => props.navigation.navigate('Home')}></Button>
+          </View>
+        )}
       </Contents>
       <Nav props={props} />
     </Container>
