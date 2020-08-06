@@ -14,7 +14,7 @@ export default class Splash extends Component {
           <Text style={styles.title}>TOM !!</Text>
         </View>
         <View>
-          <Text style={styles.subtitle}> copyright by Jerry </Text>
+          <Text style={styles.subtitle}> Ⓒcopyright by Jerry </Text>
         </View>
       </View>
     );
@@ -23,18 +23,18 @@ export default class Splash extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F7F8E0',
+    backgroundColor: '#FBF5F5',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
-    color: '#01DFA5',
+    color: '#464E46',
     fontSize: 35,
     fontWeight: 'bold',
   },
   subtitle: {
-    color: '#01DFA5',
+    color: '#464E46',
     fontWeight: '200',
   },
   titleContainer: {
