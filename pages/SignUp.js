@@ -39,8 +39,11 @@ const SignUp = (props) => {
   const [password, onChangePassword] = useState('');
   const [phone, onChangePhone] = useState('');
   const [address, onChangeAddress] = useState('');
+  const [trade_name, onChangetradename] = useState('');
+  const [business_number, onChangeBusiness] = useState('');
   const [user_type, onChangeUserType] = useState(1);
-
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isSeller, setIsSeller] = useState(false);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const dispatch = useDispatch();
@@ -52,6 +55,8 @@ const SignUp = (props) => {
     phone,
     address,
     user_type,
+    trade_name,
+    business_number,
   };
 
   const onPressSingup = useCallback(() => {
@@ -59,6 +64,10 @@ const SignUp = (props) => {
     alert('회원가입 되었습니다');
     props.navigation.navigate('Home');
   }, [username, email, password, phone, address, user_type]);
+
+  // const onPressFail = function () {
+  //   alert('개인정보 수집에 동의하셔야 합니다');
+  // };
 
   return (
     <Container>
@@ -120,42 +129,32 @@ const SignUp = (props) => {
           placeholder="Address"
           value={address}
           onChangeText={(text) => onChangeAddress(text)}></TextInput>
-
-        {/* <Switch
+        <Text>판매자로 등록하시려면 아래 버튼을 클릭해주세요</Text>
+        <Switch
           trackColor={{false: '#767577', true: '#81b0ff'}}
-          thumbColor={user_type ? '#f5dd4b' : '#f4f3f4'}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={user_type ? onChangeUserType(1) : onChangeUserType(2)}
-          value={user_type}
-        /> */}
+          onValueChange={() => {
+            setIsEnabled((previousState) => !previousState);
+            setIsSeller((previousState) => !previousState);
+            onChangeUserType(2);
+          }}
+          value={isEnabled}
+        />
 
-        {/* <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
-      placeholder = "사업자 등록번호">
-      </TextInput>
+        {isSeller === true ? (
+          <View>
+            <TextInput
+              placeholder="사업자 등록번호"
+              onChangeText={(text) => onChangeBusiness(text)}></TextInput>
 
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
-      placeholder = "사업자명">
-      </TextInput>
-
-      <TextInput
-      style={{
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-      }}
-      placeholder = "사업자 주소">
-      </TextInput> */}
-
+            <TextInput
+              placeholder="사업자명"
+              onChangeText={(text) => onChangetradename(text)}></TextInput>
+          </View>
+        ) : (
+          <Text></Text>
+        )}
         <Text>
           <Text>[필수] 개인정보 수집 및 이용 동의</Text>
 
@@ -175,13 +174,19 @@ const SignUp = (props) => {
           />
           <Text>동의</Text>
         </Text>
-
-        <InButton
-          onPress={onPressSingup}
-          title="Sign Up"
-          // disabled={!isLogin}
-          // title={isLogin ? "Log in" : "Log out"}
-        />
+        {toggleCheckBox === true ? (
+          <InButton
+            onPress={onPressSingup}
+            title="Sign Up"
+            // disabled={!isLogin}
+            // title={isLogin ? "Log in" : "Log out"}
+          />
+        ) : (
+          <InButton
+            onPress={() => alert('개인정보 수집에 동의하셔야 합니다')}
+            title="Sign Up"
+          />
+        )}
       </Contents>
       <Nav props={props} />
     </Container>
