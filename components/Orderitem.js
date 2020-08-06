@@ -1,7 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, Input, TouchableOpacity, Image} from "react-native";
-import styled from "styled-components";
-
+import {
+  StyleSheet,
+  Text,
+  View,
+  Input,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import styled from 'styled-components';
 
 export const OrderContainer = styled.TouchableOpacity`
   flex: 1;
@@ -21,15 +27,5 @@ export const OrderImageView = styled.Image`
 `;
 
 export const OrderTextView = styled.Text`
-  color : blue;
+  color: blue;
 `;
-
-const Orderitem = () => {
-  return (
-    <View>
-      <Text>Flower</Text>
-    </View>
-  )
-}
-
-export default Orderitem;
