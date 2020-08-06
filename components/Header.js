@@ -1,4 +1,3 @@
-
 import React, {useState, useCallback} from 'react';
 import styled from 'styled-components/native';
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
@@ -10,6 +9,7 @@ import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 // import { Fonts } from "../src/fonts/Fonts";
 // console.log('In Header, Fonts : ', Fonts);
+
 
 const HeaderView = styled.View`
   height: 50px;
@@ -41,17 +41,24 @@ const HeaderCenterText = styled.Text`
 `;
 
 
-const Header = ({props}) => {
+const SearchIcon = styled.TextInput`
+  width: 150px;
+  height: 50px;
+  border: 3px solid blue;
+`;
 
+
+const Header = ({props}) => {
   const loginDone = useSelector((state) => state.login?.loginDone);
 
   const dispatch = useDispatch();
   // const font_rubik = Fonts["Rubik-Regular"]
   const onPressSignout = useCallback(() => {
-    dispatch(logoutAction());
-    alert('로그아웃 하셨습니다');
     props.navigation.navigate('Home');
+    dispatch(logoutAction());
+    // alert('로그아웃 하셨습니다');
   }, []);
+
 
   return (
     <HeaderView>
@@ -64,6 +71,7 @@ const Header = ({props}) => {
       </HeaderIcon>
 
       <HeaderCenterText >T - MARKET</HeaderCenterText>
+
 
       {loginDone === true ? (
         <HeaderIcon onPress={onPressSignout}>

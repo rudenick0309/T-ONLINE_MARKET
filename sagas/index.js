@@ -7,6 +7,7 @@ import signupSaga from './signupsaga';
 import EditInfoSaga from './infosaga';
 import resignSaga from './resignsaga';
 import infoCheckSaga from './infocheck';
+import orderSaga from './orders';
 // TODO :  import userSaga from './user'   -> later
 
 axios.defaults.baseURL =
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     fork(EditInfoSaga),
     fork(resignSaga),
     fork(infoCheckSaga),
+    fork(orderSaga),
   ]);
 }

@@ -29,3 +29,13 @@ export const OrderImageView = styled.Image`
 export const OrderTextView = styled.Text`
   color: blue;
 `;
+
+const OnsaleInfo = () => {
+  return (
+    <View>
+      <Text>Flower</Text>
+    </View>
+  );
+};
+
+export default OnsaleInfo;

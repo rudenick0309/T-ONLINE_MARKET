@@ -24,7 +24,7 @@ const Myinfo = (props) => {
   // TODO : changes the state name :  const [checkList, setCheckList] = useState(null);
 
   const userInfo = useSelector((state) => state.login.data?.userInfo);
-
+  const data = useSelector((state) => state.login?.data);
   const [username, onChangeUsername] = useState('');
   const [password, onChangePassword] = useState('');
   const [email, onChangeEmail] = useState('');
@@ -50,7 +50,7 @@ const Myinfo = (props) => {
   const onPressMyinfo = useCallback(() => {
     dispatch(editinfoAction(text)); //TODO : 1. text  or  2. (name, content)
     alert('회원정보가 변경되었습니다');
-    props.navigation.navigation('Mypage');
+    props.navigation.navigate('Mypage');
   }, [username, password, email, phone, address]);
 
   return (
@@ -59,12 +59,12 @@ const Myinfo = (props) => {
       <Contents>
         <Text> Name : {userInfo ? userInfo.username : ''} </Text>
         <TextInput
-          placeholder="NameChange"
+          placeholder={userInfo ? userInfo.username : ''}
           value={username}
           onChangeText={(text) => onChangeUsername(text)}></TextInput>
         <Text> Email : {userInfo ? userInfo.email : ''} </Text>
         <TextInput
-          placeholder="Email"
+          placeholder={userInfo ? userInfo.email : ''}
           value={email}
           onChangeText={(text) => onChangeEmail(text)}></TextInput>
         <Text> Password </Text>
@@ -75,12 +75,12 @@ const Myinfo = (props) => {
           onChangeText={(text) => onChangePassword(text)}></TextInput>
         <Text> Phone : {userInfo ? userInfo.phone : ''}</Text>
         <TextInput
-          placeholder="Phone"
+          placeholder={userInfo ? userInfo.phone : ''}
           value={phone}
           onChangeText={(text) => onChangePhone(text)}></TextInput>
         <Text> Address : {userInfo ? userInfo.address : ''}</Text>
         <TextInput
-          placeholder="Address"
+          placeholder={userInfo ? userInfo.address : ''}
           value={address}
           onChangeText={(text) => onChangeAddress(text)}></TextInput>
 

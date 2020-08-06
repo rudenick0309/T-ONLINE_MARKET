@@ -51,19 +51,14 @@ const SignIn = (props) => {
 
   const onPressSignin = useCallback(() => {
     dispatch(loginAction(text));
-    props.navigation.goBack();
+    console.log('login page', errMessage);
+    props.navigation.navigate('Home');
   }, [email, password]);
 
   return (
     <Container>
       <Header props={props} />
       <Contents>
-        <Button
-          title="회원가입하기"
-          onPress={() => props.navigation.navigate('SignUp')}
-        />
-        <Button title="Go back" onPress={() => props.navigation.goBack()} />
-
         {/* <TouchableOpacity style = {{ margin: 100 }} onPress = {goToHome}>
          <Text>Log In</Text>
       </TouchableOpacity> */}
@@ -86,6 +81,10 @@ const SignIn = (props) => {
           title="Log in"
           // disabled={!isLogin}
           // title={isLogin ? "Log in" : "Log out"}
+        />
+        <Button
+          title="회원가입하기"
+          onPress={() => props.navigation.navigate('SignUp')}
         />
       </Contents>
       <Nav props={props} />
