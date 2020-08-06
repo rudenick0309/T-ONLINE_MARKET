@@ -15,7 +15,7 @@ function postResignAPI(data) {
 function* postResign(action) {
   console.log('postResign saga', action);
   try {
-    // TODO : const result = yield call(postLoginAPI, action.data);
+    const result = yield call(postResignAPI, action.data);
     yield put({
       type: POST_RESIGN_SUCCESS,
       // TODO : data: result.data,
