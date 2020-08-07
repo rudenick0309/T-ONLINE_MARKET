@@ -52,10 +52,9 @@ const QnAPlusEdit = (props) => {
   };
 
   const modifiedQnA = {
-    username,
     title: editTitle,
-    content: editContent,
-    id,
+    contents: editContent,
+    qa_list_id : id,
   }
 
   const onPressEditQnA = () => {
