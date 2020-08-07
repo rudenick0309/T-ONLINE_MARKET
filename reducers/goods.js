@@ -151,13 +151,7 @@ export const deleteToBucket = () => {
   };
 };
 
-// count
-export const timesPlus = () => {
-  console.log('In REDUCER, timesPlus, executes')
-  return {
-    type: TIMES_PLUS_REQUEST,
-  };
-};
+
 
 // count
 export const countDefault = () => {
@@ -182,6 +176,13 @@ export const countMinus = () => {
 export const homeToLoad = () => {
   return {
     type: HOME_REQUEST,
+  };
+};
+
+// timesDelete
+export const timesToDelete = () => {
+  return {
+    type: TIMES_PLUS_REQUEST,
   };
 };
 
