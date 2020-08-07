@@ -6,7 +6,7 @@ import Nav from "../components/Nav";
 import {connect, useDispatch, useSelector} from "react-redux";
 // import {actionCreators} from "../reducers/goods";
 import shortid from "shortid";
-import {addToQuestion, loadToQuestion} from "../reducers/goods";
+import {addToQuestion, loadToQuestion, timesToDelete} from "../reducers/goods";
 // import {initialState} from '../reducers/goods'
 
 // css part
@@ -52,7 +52,6 @@ const QnAContentTextInput = styled.TextInput`
 // function part
 const QnAPlus = (props) => {
   console.log('In QnAPlus, props : ', props.route.params);
-  const [userName, onChangeUserName] = useState("");
   const [title, onChangeTitle] = useState("");
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
@@ -61,8 +60,6 @@ const QnAPlus = (props) => {
   // console.log('In QnAPlus, title : ', title);
   // console.log('In QnAPlus, content : ', content);
   // console.log('In QnAPlus, addQnAError : ', addQnAError);
-
-  const [timesAdd, setTimesAdd] = useState(0)
 
   var text = null;
 
@@ -77,8 +74,7 @@ const QnAPlus = (props) => {
 
 
   const onPressQuestion = useCallback(() => {
-    setTimesAdd((prevTimesAdd) => prevTimesAdd + 1);
-    console.log('In QnAPlus, times : ', timesAdd);
+    dispatch(timesToDelete())
     console.log('In QnAPlus, text: ', text);
 
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
@@ -86,13 +82,8 @@ const QnAPlus = (props) => {
     setTimeout(() => {
       props.navigation.goBack();
     },1000);
-
   }, [title, content]);
 
-  useEffect(() => {
-    console.log('In QnAPlus, useEffect, executes after changed times up')
-    dispatch(loadToQuestion(id.id))
-  }, [timesAdd])
 
   return (
     <Container>
