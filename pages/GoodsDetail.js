@@ -21,7 +21,6 @@ import * as Colors from "react-native-svg";
 // import {Fonts} from "../src/fonts/Fonts";
 import AutoHeightImage from 'react-native-auto-height-image';
 
-
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -44,7 +43,7 @@ const LeftDetailInfoOfUpper = styled.View`
 
 const ImageOfUpperLeft = styled.Image`
   flex: 1;
-  width:100%;
+  width: 100%;
   height: 100%;
   resize-mode: contain;
 `;
@@ -90,6 +89,7 @@ const QnADetailInfoOfBottom = styled.ScrollView`
   height: 500px;
 `;
 
+
 // const QnAheader = styled.View`                  // no use
 //   flex-direction : row;
 //   justify-content : space-around;
@@ -100,6 +100,7 @@ const QnADetailInfoOfBottom = styled.ScrollView`
 //   width : 400px;
 //
 // `;
+
 
 
 const ViewDetailInfoOfBottom = styled.View`
@@ -157,7 +158,6 @@ const ViewMiddleStyled = styled.View`
   flex-direction:row;
   justify-content: space-around;
   flex:1;
-  
 `;
 
 const TouchableText = styled.Text`
@@ -177,7 +177,7 @@ const GoodsDetail = (props) => {
   const [userQnA, setQnA] = useState(false);
   const [review, setReview] = useState(false);
   const dispatch = useDispatch();
-  const qna = useSelector(state => state.goods?.qna);
+  const qna = useSelector((state) => state.goods?.qna);
   const id = props.route.params;
   const goodsInfo = useSelector((state) => state.goods?.goodsInfo);
   console.log("In GOODS_DETAIL, goodsInfo : ", goodsInfo);
@@ -216,16 +216,16 @@ const GoodsDetail = (props) => {
 
   return (
     <Container>
-      <Header props={props}/>
+      <Header props={props} />
 
       <Contents>
         <DetailInfoOfUpper>
-
           <LeftDetailInfoOfUpper>
-            <ImageOfUpperLeft source={{uri: goods_img}}/>
+            <ImageOfUpperLeft source={{uri: goods_img}} />
           </LeftDetailInfoOfUpper>
 
           <RightDetailInfoOfUpper>
+
             <ViewMiddleStyled style={styles.border} >
 
               <View>
@@ -268,7 +268,6 @@ const GoodsDetail = (props) => {
 
             </ViewMiddleStyled>
 
-
           </RightDetailInfoOfUpper>
 
         </DetailInfoOfUpper>
@@ -277,7 +276,6 @@ const GoodsDetail = (props) => {
         <DetailInfoOfBottom>
           <ViewDetailInfoOfBottom>
             <ButtonDetailInfoOfBottom
-
               color={"#535204"}
               onPress={() => {
                 setQnA(false);
@@ -346,7 +344,6 @@ const GoodsDetail = (props) => {
                   <Text>empty part</Text>
                 )}
         </DetailInfoOfBottom>
-
       </Contents>
 
       {!info || !userQnA || !review

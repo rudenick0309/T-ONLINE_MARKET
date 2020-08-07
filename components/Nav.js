@@ -1,10 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import {StyleSheet, Text, View, Input, TouchableOpacity} from "react-native";
-import Home from "../pages/Home";
+import React, {useState, useEffect} from 'react';
+import styled from 'styled-components';
+import {StyleSheet, Text, View, Input, TouchableOpacity} from 'react-native';
+import Home from '../pages/Home';
+import {useSelector} from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {faChevronLeft, faSearch,faHome} from "@fortawesome/free-solid-svg-icons";
 import {faAddressCard} from "@fortawesome/free-regular-svg-icons";
+
 
 const NavView = styled.View`
   height: 50px;
@@ -49,6 +51,11 @@ const HeaderIconText = styled.Text`
 `;
 
 const Nav = ({props}) => {
+  const loginDone = useSelector((state) => state.login?.loginDone);
+  const userInfo = useSelector((state) => state.login.data?.userInfo);
+  const message = useSelector((state) => state.login.data?.message);
+  // console.log('usertype', userInfo.user_type);
+
   return (
     <NavView>
       <NavIcon onPress={() => {
@@ -68,12 +75,21 @@ const Nav = ({props}) => {
           </HeaderIcon>
         </NavCenterText>
       </NavIcon>
-
-      <NavIcon onPress={() => {
+ {loginDone && message ? (
+        <NavIcon
+          onPress={() => {
+            props.navigation.navigate('MypageSeller');
+          }}>
+          
+        </NavIcon>
+      ) : (
+        <NavIcon onPress={() => {
         props.navigation.navigate("Mypage");
+      <FontAwesomeIcon icon={ faAddressCard } color={ '#464e46' } size={ 30 }/>
       }}>
-        <FontAwesomeIcon icon={ faAddressCard } color={ '#464e46' } size={ 30 }/>
-      </NavIcon>
+        </NavIcon>
+      )}
+     
     </NavView>
   );
 };

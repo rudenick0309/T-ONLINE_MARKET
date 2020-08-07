@@ -92,8 +92,8 @@ const Home = (props) => {
       <Contents>
         {/*  TODO: <Search></Search>*/}
 
-        <RecommendTextStyled>MD PICK's</RecommendTextStyled>
 
+        <RecommendTextStyled>MD PICK's</RecommendTextStyled>
         <ViewPagerStyled initialPage={0}>
           {recommendation && recommendation.map( (el) => {
             return (

@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Nav from '../components/Nav';
 import {useDispatch} from 'react-redux';
 import {resignAction} from '../reducers/resign';
+import {logoutAction} from '../reducers/login';
 
 // css part
 const Container = styled.SafeAreaView`
@@ -35,7 +36,8 @@ const Resign = (props) => {
   };
 
   const onPressResign = useCallback(() => {
-    dispatch(resignAction(text)); //TODO : 1. text  or  2. (name, content)
+    dispatch(resignAction(text));
+    dispatch(logoutAction()); //TODO : 1. text  or  2. (name, content)
     props.navigation.navigate('ResignCheck');
   }, [email, password]);
 
