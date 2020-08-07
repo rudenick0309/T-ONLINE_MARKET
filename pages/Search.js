@@ -96,7 +96,7 @@ const Search = (props) => {
       <Contents>
         {searchList&&searchList.map((el) => {
           return (
-            <SearchList key={shortId.generate()} data={el}/>
+            <SearchList key={shortId.generate()} prop={props} data={el}/>
           )
         })}
 
