@@ -4,7 +4,7 @@ import QnAList from "./QnAList";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {LOAD_QUESTION_REQUEST, loadToQuestion} from "../reducers/goods";
-import shortId from 'shortid'
+import shortId from "shortid";
 
 // qna detail part
 const QnADetailInfoOfBottom = styled.ScrollView`
@@ -26,24 +26,16 @@ const QnAButtonDetailInfoOfBottom = styled.Button`
 
 // function part
 const QnADetailInfo = (props) => {
-  console.log('In QnADetailInfo, props : ', props);
-  const id = props.prop?.route.params.id
+  console.log("In QnADetailInfo, props : ", props);
+  const id = props.prop?.route.params.id;
   const dispatch = useDispatch();
-  const loadQnAError = useSelector((state) => state.goods?.loadQnAError);
-  console.log('In QnADetailInfo, loadQnAError : ', loadQnAError);
-
   const qna = useSelector(state => state.goods?.qna);
-  // qna = qna[0].reverse()
+  // console.log("In QnADetailInfo, times : ", times);
+  // console.log("In QnADetailInfo, qna : ", qna);
 
-  console.log('In QnADetailInfo, qna : ', qna);
-  // if (loadQnAError) {
-  //   console.log('In QnADetailInfo At IF, id : ', id)  //id : 9,
-  //   qna = [];
-  // }
-
- useEffect(() => {
-    dispatch(loadToQuestion(id))
- },[])
+  useEffect(() => {
+    dispatch(loadToQuestion(id));
+  },[]);
 
   return (
     <QnADetailInfoOfBottom>
@@ -53,18 +45,18 @@ const QnADetailInfo = (props) => {
           title={"글쓰기"}
           color={"#535204"}
           onPress={() => {
-            props.prop.navigation.navigate("QnAPlus", {id:id});
+            props.prop.navigation.navigate("QnAPlus", {id: id});
           }}
         />
       </QnAheader>
-      { qna && qna.length === 0
+      {qna && qna.length === 0
         ? <Text>등록된 QnA가 없습니다</Text>
-        : (qna[0].reverse().map(el => {
+        : (qna[0].map(el => {
           return <QnAList key={shortId.generate()} list={el} prop={props}/>;
         }))
       }
     </QnADetailInfoOfBottom>
-  )
-}
+  );
+};
 
 export default QnADetailInfo;

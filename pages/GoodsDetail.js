@@ -8,7 +8,7 @@ import Payment from "./Payment";
 import Bucket from "./Bucket";
 import {useSelector, useDispatch} from "react-redux";
 import QnAList from "../components/QnAList";
-import {countDefault, countPlus, countMinus, loadGoodsInfo} from "../reducers/goods";
+import {countDefault, countPlus, countMinus, loadGoodsInfo, loadToQuestion} from "../reducers/goods";
 import goods from "../sagas/goods";
 import QnADetailInfo from "../components/QnADetailInfo";
 import ReviewDetailInfo from "../components/ReviewDetailInfo";
@@ -201,7 +201,7 @@ const GoodsDetail = (props) => {
 
   useEffect(() => {
     // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!
-    // console.log("In GOODSDETAIL, final ID : ", id);
+
     dispatch(countDefault());
     dispatch(loadGoodsInfo(id));
   }, []);
