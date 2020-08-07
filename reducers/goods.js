@@ -256,6 +256,7 @@ export const addToQuestion = (text) => {
 };
 
 export const deleteToQuestion = (id) => {
+  console.log("In REDUCER, deleteToQuestion , id : ", id);
   return {
     type: DELETE_QUESTION_REQUEST,
     // TODO : id : parseInt(id),
@@ -404,7 +405,7 @@ const reducer = (state = initialState, action) => {
         loadGoodsInfoError: null,
       };
     case LOAD_GOODSINFO_SUCCESS:
-      // console.log("In REDUX, LOAD_GOODSINFO_SUCCESS, action : ", action)
+      console.log("In REDUX, LOAD_GOODSINFO_SUCCESS, action : ", action)
       return {
         ...state,
         loadGoodsInfoLoading: false, // goods info
@@ -436,7 +437,8 @@ const reducer = (state = initialState, action) => {
         loadReviewLoading: false,   // review read
         loadReviewDone: true,
         loadReviewError: null,
-        review: [action.data, ...state.review],
+        // review: [action.data, ...state.review],
+        review: [action.data],   // When i clicked 'review button', action.data has been added in qna states
       };
     case LOAD_REVIEW_FAILURE:
       console.log("In REDUCER, LOAD_REVIEW_FAILURE action : ", action);
@@ -457,12 +459,12 @@ const reducer = (state = initialState, action) => {
         addReviewError: null,
       };
     case ADD_REVIEW_SUCCESS:
-      console.log("In REDUCERS OF ADD_REVIEW_SUCCESS, action : ", action);
+      console.log("In REDUCERS OF ADD_REVIEW_SUCCESS, action : ", action.data.data);
       return {
         ...state,
         addReviewLoading: false,
         addReviewDone: true,
-        review: [action.data, ...state.review],
+        review: [action.data.data, ...state.review],
 
       };
     case ADD_REVIEW_FAILURE:
@@ -546,12 +548,14 @@ const reducer = (state = initialState, action) => {
         loadQnAError: null,
       };
     case LOAD_QUESTION_SUCCESS:
-      console.log("In REDUX, LOAD_QUESTION_SUCCESS, action : ", action.data);
+      console.log("In REDUX, LOAD_QUESTION_SUCCESS, action : ", action);
       return {
         ...state,
         loadQnALoading: false,
         loadQnADone: true,
-        qna: [action.data, ...state.qna],
+        // qna: [action.data],    // 단순 db를 불러오기 위해서
+        // qna: action.data.concat(...state.qna), // When i clicked 'review button', action.data has been added in qna states
+        qna:[action.data,...state.qna]
       };
     case LOAD_QUESTION_FAILURE:
       console.log("In REDUX, LOAD_QUESTION_FAILURE, action : ", action);
@@ -573,14 +577,15 @@ const reducer = (state = initialState, action) => {
         addQnAError: null,
       };
     case ADD_QUESTION_SUCCESS:
-      const data = JSON.parse(action.data.config.data)
-      console.log("In REDUCERS OF ADD_QUESTION_SUCCESS, JSON action : ", action);
+      // const data = JSON.parse(action.data.config.data)
+      console.log("In REDUCERS OF ADD_QUESTION_SUCCESS, JSON action : ", action.data);
 
       return {
         ...state,
         addQnALoading: false,
         addQnADone: true,
-        qna: [data, ...state.qna], //TODO: ...state.qna
+        // qna: action.data.concat(...state.qna), //TODO: ...state.qna
+        // qna:[action.data, ...state.qna],
         // TODO: in immer ->  qna: state.qna.push(action.data),
       };
     case ADD_QUESTION_FAILURE:
@@ -594,7 +599,7 @@ const reducer = (state = initialState, action) => {
 
     // delete question
     case DELETE_QUESTION_REQUEST:
-      // console.log('In reducers, DELETE REQUEST')
+      console.log('In REDUCER, DELETE_QUESTION_REQUEST, action : ', action)
       return {
         ...state,
         deleteQnALoading: true, // QnA Plus
@@ -602,6 +607,7 @@ const reducer = (state = initialState, action) => {
         deleteQnAError: null,
       };
     case DELETE_QUESTION_SUCCESS:
+      console.log('In REDUCER, DELETE_QUESTION_SUCCESS, action : ', action)
       return {
         ...state,
         deleteQnALoading: false,
@@ -609,24 +615,24 @@ const reducer = (state = initialState, action) => {
         qna: state.qna.filter((el) => el.id !== action.data),
       };
     case DELETE_QUESTION_FAILURE:
-      // console.log("In reducers, DELETE FAILURE");
+      console.log('In REDUCER, DELETE_QUESTION_FAILURE, action : ', action)
       return {
         ...state,
-        addQnALoading: true,
-        addQnADone: false,
-        addQnAError: action.error,
+        deleteQnALoading: false,
+        deleteQnAError: action.error,
       };
 
     // TODO: patch question  -> advanced?
     case PATCH_QUESTION_REQUEST:
-      // console.log("In reducers, PATCH REQUEST");
+      console.log('In REDUCER, PATCH_QUESTION_REQUEST, action : ', action)
       return {
         ...state,
+        patchQnALoading: true,
         patchQnADone: false,
         patchQnAError: null,
       };
     case PATCH_QUESTION_SUCCESS:
-      // console.log("In reducers, PATCH SUCCESS", action);
+      console.log('In REDUCER, PATCH_QUESTION_SUCCESS, action : ', action)
       let qnaIndex = 0;
       state.qna.forEach((el, index) => {
         if (action.data.id === el.id) {
@@ -645,11 +651,10 @@ const reducer = (state = initialState, action) => {
         qna: forehand.concat(action.data, backhand),
       };
     case PATCH_QUESTION_FAILURE:
-      // console.log("In reducers, PATCH FAILURE");
+      console.log('In REDUCER, PATCH_QUESTION_FAILURE, action : ', action)
       return {
         ...state,
         patchQnALoading: false,
-        patchQnADone: false,
         patchQnAError: action.error,
       };
     default:
