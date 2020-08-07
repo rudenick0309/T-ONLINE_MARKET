@@ -46,7 +46,6 @@ const ButtonRowStyled = styled.View`
 const ButtonStyled = styled.Button`
   height : 50px;
   color : #e3dfc8;
-  
 `;
 
 const ImageStyled = styled.Image`
@@ -88,6 +87,8 @@ const ReviewList = (props) => {
     // console.log("In deleteQnA", id);
     dispatch(deleteToQuestion(id));
   }, []);
+
+
 
   return (
     <Container>
@@ -142,54 +143,3 @@ const ReviewList = (props) => {
 
 export default ReviewList;
 
-
-//
-//
-// <Container>
-//   <Contents>
-//     <ViewStyled>
-//
-//       {/*<TouchableTextStyled key={id} onPress={onPressReview}>*/}
-//
-//       {/*<TopViewStyled>*/}
-//       <View>
-//         <View>
-//           <TextStyled>
-//             {starStr}
-//           </TextStyled>
-//         </View>
-//
-//         {/*</TopViewStyled>*/}
-//
-//         <View>
-//           <TextStyled>
-//             {
-//               `${contents}`
-//             }
-//           </TextStyled>
-//
-//           <TextStyled>
-//             {
-//               `${username} | 작성날짜는 여기에`
-//             }
-//           </TextStyled>
-//         </View>
-//         <View>
-//           <ButtonStyled title={"수정"} onPress={() => {
-//             prop.navigation.navigate("ReviewPlusEdit", {id, title, contents, username});
-//           }}/>
-//           <ButtonStyled title={"삭제"} onPress={deleteReview}/>
-//         </View>
-//       </View>
-//
-//       <View>
-//         <ImageStyled source={{uri: review_img}}/>
-//       </View>
-//
-//       {/*</TouchableTextStyled>*/}
-//
-//
-//     </ViewStyled>
-//   </Contents>
-//
-// </Container>

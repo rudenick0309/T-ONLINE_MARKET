@@ -71,12 +71,15 @@ function addQnAAPI(data) {
 
 function deleteQnAAPI(data) {
   console.log("In SAGA, deleteQnAAPI, data : ", data);
-  return axios.post("goods/info/qa_lists", data);
+  let obj = {
+    data : data,
+  }
+  return axios.delete("goods/info/qa_lists", obj);
 }
 
 function patchQnAAPI(data) {
   console.log("In SAGA, patchQnAAPI, data : ", data);
-  return axios.post("goods/info/qa_lists", data);
+  return axios.put("goods/info/qa_lists", data);
 }
 
 // review api
@@ -185,7 +188,8 @@ function* loadReview(action) {
     yield put({
       type: LOAD_REVIEW_SUCCESS,
       // TODO : data: result.data,
-      data: result.data[0],
+      // data: result.data[result.data.length - 1],
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
@@ -199,11 +203,11 @@ function* loadReview(action) {
 function* addReview(action) {
   // console.log('In SAGA, addReview, action : ', action);
   try {
-    const result = yield call(addQnAAPI, action.text);
-    // console.log('In SAGA of addQnA, result : ', result)
+    const result = yield call(addReviewAPI, action.text);
+    console.log('In SAGA of addReview, result : ', result)
     yield put({
       type: ADD_REVIEW_SUCCESS,
-      data: result.text,
+      data: result,
     });
   } catch (err) {
     console.log(err);
@@ -217,7 +221,8 @@ function* addReview(action) {
 function* deleteReview(action) {
   console.log("In SAGA, deleteReview, action : ", action);
   try {
-    // TODO : const result = yield call(deleteQnAAPI, action.data);
+    const result = yield call(deleteQnAAPI, action.data);
+    console.log("In SAGA, deleteReview, result : ", result);
     yield put({
       type: DELETE_REVIEW_SUCCESS,
       data: action.id,
@@ -234,7 +239,8 @@ function* deleteReview(action) {
 function* patchReview(action) {
   console.log("In SAGA, patchReview, action : ", action);
   try {
-    // TODO : const result = yield call(patchReviewAPI, action.data);
+    const result = yield call(patchReviewAPI, action.data);
+    console.log("In SAGA, deleteReview, result : ", result);
     yield put({
       type: PATCH_REVIEW_SUCCESS,
       // TODO : data: result.data,
@@ -253,15 +259,13 @@ function* patchReview(action) {
 function* loadQnA(action) {
   console.log("In GOODS of SAGA, loadQnA, action : ", action);
   try {
-    // yield delay(1000);
-
     const result = yield call(loadQnAAPI, action.id);
     console.log("IN GOODS OF SAGA loadQnA, result : ", result);
     yield put({
 
       type: LOAD_QUESTION_SUCCESS,
       // TODO : data: result.data,
-      data: result.data[0],
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
@@ -274,26 +278,28 @@ function* loadQnA(action) {
 
 // login function is not executes. QnA login has all the dummy.
 function* addQnA(action) {
-  // console.log('In GOODS of SAGA, addQnA, action : ', action);
+  console.log('In SAGA, addQnA, action : ', action);
   try {
     const result = yield call(addQnAAPI, action.text);
     console.log("In SAGA of addQnA, result : ", result);
     yield put({
       type: ADD_QUESTION_SUCCESS,
-      data: result,
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
     yield put({
       type: ADD_QUESTION_FAILURE,
-      error: err.response.data,
+      error: err.response,
     });
   }
 }
 
 function* deleteQnA(action) {
+  console.log('In SAGA, deleteQnA, executes, action : ', action)
   try {
-    const result = yield call(deleteQnAAPI, action.data);
+    const result = yield call(deleteQnAAPI, action.id);
+    console.log('In SAGA, deleteQnA, executes, result : ', result)
     yield put({
       type: DELETE_QUESTION_SUCCESS,
       data: result.id,
@@ -308,9 +314,9 @@ function* deleteQnA(action) {
 }
 
 function* patchQnA(action) {
-  // console.log(' In goods of SAGA 3, : ', action);
+  console.log('In SAGA, patchQnA, action : ', action)
   try {
-    const result = yield call(patchQnAAPI, action.data);
+    const result = yield call(patchQnAAPI, action.text);
     yield put({
       type: PATCH_QUESTION_SUCCESS,
       // TODO : data: result.data,
@@ -378,10 +384,12 @@ function* watchAddQnA() {
 }
 
 function* watchDeleteQnA() {
+  console.log('In SAGA, watchDeleteQnA, executes')
   yield takeLatest(DELETE_QUESTION_REQUEST, deleteQnA);
 }
 
 function* watchPatchQnA() {
+  console.log('In SAGA, watchPatchQnA, executes')
   yield takeLatest(PATCH_QUESTION_REQUEST, patchQnA);
 }
 

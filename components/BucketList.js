@@ -21,10 +21,18 @@ const TextViewStyled = styled.View`
 
 
 const BucketList = (props) => {
-  console.log('In BucketList, all the props : ', img);
-  const img = props.data.goods_img;
-  const name = props.data.goods_name;
-  const price = props.data.goods_price;
+  console.log('In BucketList, all the props : ', props);
+  // console.log('In BucketList, all the props : ', props.props.route.params);
+
+  // const img = props.props.route.params.goods_img;
+  // const name = props.props.route.params.goods_name;
+  // const price = props.props.route.params.goods_price;
+  // const count = props.props.route.params.count;
+
+  const img = props.data?.goods_img;
+  const name = props.data?.goods_name;
+  const price = props.data?.goods_price;
+  const count = props.data?.count;
 
 
   return (
@@ -36,6 +44,7 @@ const BucketList = (props) => {
 
       <TextViewStyled>
         <Text>{name}</Text>
+        <Text>{count}</Text>
         <Text>{price}</Text>
       </TextViewStyled>
 

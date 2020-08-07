@@ -6,7 +6,7 @@ import Nav from "../components/Nav";
 import {connect, useDispatch, useSelector} from "react-redux";
 // import {actionCreators} from "../reducers/goods";
 import shortid from "shortid";
-import {addToQuestion} from "../reducers/goods";
+import {addToQuestion, loadToQuestion} from "../reducers/goods";
 // import {initialState} from '../reducers/goods'
 
 // css part
@@ -59,27 +59,43 @@ const QnAPlus = (props) => {
   const id = props.route.params;
   const qna = useSelector((state) => state.goods?.qna);
   const addQnAError = useSelector((state) => state.goods?.addQnAError);
-
+  console.log('In QnAPlus, title : ', title);
+  console.log('In QnAPlus, content : ', content);
   console.log('In QnAPlus, addQnAError : ', addQnAError);
+  var text = null;
+  // useEffect(() => {
+  //   // TODO: take the bucket list to axios
+  //   if (addQnAError === null) {
+  //     alert(addQnAError)
+  //   }
+  // }, [addQnAError]);
 
-  useEffect(() => {
-    // TODO: take the bucket list to axios
-    if (addQnAError === null) {
-      alert(addQnAError)
-    }
-  }, [addQnAError]);
+  // const text = {
+  //   title: title,
+  //   contents: content,
+  //   goods_id:id.id,
+  // };
+  useEffect(()=> {
+    text = {
+      title: title,
+      contents: content,
+      goods_id:id.id,
+    };
+    console.log('In QnAPlus, text collection : ', text);
+  },[title, content])
 
-  const text = {
-    title: title,
-    contents: content,
-    goods_id:id.id,
-  };
-
+  // const onPressQuestion = useCallback(() => {
+  //   console.log('In QnAPlus, text: ', text);
+  //   dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
+  //   props.navigation.goBack();
+  // }, [userName, content]);
   const onPressQuestion = useCallback(() => {
+
     console.log('In QnAPlus, text: ', text);
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
+    dispatch(loadToQuestion(id.id))
     props.navigation.goBack();
-  }, [userName, content]);
+  }, [title, content,dispatch]);
 
 
   return (
@@ -96,7 +112,7 @@ const QnAPlus = (props) => {
         </Text>
 
         <QnAView>
-          <QnANameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>
+          {/*<QnANameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>*/}
           <QnATitleText maxLength={20} value={title} onChangeText={(text) => onChangeTitle(text)}/>
 
           <QnAButton title={"등록하기"} onPress={onPressQuestion}/>
@@ -106,10 +122,10 @@ const QnAPlus = (props) => {
         <QnAContentTextInput
           maxLength={200}
           multiline={true}
-          onChangeText={(text) => onChangeContent(text)}
           value={content}
+          onChangeText={(text) => onChangeContent(text)}
         />
-        {/*{qna}*/}
+
       </Contents>
 
       <Nav props={props}/>

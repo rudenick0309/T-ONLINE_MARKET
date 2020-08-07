@@ -2,7 +2,7 @@ import React from "react";
 import {View, Text, Image,TouchableOpacity} from "react-native";
 import styled from "styled-components";
 
-const ViewStyled = styled.View`
+const ViewStyled = styled.TouchableOpacity`
   flex:1;
   height: 100px;
   flex-direction:row;
@@ -49,8 +49,12 @@ const SearchList = (props) => {
   //   props.navigation.navigate('GoodsDetail', {id: id})
   // }
 
+  const onPressToGoodsDetail = () => {
+    props.prop.navigation.navigate('GoodsDetail', {id: id})
+  }
+
   return (
-    <ViewStyled >
+    <ViewStyled onPress={onPressToGoodsDetail} >
 
       {/*<TouchableOpacity onPress={onPressToBuckt}>*/}
 

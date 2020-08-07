@@ -97,7 +97,7 @@ const Home = (props) => {
         <ViewPagerStyled initialPage={0}>
           {recommendation && recommendation.map( (el) => {
             return (
-              <View key={el.id}>
+              <View key={shortId.generate()}>
                 <RecommendedFlowerContainer
                   onPress={ () => {props.navigation.navigate("GoodsList", {id : el.id, filter:el.filter} )} }
                 >
@@ -105,7 +105,7 @@ const Home = (props) => {
                     <RecommendedFlowerImageView
                       source={{ uri: el.img }}
                     />
-                    <RecommendedFlowerTextView>{el.title}</RecommendedFlowerTextView>
+                    {/*<RecommendedFlowerTextView>{el.title}</RecommendedFlowerTextView>*/}
                   </RecommendedFlowerContents>
                 </RecommendedFlowerContainer>
               </View>

@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Colors from "react-native-svg";
 // import {Fonts} from "../src/fonts/Fonts";
+import AutoHeightImage from 'react-native-auto-height-image';
 
 // css part
 const Container = styled.SafeAreaView`
@@ -58,8 +59,8 @@ const RightDetailInfoOfUpper = styled.View`
 
 const TextOfUpperRight = styled.Text`
   font-family: 'DancingScript-Regular';
-  font-size: 20px;
-  margin-top:15px;
+  font-size: 18px;
+  margin-top:19px;
 `;
 
 // bottom components
@@ -71,14 +72,16 @@ const DetailInfoOfBottom = styled.View`
 // info detail part
 const InfoDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
-  height: 500px;
 `;
 
-const ImageInfoOfBottom = styled.Image`
-  flex: 1;
-  height: 500px;
-  resize-mode: contain;
-`;
+// const ImageInfoOfBottom = styled.Image`
+//   flex: 1;
+//   height: 2800px;
+//   resize-mode: contain;
+// `;
+// const ImageInfoOfBottom = styled("AutoHeightImage")`
+//   flex: 1;
+// `;
 
 // qna detail part
 const QnADetailInfoOfBottom = styled.ScrollView`
@@ -86,15 +89,18 @@ const QnADetailInfoOfBottom = styled.ScrollView`
   height: 500px;
 `;
 
-const QnAheader = styled.View`
-  flex-direction: row;
-  justify-content: space-around;
-`;
 
-const QnAButtonDetailInfoOfBottom = styled.Button`
-  height: 150px;
-  width : 400px;
-`;
+// const QnAheader = styled.View`                  // no use
+//   flex-direction : row;
+//   justify-content : space-around;
+// `;
+
+// const QnAButtonDetailInfoOfBottom = styled.Button`    // no use
+//   height: 150px;
+//   width : 400px;
+//
+// `;
+
 
 
 const ViewDetailInfoOfBottom = styled.View`
@@ -125,7 +131,6 @@ const TextInTouchableOpacityStyled = styled.Text`
   height: 100%;
   text-align:center;
   letter-spacing:3px;
-  
 `
 
 const ViewRowStyled = styled.View`
@@ -180,6 +185,7 @@ const GoodsDetail = (props) => {
   const goods_img = goodsInfo?.goods_img;
   const goods_price = goodsInfo?.goods_price;
   const info_img = goodsInfo?.info_img;
+  const language = goodsInfo?.flower_language;
   const count = useSelector((state) => state.goods?.count);
   // const scrollRef = useRef();
 
@@ -223,9 +229,9 @@ const GoodsDetail = (props) => {
             <ViewMiddleStyled style={styles.border} >
 
               <View>
-                <TextOfUpperRight>{goods_name}</TextOfUpperRight>
-                <TextOfUpperRight>{goods_price}원</TextOfUpperRight>
-                <TextOfUpperRight>{"꽃말"}</TextOfUpperRight>
+                <TextOfUpperRight>이름 : {goods_name}</TextOfUpperRight>
+                <TextOfUpperRight>가격 : {goods_price}원</TextOfUpperRight>
+                <TextOfUpperRight>꽃말 : {language}</TextOfUpperRight>
               </View>
 
               <View>
@@ -316,7 +322,11 @@ const GoodsDetail = (props) => {
             ?
             (
               <InfoDetailInfoOfBottom>
-                <ImageInfoOfBottom source={{uri: info_img}}/>
+                {/*<ImageInfoOfBottom source={{uri: info_img}}/>*/}
+                <AutoHeightImage
+                  width={400}
+                  source={{uri: info_img}}
+                />
               </InfoDetailInfoOfBottom>
             )
             : userQnA

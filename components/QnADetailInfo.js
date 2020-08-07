@@ -9,19 +9,19 @@ import shortId from 'shortid'
 // qna detail part
 const QnADetailInfoOfBottom = styled.ScrollView`
   flex: 1;
-  height: 500px;
-  border: 5px solid green;
+  height: 100%;
 `;
 
 const QnAheader = styled.View`
   flex-direction : row;
+  align-items:center;
   justify-content : space-around;
+  margin-bottom : 20px;
 `;
 
 const QnAButtonDetailInfoOfBottom = styled.Button`
   height: 150px;
   width : 400px;
-  border: 20px solid black;
 `;
 
 // function part
@@ -32,7 +32,9 @@ const QnADetailInfo = (props) => {
   const loadQnAError = useSelector((state) => state.goods?.loadQnAError);
   console.log('In QnADetailInfo, loadQnAError : ', loadQnAError);
 
-  var qna = useSelector(state => state.goods?.qna);
+  const qna = useSelector(state => state.goods?.qna);
+  // qna = qna[0].reverse()
+
   console.log('In QnADetailInfo, qna : ', qna);
   // if (loadQnAError) {
   //   console.log('In QnADetailInfo At IF, id : ', id)  //id : 9,
@@ -49,6 +51,7 @@ const QnADetailInfo = (props) => {
         <Text>궁금한 점을 남겨주세요.</Text>
         <QnAButtonDetailInfoOfBottom
           title={"글쓰기"}
+          color={"#535204"}
           onPress={() => {
             props.prop.navigation.navigate("QnAPlus", {id:id});
           }}
@@ -56,7 +59,7 @@ const QnADetailInfo = (props) => {
       </QnAheader>
       { qna && qna.length === 0
         ? <Text>등록된 QnA가 없습니다</Text>
-        : (qna.map(el => {
+        : (qna[0].reverse().map(el => {
           return <QnAList key={shortId.generate()} list={el} prop={props}/>;
         }))
       }
