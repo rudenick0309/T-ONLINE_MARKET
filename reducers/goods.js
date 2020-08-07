@@ -173,18 +173,21 @@ export const countMinus = () => {
   };
 };
 
-export const homeToLoad = () => {
-  return {
-    type: HOME_REQUEST,
-  };
-};
-
 // timesDelete
 export const timesToDelete = () => {
   return {
     type: TIMES_PLUS_REQUEST,
   };
 };
+
+
+export const homeToLoad = () => {
+  return {
+    type: HOME_REQUEST,
+  };
+};
+
+
 
 // recommendation -> goodsList
 export const loadGoodsList = (data) => {

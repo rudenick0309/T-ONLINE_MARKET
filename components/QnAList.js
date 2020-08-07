@@ -49,8 +49,6 @@ const ButtonStyled = styled.Button`
 
 //
 const QnAList = (props) => {
-  // const [timesDelete, setTimesDelete] = useState(0)
-
 
   const [replies, setReplies] = useState(false);
   const dispatch = useDispatch();
