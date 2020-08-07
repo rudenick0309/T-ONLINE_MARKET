@@ -48,8 +48,6 @@ const ButtonStyled = styled.Button`
   height : 30px;
 `;
 
-
-
 //
 const QnAList = (props) => {
   const [replies, setReplies] = useState(false);
