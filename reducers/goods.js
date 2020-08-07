@@ -15,6 +15,7 @@ export const initialState = {
   count: 1,
   bucket: [],
 
+  times : 1,
 
   homeLoading: false, // home rendering
   homeQnADone: false,
@@ -76,6 +77,11 @@ export const DELETE_BUCKET_REQUEST = "DELETE_BUCKET_REQUEST";
 export const COUNT_DEFAULT_REQUEST = "COUNT_DEFAULT_REQUEST";             // count
 export const COUNT_PLUS_REQUEST = "COUNT_PLUS_REQUEST";
 export const COUNT_MINUS_REQUEST = "COUNT_MINUS_REQUEST";
+
+
+
+export const TIMES_PLUS_REQUEST = "TIMES_PLUS_REQUEST";   // TIMES
+
 
 export const HOME_REQUEST = "HOME_REQUEST";                        // home
 export const HOME_SUCCESS = "HOME_SUCCESS";
@@ -146,7 +152,16 @@ export const deleteToBucket = () => {
 };
 
 // count
+export const timesPlus = () => {
+  console.log('In REDUCER, timesPlus, executes')
+  return {
+    type: TIMES_PLUS_REQUEST,
+  };
+};
+
+// count
 export const countDefault = () => {
+  console.log('In REDUCER, countDefault, executes')
   return {
     type: COUNT_DEFAULT_REQUEST,
   };
@@ -294,6 +309,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         // count: state.count - 1,
+      };
+
+    // times calculate
+    case TIMES_PLUS_REQUEST :
+      return {
+        ...state,
+        times: state.times + 1,
       };
 
     // count calculate
@@ -549,13 +571,14 @@ const reducer = (state = initialState, action) => {
       };
     case LOAD_QUESTION_SUCCESS:
       console.log("In REDUX, LOAD_QUESTION_SUCCESS, action : ", action);
+      let data = action.data.reverse();
       return {
         ...state,
         loadQnALoading: false,
         loadQnADone: true,
         // qna: [action.data],    // 단순 db를 불러오기 위해서
         // qna: action.data.concat(...state.qna), // When i clicked 'review button', action.data has been added in qna states
-        qna:[action.data,...state.qna]
+        qna:[data,...state.qna]
       };
     case LOAD_QUESTION_FAILURE:
       console.log("In REDUX, LOAD_QUESTION_FAILURE, action : ", action);
