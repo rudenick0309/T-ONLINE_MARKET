@@ -10,41 +10,38 @@ import QnAPlusEdit from "../pages/QnAPlusEdit";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid black;
+  margin-top:10px;
+  border-color : grey;
+  border-bottom-width: 1.5px;
+  border-style : solid;
+  border-radius : 20px;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid pink;
 `;
 
 const TopViewStyled = styled.View`
   flex: 1;
   height: 100px;
   flex-direction : row;
-  border: 2px solid pink;
 `;
 
 const ViewStyled = styled.View`
   flex: 1;
   height: 100px;
-  border: 2px solid pink;
+  margin: 20px 0px;
+  padding: 10px;
 `;
 
 const TextStyled = styled.Text`
   flex: 1;
-  border: 2px solid pink;
 `;
 
 // below, styled-components does not support to 'Pressable'  T.T
 // const TouchableTextStyled = styled.Pressable`
 const TouchableTextStyled = styled.TouchableOpacity`
   flex: 1;
-  border: 2px solid red;
-`;
-
-const RepliesViewStyled = styled.View`
-  height: 100px;
 `;
 
 const ButtonStyled = styled.Button`
@@ -62,11 +59,11 @@ const QnAList = (props) => {
   const {contents} = props.list;
   const {id} = props.list;
   const {reply} = props.list;
-  const qna = useSelector(state => state.goods?.qna);
-  console.log('In QnAList, reply : ', reply)
+  // const qna = useSelector(state => state.goods?.qna);
+  // console.log('In QnAList, reply : ', reply)
 
   const {prop} = props.prop;  // for Route
-  console.log('In QnAList, prop : ', prop)  //TODO: 1. When qna is empty, or full -> First, empty
+  console.log('In QnAList, props : ', props)  //TODO: 1. When qna is empty, or full -> First, empty
 
   // dummy = {...dummy, id}; // TODO: this line will be commented
   // const {reply} = dummy;
@@ -79,7 +76,10 @@ const QnAList = (props) => {
 
   const deleteQnA = useCallback(() => {
     console.log("In deleteQnA", id);
-    dispatch(deleteToQuestion(id));
+    let data = {
+      qa_list_id: id
+    }
+    dispatch(deleteToQuestion(data));
   }, []);
 
   return (
