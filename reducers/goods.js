@@ -657,22 +657,22 @@ const reducer = (state = initialState, action) => {
       };
     case PATCH_QUESTION_SUCCESS:
       console.log('In REDUCER, PATCH_QUESTION_SUCCESS, action : ', action)
-      let qnaIndex = 0;
-      state.qna.forEach((el, index) => {
-        if (action.data.id === el.id) {
-          patchQnALoading: true,
-            qnaIndex = index;
-        }
-      });
-
-      let forehand = state.qna.slice(0, qnaIndex);
-      let backhand = state.qna.slice(qnaIndex + 1);
+      // let qnaIndex = 0;
+      // state.qna.forEach((el, index) => {
+      //   if (action.data.id === el.id) {
+      //     patchQnALoading: true,
+      //       qnaIndex = index;
+      //   }
+      // });
+      //
+      // let forehand = state.qna.slice(0, qnaIndex);
+      // let backhand = state.qna.slice(qnaIndex + 1);
 
       return {
         ...state,
         patchQnALoading: false,
         patchQnADone: true,
-        qna: forehand.concat(action.data, backhand),
+        // qna: forehand.concat(action.data, backhand),
       };
     case PATCH_QUESTION_FAILURE:
       console.log('In REDUCER, PATCH_QUESTION_FAILURE, action : ', action)

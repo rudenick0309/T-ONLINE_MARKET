@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {patchToQuestion} from "../reducers/goods";
+import {patchToQuestion, timesToDelete} from "../reducers/goods";
 
 // css part
 const Container = styled.ScrollView`
@@ -46,24 +46,20 @@ const QnAPlusEdit = (props) => {
   const [editContent, onChangeTextContent] = useState(contents);
   const [nonEditUserName, setNonEditUserName] = useState(username);
 
-
-  const onChangeTextUserName = (text) => {
-    // setEditUserName(text);
-  };
-
   const modifiedQnA = {
     title: editTitle,
     contents: editContent,
     qa_list_id : id,
   }
 
-  const onPressEditQnA = () => {
+  const onPressEditQnA = useCallback(() => {
+    dispatch(timesToDelete())
     console.log('In QnAPluseEdit modifiedQnA : ', id);
     dispatch(patchToQuestion(modifiedQnA))
     onChangeTextTitle(title)
     onChangeTextContent(contents)
     props.navigation.goBack();
-  }
+  })
 
   return (
     <Container>
