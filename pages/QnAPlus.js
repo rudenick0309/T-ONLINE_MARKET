@@ -57,24 +57,15 @@ const QnAPlus = (props) => {
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
   const id = props.route.params;
-  const qna = useSelector((state) => state.goods?.qna);
-  const addQnAError = useSelector((state) => state.goods?.addQnAError);
-  console.log('In QnAPlus, title : ', title);
-  console.log('In QnAPlus, content : ', content);
-  console.log('In QnAPlus, addQnAError : ', addQnAError);
-  var text = null;
-  // useEffect(() => {
-  //   // TODO: take the bucket list to axios
-  //   if (addQnAError === null) {
-  //     alert(addQnAError)
-  //   }
-  // }, [addQnAError]);
 
-  // const text = {
-  //   title: title,
-  //   contents: content,
-  //   goods_id:id.id,
-  // };
+  // console.log('In QnAPlus, title : ', title);
+  // console.log('In QnAPlus, content : ', content);
+  // console.log('In QnAPlus, addQnAError : ', addQnAError);
+
+  const [times, setTimes] = useState(0)
+
+  var text = null;
+
   useEffect(()=> {
     text = {
       title: title,
@@ -84,19 +75,24 @@ const QnAPlus = (props) => {
     console.log('In QnAPlus, text collection : ', text);
   },[title, content])
 
-  // const onPressQuestion = useCallback(() => {
-  //   console.log('In QnAPlus, text: ', text);
-  //   dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
-  //   props.navigation.goBack();
-  // }, [userName, content]);
+
   const onPressQuestion = useCallback(() => {
-
+    setTimes((prevTimes) => prevTimes + 1);
+    console.log('In QnAPlus, times : ', times);
     console.log('In QnAPlus, text: ', text);
-    dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
-    dispatch(loadToQuestion(id.id))
-    props.navigation.goBack();
-  }, [title, content,dispatch]);
 
+    dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
+
+    setTimeout(() => {
+      props.navigation.goBack();
+    },2000);
+
+  }, [title, content]);
+
+  useEffect(() => {
+    console.log('In QnAPlus, useEffect, executes after changed times up')
+    dispatch(loadToQuestion(id.id))
+  }, [times])
 
   return (
     <Container>
