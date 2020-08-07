@@ -62,7 +62,7 @@ const QnAPlus = (props) => {
   // console.log('In QnAPlus, content : ', content);
   // console.log('In QnAPlus, addQnAError : ', addQnAError);
 
-  const [times, setTimes] = useState(0)
+  const [timesAdd, setTimesAdd] = useState(0)
 
   var text = null;
 
@@ -77,22 +77,22 @@ const QnAPlus = (props) => {
 
 
   const onPressQuestion = useCallback(() => {
-    setTimes((prevTimes) => prevTimes + 1);
-    console.log('In QnAPlus, times : ', times);
+    setTimesAdd((prevTimesAdd) => prevTimesAdd + 1);
+    console.log('In QnAPlus, times : ', timesAdd);
     console.log('In QnAPlus, text: ', text);
 
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
 
     setTimeout(() => {
       props.navigation.goBack();
-    },2000);
+    },1000);
 
   }, [title, content]);
 
   useEffect(() => {
     console.log('In QnAPlus, useEffect, executes after changed times up')
     dispatch(loadToQuestion(id.id))
-  }, [times])
+  }, [timesAdd])
 
   return (
     <Container>

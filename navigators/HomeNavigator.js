@@ -18,6 +18,8 @@ import QnAPlusEdit from '../pages/QnAPlusEdit';
 import MypageSeller from '../pages/MypageSeller';
 import Search from "../pages/Search";
 import ReviewPlusEdit from "../pages/ReviewPlusEdit";
+import QnAList from "../components/QnAList";
+import QnADetailInfo from "../components/QnADetailInfo";
 
 
 const Stack = createStackNavigator();
@@ -30,7 +32,9 @@ const HomeNavigator = () => {
       <Stack.Screen name="GoodsList" component={GoodsList}/>
       <Stack.Screen name="Payment" component={Payment}/>
       <Stack.Screen name="Bucket" component={Bucket}/>
+
       <Stack.Screen name="QnAPlus" component={QnAPlus}/>
+      <Stack.Screen name="QnAList" component={QnAList}/>
       <Stack.Screen name="ReviewPlus" component={ReviewPlus}/>
       <Stack.Screen name="QnAPlusEdit" component={QnAPlusEdit}/>
       <Stack.Screen name="Search" component={Search}/>
