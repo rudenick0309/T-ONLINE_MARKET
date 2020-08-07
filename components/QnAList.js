@@ -1,9 +1,10 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {View, Text, TouchableOpacity, Button, Pressable} from "react-native";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteToQuestion} from "../reducers/goods";
+import {deleteToQuestion, loadToQuestion} from "../reducers/goods";
 import QnAPlusEdit from "../pages/QnAPlusEdit";
+import GoodsDetail from "../pages/GoodsDetail";
 
 // import navi
 
@@ -50,6 +51,7 @@ const ButtonStyled = styled.Button`
 
 //
 const QnAList = (props) => {
+  const [timesDelete, setTimesDelete] = useState(0)
   const [replies, setReplies] = useState(false);
   const dispatch = useDispatch();
   const {username} = props.list;
@@ -60,8 +62,10 @@ const QnAList = (props) => {
   // const qna = useSelector(state => state.goods?.qna);
   // console.log('In QnAList, reply : ', reply)
 
+
   const {prop} = props.prop;  // for Route
-  console.log('In QnAList, props : ', props)  //TODO: 1. When qna is empty, or full -> First, empty
+  const goodsId = prop.route.params.id
+  console.log('In QnAList, props : ', prop)  //TODO: 1. When qna is empty, or full -> First, empty
 
   // dummy = {...dummy, id}; // TODO: this line will be commented
   // const {reply} = dummy;
@@ -73,12 +77,34 @@ const QnAList = (props) => {
   }, []);
 
   const deleteQnA = useCallback(() => {
-    console.log("In deleteQnA", id);
+    setTimesDelete((prevTimesDelete) => prevTimesDelete + 1);
+    // console.log("In deleteQnA", id);
     let data = {
       qa_list_id: id
     }
     dispatch(deleteToQuestion(data));
+    // setTimeout(() => {
+    //   console.log('In QnAList, console for delay')
+    // }, 1000)
+
   }, []);
+
+  // useEffect(() => {
+  //   dispatch(loadToQuestion(goodsId))
+  // },[timesDelete])
+
+  useEffect(() => {
+    // console.log("[effect] setInterval");
+    // const timerId = setInterval(() => {
+    //   dispatch(loadToQuestion(goodsId))
+    // }, 2000);
+
+    return () => {
+      dispatch(loadToQuestion(goodsId))
+      // console.log("[cleaning up] clearInterval");
+      // clearInterval(timerId);
+    };
+  }, [timesDelete]);
 
   return (
     <Container>
