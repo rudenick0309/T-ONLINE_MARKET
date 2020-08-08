@@ -81,7 +81,7 @@ const QnAPlus = (props) => {
 
     setTimeout(() => {
       props.navigation.goBack();
-    },1000);
+    },2000);
   }, [title, content]);
 
 
