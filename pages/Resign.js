@@ -10,12 +10,13 @@ import {logoutAction} from '../reducers/login';
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid green;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid green;
+`;
+const InButton = styled.Button`
+  background-color: black;
 `;
 
 // function part
@@ -54,7 +55,7 @@ const Resign = (props) => {
           type="password"
           secureTextEntry={true}
           onChangeText={(text) => onChangePassword(text)}></TextInput>
-        <Button title="탈퇴하기" onPress={onPressResign} />
+        <InButton color="#464e46" title="탈퇴하기" onPress={onPressResign} />
       </Contents>
       <Nav props={props} />
     </Container>
