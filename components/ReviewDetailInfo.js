@@ -44,7 +44,9 @@ const ReviewDetailInfo = (props) => {
 
   useEffect(() => {
     console.log('In ReviewDetailInfo, timesR 2 : ', timesQ);
-    dispatch(loadToReview(id))
+    setTimeout(() => {
+      dispatch(loadToReview(id))
+    }, 1000)
   },[timesQ])
 
   return (
@@ -59,7 +61,7 @@ const ReviewDetailInfo = (props) => {
           }}
         />
       </ReviewHeader>
-      { review.length === 0
+      { review && review.length === 0
         ? <Text>등록된 Review가 없습니다</Text>
         : (review[0].map(el => {
           return <ReviewList key={shortId.generate()} list={el} prop={props}/>;

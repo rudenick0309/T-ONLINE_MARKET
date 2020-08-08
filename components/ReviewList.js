@@ -2,7 +2,7 @@ import React, {useCallback, useState} from "react";
 import {View, Text, TouchableOpacity, Button, Pressable} from "react-native";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteToQuestion} from "../reducers/goods";
+import {deleteToQuestion, deleteToReview, timesToDelete} from "../reducers/goods";
 import ReviewPlusEdit from "../pages/ReviewPlusEdit";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
@@ -72,20 +72,22 @@ const ReviewList = (props) => {
   const starStr = "*".repeat(star);
   const startArray = [<FontAwesomeIcon icon={faStar} size={15}/>];
 
-  console.log("In ReviewList, startArray : ", startArray[0]);
+  console.log("In ReviewList, id : ", id);
 
   const {prop} = props.prop;  // for Route
   console.log("In ReviewList, prop : ", prop);
 
-  // TODO : key props is undefined, Why?
-
-  const onPressReview = useCallback(() => {
-    // setReplies((prevState) => !prevState);
-  }, []);
+  // const onPressReview = useCallback(() => {
+  //   // setReplies((prevState) => !prevState);
+  // }, []);
 
   const deleteReview = useCallback(() => {
-    // console.log("In deleteQnA", id);
-    dispatch(deleteToQuestion(id));
+    dispatch(timesToDelete())
+    console.log("In deleteQnA", id);
+    let data = {
+      review_id: id
+    }
+    dispatch(deleteToReview(data));
   }, []);
 
 

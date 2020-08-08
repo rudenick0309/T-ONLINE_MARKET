@@ -39,7 +39,9 @@ const QnADetailInfo = (props) => {
   }, []);
 
   useEffect(() => {
-    dispatch(loadToQuestion(id));
+    setTimeout(() => {
+      dispatch(loadToQuestion(id));
+    }, 1000)
   }, [timesQ]);
 
 

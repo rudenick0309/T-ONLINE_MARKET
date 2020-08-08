@@ -69,17 +69,19 @@ const ReviewPlus = (props) => {
       goods_id:id.id,
     };
     console.log('In Review, text: ', text);
-  }, [title,content]);
+  }, [content]);
 
 
   const onPressReview = useCallback(() => {
-    dispatch(timesToDelete())
     console.log('In Review, text: ', text);
+
     dispatch(addToReview(text));  //TODO : 1. text  or  2. (name, content)
+
     setTimeout(() => {
       props.navigation.goBack();
-    },3000);
-  }, [title, content]);
+    },2000);
+    dispatch(timesToDelete())
+  }, [content]);
 
 
   return (
