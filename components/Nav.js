@@ -81,22 +81,18 @@ const Nav = ({props}) => {
           </HeaderIcon>
         </NavCenterText>
       </NavIcon>
-      {loginDone && data !== undefined && userInfo.user_type === 2 ? (
-        <NavIcon
-          onPress={() => {
-            props.navigation.navigate('MypageSeller');
-          }}>
-          <FontAwesomeIcon icon={faAddressCard} color={'#464e46'} size={30} />
-        </NavIcon>
-      ) : (
-        <NavIcon
-          onPress={() => {
-            props.navigation.navigate('Mypage');
-          }}>
-          <Text>Mypage</Text>
-          {/* <FontAwesomeIcon icon={faAddressCard} color={'#464e46'} size={30} />; */}
-        </NavIcon>
-      )}
+      <NavIcon
+        onPress={
+          loginDone && data !== undefined && userInfo.user_type === 2
+            ? () => {
+                props.navigation.navigate('MypageSeller');
+              }
+            : () => {
+                props.navigation.navigate('Mypage');
+              }
+        }>
+        <FontAwesomeIcon icon={faAddressCard} color={'#464e46'} size={30} />
+      </NavIcon>
     </NavView>
   );
 };
