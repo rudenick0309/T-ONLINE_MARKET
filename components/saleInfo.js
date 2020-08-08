@@ -6,6 +6,7 @@ import {
   Input,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from 'react-native';
 import styled from 'styled-components';
 import {loadSale} from '../reducers/orders';
@@ -34,7 +35,7 @@ export const OrderTextView = styled.Text`
 
 const ViewStyled = styled.View`
   flex: 1;
-  height: 100px;
+  height: 130px;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -70,29 +71,34 @@ const SaleInfo = (props) => {
   console.log('sale info props', props);
   const dispatch = useDispatch();
   const sale = useSelector((state) => state.orders?.sale);
+  const id = props.route.params;
 
   console.log('sale info salesss', sale);
   useEffect(() => {
-    dispatch(loadSale());
+    dispatch(loadSale(id));
   }, []);
 
   return (
-    <ViewStyled>
-      <Text>SALE</Text>
+    <ScrollView>
+      <Text>판매 내역</Text>
       {/*<TouchableOpacity onPress={onPressToBuckt}>*/}
       {sale &&
         sale.map((el) => {
           return (
-            <React.Fragment>
-              <ImageViewStyled>
-                <ImageOfUpperLeft source={{uri: el.goods_img}} />
-              </ImageViewStyled>
+            <ViewStyled>
+              <React.Fragment>
+                <ImageViewStyled>
+                  <ImageOfUpperLeft source={{uri: el.goods_img}} />
+                </ImageViewStyled>
 
-              <TextViewStyled>
-                <TextStyled>{el.goods_name}</TextStyled>
-                <TextStyled>{el.goods_price}</TextStyled>
-              </TextViewStyled>
-            </React.Fragment>
+                <TextViewStyled>
+                  <TextStyled>{el.goods_name}</TextStyled>
+                  <TextStyled>총 금액 {el.goods_price}원</TextStyled>
+                  <TextStyled>수량 : {el.goods_quantity}</TextStyled>
+                  <TextStyled>{el.order_date}</TextStyled>
+                </TextViewStyled>
+              </React.Fragment>
+            </ViewStyled>
           );
         })}
 
@@ -100,7 +106,7 @@ const SaleInfo = (props) => {
       {/*  /!*<Text>{count}</Text>*!/*/}
       {/*</View>*/}
       {/*</TouchableOpacity>*/}
-    </ViewStyled>
+    </ScrollView>
   );
 };
 
