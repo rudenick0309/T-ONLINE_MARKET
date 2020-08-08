@@ -95,7 +95,10 @@ function addReviewAPI(data) {
 
 function deleteReviewAPI(data) {
   console.log("In SAGA, deleteReviewAPI, data : ", data);
-  return axios.post("/goods/info/review", data);
+  let obj = {
+    data : data,
+  }
+  return axios.delete("/goods/info/review", obj);
 }
 
 function patchReviewAPI(data) {
@@ -221,7 +224,7 @@ function* addReview(action) {
 function* deleteReview(action) {
   console.log("In SAGA, deleteReview, action : ", action);
   try {
-    const result = yield call(deleteQnAAPI, action.data);
+    const result = yield call(deleteReviewAPI, action.id);
     console.log("In SAGA, deleteReview, result : ", result);
     yield put({
       type: DELETE_REVIEW_SUCCESS,
@@ -239,7 +242,7 @@ function* deleteReview(action) {
 function* patchReview(action) {
   console.log("In SAGA, patchReview, action : ", action);
   try {
-    const result = yield call(patchReviewAPI, action.data);
+    const result = yield call(patchReviewAPI, action.text);
     console.log("In SAGA, deleteReview, result : ", result);
     yield put({
       type: PATCH_REVIEW_SUCCESS,
