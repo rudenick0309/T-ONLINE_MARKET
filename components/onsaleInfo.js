@@ -10,6 +10,7 @@ import {
 import styled from 'styled-components';
 import {loadOnsale} from '../reducers/orders';
 import {useDispatch, useSelector} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const OrderContainer = styled.TouchableOpacity`
   flex: 1;
@@ -69,28 +70,32 @@ const OnsaleInfo = (props) => {
   console.log('onsale info props', props);
   const dispatch = useDispatch();
   const onsale = useSelector((state) => state.orders?.onsale);
+  const id = props.route.params;
 
   console.log('onsale info salesss', onsale);
   useEffect(() => {
-    dispatch(loadOnsale());
+    dispatch(loadOnsale(id));
   }, []);
   return (
-    <ViewStyled>
-      <Text>ONSALE</Text>
+    <ScrollView>
+      <Text>판매 등록 상품</Text>
       {/*<TouchableOpacity onPress={onPressToBuckt}>*/}
       {onsale &&
         onsale.map((el) => {
           return (
-            <React.Fragment>
-              <ImageViewStyled>
-                <ImageOfUpperLeft source={{uri: el.goods_img}} />
-              </ImageViewStyled>
+            <ViewStyled>
+              <React.Fragment>
+                <ImageViewStyled>
+                  <ImageOfUpperLeft source={{uri: el.goods_img}} />
+                </ImageViewStyled>
 
-              <TextViewStyled>
-                <TextStyled>{el.goods_name}</TextStyled>
-                <TextStyled>{el.goods_price}</TextStyled>
-              </TextViewStyled>
-            </React.Fragment>
+                <TextViewStyled>
+                  <TextStyled>{el.goods_name}</TextStyled>
+                  <TextStyled>개당 가격 : {el.goods_price}</TextStyled>
+                  <TextStyled>총 수량 : {el.stock}</TextStyled>
+                </TextViewStyled>
+              </React.Fragment>
+            </ViewStyled>
           );
         })}
 
@@ -98,7 +103,7 @@ const OnsaleInfo = (props) => {
       {/*  /!*<Text>{count}</Text>*!/*/}
       {/*</View>*/}
       {/*</TouchableOpacity>*/}
-    </ViewStyled>
+    </ScrollView>
   );
 };
 
