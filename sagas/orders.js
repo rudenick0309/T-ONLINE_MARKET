@@ -9,6 +9,12 @@ import {
   LOAD_ONSALE_REQUEST,
   LOAD_ONSALE_SUCCESS,
   LOAD_ONSALE_FAILURE,
+  LOAD_TRACKING_REQUEST,
+  LOAD_TRACKING_SUCCESS,
+  LOAD_TRACKING_FAILURE,
+  LOAD_ORDERCHECK_FAILURE,
+  LOAD_ORDERCHECK_REQUEST,
+  LOAD_ORDERCHECK_SUCCESS,
 } from '../reducers/orders';
 import {all, fork, call, put, takeLatest, throttle} from 'redux-saga/effects';
 
@@ -26,6 +32,16 @@ function loadSaleAPI(data) {
 function loadOnsaleAPI(data) {
   console.log('In SAGA, loadOnsaleAPI, data : ', data);
   return axios.get(`/mypage/onsale?userId=${data}`, data);
+}
+
+function loadTrackingAPI(data) {
+  console.log('In SAGA, loadOTrackingAPI, data : ', data);
+  return axios.get(`/mypage/tracking?userId=${data}`, data);
+}
+
+function loadOrderCheckAPI(data) {
+  console.log('In SAGA, loadOrdercheckAPI, data : ', data);
+  return axios.get(`/mypage/ordercheck?userId=${data}`, data);
 }
 
 // 3
@@ -86,6 +102,44 @@ function* loadOnsale(action) {
   }
 }
 
+function* loadTracking(action) {
+  console.log('loadTracking saga', action);
+  try {
+    const result = yield call(loadTrackingAPI, action.data);
+    console.log('In SAGA, loadTracking, result : ', result);
+    yield put({
+      type: LOAD_TRACKING_SUCCESS,
+      // TODO : data: result.data,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_TRACKING_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* loadOrderCheck(action) {
+  console.log('loadOrdercheck saga', action);
+  try {
+    const result = yield call(loadOrderCheckAPI, action.data);
+    console.log('In SAGA, loadOrderCheck, restul : ', result);
+    yield put({
+      type: LOAD_ORDERCHECK_SUCCESS,
+      // TODO : data: result.data,
+      data: result.data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_ORDERCHECK_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 // 2
 function* watchLoadOrder() {
   console.log('watchLoadOrder', loadOrder);
@@ -102,12 +156,24 @@ function* watchLoadOnsale() {
   yield takeLatest(LOAD_ONSALE_REQUEST, loadOnsale);
 }
 
+function* watchLoadTracking() {
+  console.log('watchLoadTracking', loadTracking);
+  yield takeLatest(LOAD_TRACKING_REQUEST, loadTracking);
+}
+
+function* watchLoadOrderCheck() {
+  console.log('watchLoadOrderCheck', loadOrderCheck);
+  yield takeLatest(LOAD_ORDERCHECK_REQUEST, loadOrderCheck);
+}
+
 // 1
 export default function* orderSaga() {
   yield all([
     fork(watchLoadOrder),
     fork(watchLoadSale),
     fork(watchLoadOnsale),
+    fork(watchLoadTracking),
+    fork(watchLoadOrderCheck),
 
     // fork(watchLoadReview),
     // fork(watchAddQnA),

@@ -11,12 +11,13 @@ import CheckBox from '@react-native-community/checkbox';
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid green;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid green;
+`;
+const InButton = styled.Button`
+  background-color: black;
 `;
 
 // function part
@@ -59,12 +60,12 @@ const Myinfo = (props) => {
       <Contents>
         <Text> Name : {userInfo ? userInfo.username : ''} </Text>
         <TextInput
-          placeholder={userInfo ? userInfo.username : ''}
+          defaultValue={userInfo ? userInfo.username : ''}
           value={username}
           onChangeText={(text) => onChangeUsername(text)}></TextInput>
         <Text> Email : {userInfo ? userInfo.email : ''} </Text>
         <TextInput
-          placeholder={userInfo ? userInfo.email : ''}
+          defaultValue={userInfo ? userInfo.email : ''}
           value={email}
           onChangeText={(text) => onChangeEmail(text)}></TextInput>
         <Text> Password </Text>
@@ -75,17 +76,18 @@ const Myinfo = (props) => {
           onChangeText={(text) => onChangePassword(text)}></TextInput>
         <Text> Phone : {userInfo ? userInfo.phone : ''}</Text>
         <TextInput
-          placeholder={userInfo ? userInfo.phone : ''}
+          defaultValue={userInfo ? userInfo.phone : ''}
           value={phone}
           onChangeText={(text) => onChangePhone(text)}></TextInput>
         <Text> Address : {userInfo ? userInfo.address : ''}</Text>
         <TextInput
-          placeholder={userInfo ? userInfo.address : ''}
+          defaultValue={userInfo ? userInfo.address : ''}
           value={address}
           onChangeText={(text) => onChangeAddress(text)}></TextInput>
 
-        <Button title="수정하기" onPress={onPressMyinfo} />
-        <Button
+        <InButton color="#464e46" title="수정하기" onPress={onPressMyinfo} />
+        <InButton
+          color="#464e46"
           title="탈퇴하기"
           onPress={() => {
             props.navigation.navigate('Resign');

@@ -15,16 +15,51 @@ import {loadOrder} from '../reducers/orders';
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid green;
 `;
 
-const Contents = styled.ScrollView`
+const InContainer = styled.TouchableOpacity`
   flex: 1;
-  border: 2px solid green;
+  margin-top: 30px;
+`;
+
+const Contents = styled.View`
+  flex: 1;
+  height: 550px;
+  border-radius: 30px;
+`;
+
+const ImageOfUpperLeft = styled.Image`
+  resize-mode: contain;
+  flex: 1;
+  width: 100px;
+`;
+
+const ImageViewStyled = styled.View`
+  margin-left: 30px;
+  margin-bottom: 13px;
+`;
+
+const TextViewStyled = styled.View`
+  margin-top: 20px;
+  padding-right: 30px;
+  align-items: flex-end;
 `;
 
 const TextStyled = styled.Text`
-  margin-top: 20px;
+  font-size: 15px;
+  margin-bottom: 3px;
+`;
+
+const InButton = styled.Button`
+  background-color: black;
+`;
+
+const ViewRowStyled = styled.View`
+  flex-direction: row;
+  text-align: center;
+  margin: 23px 0px;
+  justify-content: center;
+  align-items: center;
 `;
 
 let OrderData = [];
@@ -36,17 +71,26 @@ const Mypage = (props) => {
   const loginDone = useSelector((state) => state.login?.loginDone);
   const userInfo = useSelector((state) => state.login.data?.userInfo);
   const data = useSelector((state) => state.login?.data);
+  const orderList = useSelector((state) => state.orders?.orderList);
   const order_list = useSelector((state) => state.orders?.order_list);
-  const filterValue = useSelector((state) => state.login.data?.user_type);
+  const filterValue = props.route.params?.filter;
+
+  // useEffect(() => {
+  //   if (orderList && orderList.length > 0) {
+  //     orderList = [];
+  //   }
+  //   // }, [searchList]);
+  // }, [orderList]);
 
   useEffect(() => {
     // TODO: take the bucket list to axios
-    dispatch(loadOrder(filterValue));
+
+    dispatch(loadOrder());
   }, []);
 
   console.log('login done', loginDone);
   console.log('user', userInfo);
-  // if (loginDone === true) {
+  console.log('order data 11', orderList);
   return (
     <Container>
       <Header props={props} />
@@ -56,28 +100,49 @@ const Mypage = (props) => {
             <TextStyled>
               {data === undefined ? '로그아웃' : userInfo.username}님 환영합니다
             </TextStyled>
-            <Button
-              title="내 정보 수정하기"
-              onPress={() => {
-                props.navigation.navigate('Myinfocheck');
-              }}
-            />
+            <ViewRowStyled>
+              <InButton
+                title="내 정보 수정하기"
+                color="#464e46"
+                onPress={() => {
+                  props.navigation.navigate('Myinfocheck');
+                }}
+              />
+            </ViewRowStyled>
             <TextStyled>orderList</TextStyled>
 
-            <OrderContainer
-              // onPress={ () => {props.navigation.navigate("GoodsList")} }>
-              onPress={() => {
-                props.navigation.navigate('GoodsList', {id: OrderData.id});
-              }}>
-              <OrderContents>
-                <OrderImageView source={OrderData.img}></OrderImageView>
-                <OrderTextView>{OrderData.contents}</OrderTextView>
-              </OrderContents>
-            </OrderContainer>
+            {orderList &&
+              orderList.map((el) => {
+                return (
+                  // <Contents>
+                  <React.Fragment>
+                    <ImageViewStyled>
+                      <ImageOfUpperLeft source={{uri: el.goods_img}} />
+                    </ImageViewStyled>
+
+                    <TextViewStyled>
+                      <TextStyled>{el.goods_name}</TextStyled>
+                      <TextStyled>{el.goods_price}</TextStyled>
+                      <TextStyled>수량 : {el.goods_quantity}</TextStyled>
+                      <TextStyled>주문날짜 {el.order_date}</TextStyled>
+                    </TextViewStyled>
+                  </React.Fragment>
+                  // </Contents>
+                );
+              })}
           </View>
         ) : (
           <Contents>
             <Text>로그인을 하십시오</Text>
+            <ViewRowStyled>
+              <Button
+                title="홈으로"
+                color="#464e46"
+                onPress={() => {
+                  props.navigation.navigate('Home');
+                }}
+              />
+            </ViewRowStyled>
           </Contents>
         )}
       </Contents>
@@ -88,8 +153,7 @@ const Mypage = (props) => {
 
 export default Mypage;
 
-{
-  /* {order_list.length !== 0 &&
+/* {order_list.length !== 0 &&
               order_list.map((el) => {
                 return (
                   <Contents>
@@ -111,4 +175,12 @@ export default Mypage;
                   </Contents>
                 );
               })}  */
-}
+
+/* <InContainer key={el.order_id}>
+                    <ImageOfUpperLeft>
+                      <ImageViewStyled
+                        source={{uri: el.goods_img}}></ImageViewStyled>
+                    </ImageOfUpperLeft>
+                    <TextViewStyled>{el.goods_name}</TextViewStyled>
+                    <TextViewStyled>{el.goods_price}</TextViewStyled>
+                  </InContainer> */

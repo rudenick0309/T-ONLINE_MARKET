@@ -20,23 +20,21 @@ import CheckBox from '@react-native-community/checkbox';
 
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid blue;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid blue;
 `;
 
 const InButton = styled.Button`
-  width: 100px;
-  border: 2px solid yellow;
+  background-color: black;
 `;
 
 const SignUp = (props) => {
   const [username, onChangeUsername] = useState('');
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
+  const [pwdcheck, onChangePwdcheck] = useState('');
   const [phone, onChangePhone] = useState('');
   const [address, onChangeAddress] = useState('');
   const [trade_name, onChangetradename] = useState('');
@@ -74,7 +72,11 @@ const SignUp = (props) => {
       <Header props={props} />
       <Contents>
         <Text>Sign Up</Text>
-        <Button title="Go back" onPress={() => props.navigation.goBack()} />
+        <InButton
+          title="Go back"
+          color="#464e46"
+          onPress={() => props.navigation.goBack()}
+        />
         <TextInput
           placeholder="Username"
           value={username}
@@ -103,15 +105,8 @@ const SignUp = (props) => {
           textContentType="password"
           placeholder="Password 확인"
           secureTextEntry={true}
-          // onChange={(value) => {
-          //   if(value === password){
-          //   handleInputValue("password")
-          // }else{
-          //   alert("비밀번호가 다릅니다")
-          //   }
-          //  }
-          // }
-          onChangeText={(text) => onChangePassword(text)}></TextInput>
+          value={pwdcheck}
+          onChangeText={(text) => onChangePwdcheck(text)}></TextInput>
 
         <TextInput
           placeholder="Phone"
@@ -174,16 +169,26 @@ const SignUp = (props) => {
           />
           <Text>동의</Text>
         </Text>
-        {toggleCheckBox === true ? (
-          <InButton
-            onPress={onPressSingup}
-            title="Sign Up"
-            // disabled={!isLogin}
-            // title={isLogin ? "Log in" : "Log out"}
-          />
+        {password === pwdcheck ? (
+          toggleCheckBox === true ? (
+            <InButton
+              onPress={onPressSingup}
+              title="Sign Up"
+              color="#464e46"
+              // disabled={!isLogin}
+              // title={isLogin ? "Log in" : "Log out"}
+            />
+          ) : (
+            <InButton
+              color="#464e46"
+              onPress={() => alert('개인정보 수집에 동의하셔야 합니다')}
+              title="Sign Up"
+            />
+          )
         ) : (
           <InButton
-            onPress={() => alert('개인정보 수집에 동의하셔야 합니다')}
+            color="#464e46"
+            onPress={() => alert('비밀번호가 일치하지 않습니다')}
             title="Sign Up"
           />
         )}

@@ -9,21 +9,20 @@ import {infoCheckAction} from '../reducers/myinfocheck';
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid green;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid green;
 `;
 // const InputText = styled.TextInput`
-//         height: 40,
+//         height: 40;
+// font-size: 23px;
+// font-family: Consola;
 // `
 
-// const InButton = styled.Button`
-//   width: 100px;
-//   border: 2px solid yellow;
-// `;
+const InButton = styled.Button`
+  background-color: black;
+`;
 
 // function part
 const Myinfocheck = (props) => {
@@ -61,14 +60,21 @@ const Myinfocheck = (props) => {
               placeholder="Password"
               type="password"
               secureTextEntry={true}
+              value={password}
               onChangeText={(text) => onChangePassword(text)}></TextInput>
-            <Button title="수정하기" onPress={onPressInfoCheck} />
+            <InButton
+              color="#464e46"
+              title="수정하기"
+              onPress={onPressInfoCheck}
+            />
           </View>
         ) : (
           <View>
-            <Button
+            <InButton
+              color="#464e46"
               title="로그인 후 이용 가능한 서비스입니다"
-              onPress={() => props.navigation.navigate('Home')}></Button>
+              onPress={() => props.navigation.navigate('Home')}
+            />
           </View>
         )}
       </Contents>

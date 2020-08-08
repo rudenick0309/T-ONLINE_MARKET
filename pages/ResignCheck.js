@@ -7,12 +7,13 @@ import Nav from '../components/Nav';
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid green;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid green;
+`;
+const InButton = styled.Button`
+  background-color: black;
 `;
 
 // function part
@@ -23,8 +24,9 @@ const ResignCheck = (props) => {
       <Contents>
         <Text>탈퇴가 완료되었습니다 </Text>
 
-        <Button
+        <InButton
           title="홈으로"
+          color="#464e46"
           onPress={() => {
             props.navigation.navigate('Home');
           }}
