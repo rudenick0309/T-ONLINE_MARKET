@@ -61,7 +61,21 @@ export const initialState = {
   patchQnALoading: false, // QnA update
   patchQnADone: false,
   patchQnAError: null,
+
+  addReplyLoading: false, // add reply to qna
+  addReplyDone: false,
+  addReplyError: null,
+
+  patchReplyLoading: false, // patch reply to qna
+  patchReplyDone: false,
+  patchReplyError: null,
+
+  deleteReplyLoading: false, // delete reply to qna
+  deleteReplyDone: false,
+  deleteReplyError: null,
+
   //TODO: needs other state
+
 
   // the states saved and accmulated
 };
@@ -132,6 +146,18 @@ export const DELETE_QUESTION_FAILURE = "DELETE_QUESTION_FAILURE";
 export const PATCH_QUESTION_REQUEST = "PATCH_QUESTION_REQUEST"; // qna patch
 export const PATCH_QUESTION_SUCCESS = "PATCH_QUESTION_SUCCESS";
 export const PATCH_QUESTION_FAILURE = "PATCH_QUESTION_FAILURE";
+
+export const ADD_REPLY_REQUEST = "ADD_REPLY_REQUEST";                // add reply to qna
+export const ADD_REPLY_SUCCESS = "ADD_REPLY_SUCCESS";
+export const ADD_REPLY_FAILURE = "ADD_REPLY_FAILURE";
+
+export const PATCH_REPLY_REQUEST = "PATCH_REPLY_REQUEST";                // patch reply to qna
+export const PATCH_REPLY_SUCCESS = "PATCH_REPLY_SUCCESS";
+export const PATCH_REPLY_FAILURE = "PATCH_REPLY_FAILURE";
+
+export const DELETE_REPLY_REQUEST = "DELETE_REPLY_REQUEST";                // delete reply to qna
+export const DELETE_REPLY_SUCCESS = "DELETE_REPLY_SUCCESS";
+export const DELETE_REPLY_FAILURE = "DELETE_REPLY_FAILURE";
 
 // the part of action creator definition
 
@@ -298,6 +324,33 @@ export const patchToQuestion = (text) => {
     type: PATCH_QUESTION_REQUEST,
     // id,   //TODO : Note , action creators takes a one parameter!
     text,
+  };
+};
+
+// add reply to qna
+export const addToReplyToQuestion = (text) => {
+  console.log("In REDUCER, addToReplyToQuestion , text : ", text);
+  return {
+    type: ADD_REPLY_REQUEST,
+    text,
+  };
+};
+
+// patch reply to qna
+export const patchToReplyToQuestion = (text) => {
+  console.log("In REDUCER, patchToReplyToQuestion , text : ", text);
+  return {
+    type: PATCH_REPLY_REQUEST,
+    text,
+  };
+};
+
+// delete reply to qna
+export const deleteToReplyToQuestion = (id) => {
+  console.log("In REDUCER, deleteToReplyToQuestion , id : ", id);
+  return {
+    type: DELETE_REPLY_REQUEST,
+    id,
   };
 };
 
@@ -473,7 +526,6 @@ const reducer = (state = initialState, action) => {
         loadReviewDone: true,
         loadReviewError: null,
         review: [action.data, ...state.review],
-        // review: [action.data],   // When i clicked 'review button', action.data has been added in qna states
       };
     case LOAD_REVIEW_FAILURE:
       console.log("In REDUCER, LOAD_REVIEW_FAILURE action : ", action);
@@ -499,8 +551,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         addReviewLoading: false,
         addReviewDone: true,
-        // review: [action.data.data, ...state.review],
-
       };
     case ADD_REVIEW_FAILURE:
       console.log("In REDUCERS OF ADD_REVIEW_FAILURE, action : ", action);
@@ -548,21 +598,10 @@ const reducer = (state = initialState, action) => {
       };
     case PATCH_REVIEW_SUCCESS:
       console.log("In REDUCERS OF PATCH_REVIEW_SUCCESS, action : ", action);
-      // let reviewIndex = 0;
-      // state.review.forEach((el, index) => {
-      //   if (action.data.id === el.id) {
-      //     reviewIndex = index;
-      //   }
-      // });
-      //
-      // let reviewForehand = state.review.slice(0, reviewIndex);
-      // let reviewBackhand = state.review.slice(reviewIndex + 1);
-
       return {
         ...state,
         patchReviewLoading: false,
         patchReviewDone: true,
-        // review: reviewForehand.concat(action.data, reviewBackhand)
       };
     case PATCH_REVIEW_FAILURE:
       console.log("In REDUCERS OF PATCH_REVIEW_FAILURE, action : ", action);
@@ -669,22 +708,10 @@ const reducer = (state = initialState, action) => {
       };
     case PATCH_QUESTION_SUCCESS:
       console.log('In REDUCER, PATCH_QUESTION_SUCCESS, action : ', action)
-      // let qnaIndex = 0;
-      // state.qna.forEach((el, index) => {
-      //   if (action.data.id === el.id) {
-      //     patchQnALoading: true,
-      //       qnaIndex = index;
-      //   }
-      // });
-      //
-      // let forehand = state.qna.slice(0, qnaIndex);
-      // let backhand = state.qna.slice(qnaIndex + 1);
-
       return {
         ...state,
         patchQnALoading: false,
         patchQnADone: true,
-        // qna: forehand.concat(action.data, backhand),
       };
     case PATCH_QUESTION_FAILURE:
       console.log('In REDUCER, PATCH_QUESTION_FAILURE, action : ', action)
@@ -693,6 +720,80 @@ const reducer = (state = initialState, action) => {
         patchQnALoading: false,
         patchQnAError: action.error,
       };
+
+    // add reply to qna
+    case ADD_REPLY_REQUEST:
+      console.log("In REDUCERS OF ADD_REPLY_REQUEST, action : ", action);
+      return {
+        ...state,
+        addReplyLoading: true, // reply to qna
+        addReplyDone: false,
+        addReplyError: null,
+      };
+    case ADD_REPLY_SUCCESS:
+      console.log("In REDUCERS OF ADD_REPLY_SUCCESS, action : ", action);
+      return {
+        ...state,
+        addReplyLoading: false,
+        addReplyDone: true,
+      };
+    case ADD_REPLY_FAILURE:
+      console.log("In REDUCERS OF ADD_REPLY_FAILURE, action : ", action);
+      return {
+        ...state,
+        addReplyLoading: false,
+        addReplyError: action.error,
+      };
+
+    // patch reply to qna
+    case PATCH_REPLY_REQUEST:
+      console.log("In REDUCERS OF PATCH_REPLY_REQUEST, action : ", action);
+      return {
+        ...state,
+        patchReplyLoading: true, // reply to qna
+        patchReplyDone: false,
+        patchReplyError: null,
+      };
+    case PATCH_REPLY_SUCCESS:
+      console.log("In REDUCERS OF PATCH_REPLY_SUCCESS, action : ", action);
+      return {
+        ...state,
+        patchReplyLoading: false,
+        patchReplyDone: true,
+      };
+    case PATCH_REPLY_FAILURE:
+      console.log("In REDUCERS OF PATCH_REPLY_FAILURE, action : ", action);
+      return {
+        ...state,
+        patchReplyLoading: false,
+        patchReplyError: action.error,
+      };
+
+    // delete reply to qna
+    case DELETE_REPLY_REQUEST:
+      console.log("In REDUCERS OF DELETE_REPLY_REQUEST, action : ", action);
+      return {
+        ...state,
+        deleteReplyLoading: true, // reply to qna
+        deleteReplyDone: false,
+        deleteReplyError: null,
+      };
+    case DELETE_REPLY_SUCCESS:
+      console.log("In REDUCERS OF DELETE_REPLY_SUCCESS, action : ", action);
+      return {
+        ...state,
+        deleteReplyLoading: false,
+        deleteReplyDone: true,
+      };
+    case DELETE_REPLY_FAILURE:
+      console.log("In REDUCERS OF DELETE_REPLY_FAILURE, action : ", action);
+      return {
+        ...state,
+        deleteReplyLoading: false,
+        deleteReplyError: action,
+      };
+
+
     default:
       return state;
   }

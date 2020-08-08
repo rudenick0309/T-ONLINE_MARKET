@@ -33,7 +33,17 @@ import {
   PATCH_REVIEW_SUCCESS,
   PATCH_REVIEW_FAILURE,
   PATCH_REVIEW_REQUEST,
-  LOAD_SEARCHLIST_REQUEST, LOAD_SEARCHLIST_SUCCESS, LOAD_SEARCHLIST_FAILURE,
+  LOAD_SEARCHLIST_REQUEST,
+  LOAD_SEARCHLIST_SUCCESS,
+  LOAD_SEARCHLIST_FAILURE,
+  ADD_REPLY_REQUEST,
+  ADD_REPLY_SUCCESS,
+  ADD_REPLY_FAILURE,
+  PATCH_REPLY_REQUEST,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_SUCCESS,
+  DELETE_REPLY_FAILURE,
+  PATCH_REPLY_SUCCESS, PATCH_REPLY_FAILURE,
 } from "../reducers/goods";
 import {all, fork, call, put, takeLatest, throttle} from "redux-saga/effects";
 
@@ -70,10 +80,10 @@ function addQnAAPI(data) {
 }
 
 function deleteQnAAPI(data) {
-  console.log("In SAGA, deleteQnAAPI, data : ", data);
   let obj = {
     data : data,
   }
+  console.log("In SAGA, deleteQnAAPI, obj : ", obj);
   return axios.delete("goods/info/qa_lists", obj);
 }
 
@@ -94,16 +104,32 @@ function addReviewAPI(data) {
 }
 
 function deleteReviewAPI(data) {
-  console.log("In SAGA, deleteReviewAPI, data : ", data);
   let obj = {
     data : data,
   }
+  console.log("In SAGA, deleteReviewAPI, obj : ", obj);
   return axios.delete("/goods/info/review", obj);
 }
 
 function patchReviewAPI(data) {
   console.log("In SAGA, patchReviewAPI, data : ", data);
   return axios.put("/goods/info/review", data);
+}
+
+function addReplyAPI(data) {
+  console.log("In SAGA, addReplyAPI, data : ", data);
+  return axios.post("/goods/info/reply", data);
+}
+function patchReplyAPI(data) {
+  console.log("In SAGA, patchReplyAPI, data : ", data);
+  return axios.put("/goods/info/reply", data);
+}
+function deleteReplyAPI(data) {
+  let obj = {
+    data : data,
+  }
+  console.log("In SAGA, deleteReplyAPI, obj : ", obj);
+  return axios.delete("/goods/info/reply", obj);
 }
 
 
@@ -334,6 +360,62 @@ function* patchQnA(action) {
   }
 }
 
+function* addReply(action) {
+  console.log('In SAGA, addReply, action : ', action)
+  try {
+    const result = yield call(addReplyAPI, action.text);
+    yield put({
+      type: ADD_REPLY_SUCCESS,
+      // TODO : data: result.data,
+      data: result.text,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: ADD_REPLY_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* patchReply(action) {
+  console.log('In SAGA, patchReply, action : ', action)
+  try {
+    const result = yield call(patchReplyAPI, action.text);
+    yield put({
+      type: PATCH_REPLY_SUCCESS,
+      // TODO : data: result.data,
+      data: result.text,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: PATCH_REPLY_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* deleteReply(action) {
+  console.log('In SAGA, deleteReply, action : ', action)
+  try {
+    const result = yield call(deleteReplyAPI, action.id);
+    console.log('In SAGA, deleteReply, result : ', result)
+    yield put({
+      type: DELETE_REPLY_SUCCESS,
+      // TODO : data: result.data,
+      data: result.text,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: DELETE_REPLY_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+
 // 2
 function* watchHome() {
   yield takeLatest(HOME_REQUEST, home);
@@ -396,6 +478,21 @@ function* watchPatchQnA() {
   yield takeLatest(PATCH_QUESTION_REQUEST, patchQnA);
 }
 
+function* watchAddReply() {
+  console.log('In SAGA, watchAddReply, executes')
+  yield takeLatest(ADD_REPLY_REQUEST, addReply);
+}
+
+function* watchPatchReply() {
+  console.log('In SAGA, watchPatchReply, executes')
+  yield takeLatest(PATCH_REPLY_REQUEST, patchReply);
+}
+
+function* watchDeleteReply() {
+  console.log('In SAGA, watchDeleteReply, executes')
+  yield takeLatest(DELETE_REPLY_REQUEST, deleteReply);
+}
+
 // 1
 export default function* goodsSaga() {
   console.log("In GOODS of SAGA, goodsSaga");
@@ -412,5 +509,8 @@ export default function* goodsSaga() {
     fork(watchAddReview),
     fork(watchDeleteReview),
     fork(watchPatchReview),
+    fork(watchAddReply),
+    fork(watchPatchReply),
+    fork(watchDeleteReply),
   ]);
 }
