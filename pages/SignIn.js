@@ -20,12 +20,10 @@ import {loginAction} from '../reducers/login';
 
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid blue;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid blue;
 `;
 
 // const InputText = styled.TextInput`
@@ -33,8 +31,16 @@ const Contents = styled.ScrollView`
 // `
 
 const InButton = styled.Button`
-  width: 100px;
-  border: 2px solid yellow;
+  background-color: black;
+  margin-bottom: 300px;
+`;
+
+const ViewRowStyled = styled.View`
+  flex-direction: row;
+  text-align: center;
+  margin: 23px 0px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SignIn = (props) => {
@@ -42,7 +48,7 @@ const SignIn = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const errMessage = useSelector((state) => state.login?.data);
+  const error = useSelector((state) => state.login?.error);
 
   const text = {
     email,
@@ -51,7 +57,7 @@ const SignIn = (props) => {
 
   const onPressSignin = useCallback(() => {
     dispatch(loginAction(text));
-    console.log('login page', errMessage);
+
     props.navigation.navigate('Home');
   }, [email, password]);
 
@@ -75,17 +81,30 @@ const SignIn = (props) => {
           value={password}
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}></TextInput>
-
-        <InButton
-          onPress={onPressSignin}
-          title="Log in"
-          // disabled={!isLogin}
-          // title={isLogin ? "Log in" : "Log out"}
-        />
-        <Button
-          title="회원가입하기"
-          onPress={() => props.navigation.navigate('SignUp')}
-        />
+        {error ? (
+          <InButton
+            color="#464e46"
+            onPress={() => alert('이메일이나 비밀번호가 올바르지 않습니다')}
+            title="Log in"
+            // disabled={!isLogin}
+            // title={isLogin ? "Log in" : "Log out"}
+          />
+        ) : (
+          <InButton
+            color="#464e46"
+            onPress={onPressSignin}
+            title="Log in"
+            // disabled={!isLogin}
+            // title={isLogin ? "Log in" : "Log out"}
+          />
+        )}
+        <ViewRowStyled>
+          <InButton
+            title="회원가입하기"
+            color="#464e46"
+            onPress={() => props.navigation.navigate('SignUp')}
+          />
+        </ViewRowStyled>
       </Contents>
       <Nav props={props} />
     </Container>
