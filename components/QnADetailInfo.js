@@ -30,8 +30,8 @@ const QnADetailInfo = (props) => {
   const id = props.prop?.route.params.id;
   const dispatch = useDispatch();
   const qna = useSelector(state => state.goods?.qna);
-  const timesD = useSelector((state => state.goods?.times))
-  console.log("In QnADetailInfo, times : ", timesD);
+  const timesQ = useSelector((state => state.goods?.times))
+  console.log("In QnADetailInfo, times : ", timesQ);
   // console.log("In QnADetailInfo, qna : ", qna);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const QnADetailInfo = (props) => {
 
   useEffect(() => {
     dispatch(loadToQuestion(id));
-  }, [timesD]);
+  }, [timesQ]);
 
 
 

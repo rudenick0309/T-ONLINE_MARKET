@@ -17,6 +17,8 @@ export const initialState = {
 
   times : 1,
 
+  timesR : 1,
+
   homeLoading: false, // home rendering
   homeQnADone: false,
   homeQnAError: null,
@@ -81,6 +83,7 @@ export const COUNT_MINUS_REQUEST = "COUNT_MINUS_REQUEST";
 
 
 export const TIMES_PLUS_REQUEST = "TIMES_PLUS_REQUEST";   // TIMES
+export const TIMESR_PLUS_REQUEST = "TIMESR_PLUS_REQUEST";   // TIMES review
 
 
 export const HOME_REQUEST = "HOME_REQUEST";                        // home
@@ -177,6 +180,13 @@ export const countMinus = () => {
 export const timesToDelete = () => {
   return {
     type: TIMES_PLUS_REQUEST,
+  };
+};
+
+// times to Review
+export const timesToReview = () => {
+  return {
+    type: TIMESR_PLUS_REQUEST,
   };
 };
 
@@ -463,8 +473,8 @@ const reducer = (state = initialState, action) => {
         loadReviewLoading: false,   // review read
         loadReviewDone: true,
         loadReviewError: null,
-        // review: [action.data, ...state.review],
-        review: [action.data],   // When i clicked 'review button', action.data has been added in qna states
+        review: [action.data, ...state.review],
+        // review: [action.data],   // When i clicked 'review button', action.data has been added in qna states
       };
     case LOAD_REVIEW_FAILURE:
       console.log("In REDUCER, LOAD_REVIEW_FAILURE action : ", action);
@@ -490,7 +500,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         addReviewLoading: false,
         addReviewDone: true,
-        review: [action.data.data, ...state.review],
+        // review: [action.data.data, ...state.review],
 
       };
     case ADD_REVIEW_FAILURE:
