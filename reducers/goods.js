@@ -1,6 +1,5 @@
 import login from './login'
 
-console.log('이건 테스트, ', login)
 // initialState part
 export const initialState = {
   home: [], // change
@@ -549,21 +548,21 @@ const reducer = (state = initialState, action) => {
       };
     case PATCH_REVIEW_SUCCESS:
       console.log("In REDUCERS OF PATCH_REVIEW_SUCCESS, action : ", action);
-      let reviewIndex = 0;
-      state.review.forEach((el, index) => {
-        if (action.data.id === el.id) {
-          reviewIndex = index;
-        }
-      });
-
-      let reviewForehand = state.review.slice(0, reviewIndex);
-      let reviewBackhand = state.review.slice(reviewIndex + 1);
+      // let reviewIndex = 0;
+      // state.review.forEach((el, index) => {
+      //   if (action.data.id === el.id) {
+      //     reviewIndex = index;
+      //   }
+      // });
+      //
+      // let reviewForehand = state.review.slice(0, reviewIndex);
+      // let reviewBackhand = state.review.slice(reviewIndex + 1);
 
       return {
         ...state,
         patchReviewLoading: false,
         patchReviewDone: true,
-        review: reviewForehand.concat(action.data, reviewBackhand)
+        // review: reviewForehand.concat(action.data, reviewBackhand)
       };
     case PATCH_REVIEW_FAILURE:
       console.log("In REDUCERS OF PATCH_REVIEW_FAILURE, action : ", action);
