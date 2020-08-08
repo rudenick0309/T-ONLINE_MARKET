@@ -103,7 +103,7 @@ function deleteReviewAPI(data) {
 
 function patchReviewAPI(data) {
   console.log("In SAGA, patchReviewAPI, data : ", data);
-  return axios.post("/goods/info/review", data);
+  return axios.put("/goods/info/review", data);
 }
 
 
