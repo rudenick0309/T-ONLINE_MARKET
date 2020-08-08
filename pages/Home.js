@@ -51,9 +51,9 @@ const TextPagerStyled = styled.Text`
   height : 200px;
   font-size: 50px;
 `;
-const TouchablePagerStyled = styled.TouchableOpacity`
-  height : 200px;
-`;
+// const TouchablePagerStyled = styled.TouchableOpacity`
+//   height : 200px;
+// `;
 
 const RecommendTextStyled = styled.Text`
   font-weight:bold;
