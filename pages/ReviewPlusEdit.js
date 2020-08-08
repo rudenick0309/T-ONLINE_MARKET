@@ -1,10 +1,10 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {View, Text, TextInput, Button} from "react-native";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {patchToReview} from "../reducers/goods";
+import {patchToReview, timesToDelete} from "../reducers/goods";
 
 // css part
 const Container = styled.ScrollView`
@@ -46,24 +46,31 @@ const ReviewPlusEdit = (props) => {
   const [editContent, onChangeTextContent] = useState(contents);
   const [nonEditUserName, setNonEditUserName] = useState(username);
 
+  var modifiedReview = null;
 
   const onChangeTextUserName = (text) => {
     // setEditUserName(text);
   };
 
-  const modifiedQnA = {
-    username,
-    title: editTitle,
-    content: editContent,
-    id,
-  }
+  useEffect(() => {
+    modifiedReview = {
+      title: editTitle,
+      contents: editContent,
+      review_id : id,
+    }
+  }, [editTitle,editContent])
+
 
   const onPressEditReview = () => {
     console.log('In ReviewPluseEdit modifiedReview : ', id);
     dispatch(patchToReview(modifiedReview))
+
     onChangeTextTitle(title)
     onChangeTextContent(contents)
-    props.navigation.goBack();
+    setTimeout(() => {
+      props.navigation.goBack();
+    }, 2000)
+    dispatch(timesToDelete())
   }
 
   return (
