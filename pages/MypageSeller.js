@@ -11,6 +11,7 @@ import {
 } from '../components/Orderitem';
 import {useSelector} from 'react-redux';
 import SaleInfo from '../components/saleInfo';
+import OnsaleInfo from '../components/onsaleInfo';
 
 // css part
 const Container = styled.ScrollView`
@@ -22,7 +23,8 @@ const InContainer = styled.TouchableOpacity`
 `;
 
 const Contents = styled.View`
-  height: 300px;
+  flex: 1;
+  height: 560px;
 `;
 
 const TextStyled = styled.Text`
@@ -35,13 +37,46 @@ const ImageView = styled.Image`
   resize-mode: contain;
   border: 2px solid yellow;
 `;
+const ViewRowStyled = styled.View`
+  flex-direction: row;
+  text-align: center;
+  margin: 23px 0px;
+  justify-content: center;
+  align-items: center;
+`;
 
 const TextView = styled.Text`
   color: red;
 `;
-const ButtonDetailInfoOfBottom = styled.Button`
-  border: 3px solid red;
+const ButtonDetailInfoOfBottom = styled.TouchableOpacity`
+  flex:1
+  justify-content:center;
+  align-items:center;
+  flex-direction:row;
 `;
+
+const TextInTouchableOpacityStyled = styled.Text`
+  color: white;
+  font-size: 20px;
+  flex: 1;
+  width: 100%;
+  height: 10%;
+  text-align: center;
+  letter-spacing: 3px;
+`;
+
+const ViewDetailInfoOfBottom = styled.View`
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 30px;
+  height: 10px;
+  justify-content: space-between;
+  background-color: #464e46;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 const OnsaleDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
@@ -66,48 +101,70 @@ const MypageSeller = (props) => {
   }, []);
   console.log('login done', loginDone);
   console.log('user', userInfo);
-  if (loginDone === true && message) {
+  if (loginDone) {
     return (
       <Container>
         <Header props={props} />
-        {userInfo.user_admission ? (
-          <Contents>
-            <TextStyled>님 환영합니다</TextStyled>
 
-            <ButtonDetailInfoOfBottom
-              title={'판매'}
-              color={'palevioletred'}
-              onPress={() => {
-                setOnsale(true);
-                setSale(false);
-              }}
-            />
-            <ButtonDetailInfoOfBottom
-              title={'판매내역'}
-              color={'palevioletred'}
-              onPress={() => {
-                setOnsale(false);
-                setSale(true);
-              }}
-            />
+        {userInfo && userInfo.user_admission ? (
+          <Contents>
+            <TextStyled>
+              {userInfo ? userInfo.username : ''}님 환영합니다
+            </TextStyled>
+            <ViewDetailInfoOfBottom>
+              <ButtonDetailInfoOfBottom
+                title={'판매'}
+                color="#464e46"
+                onPress={() => {
+                  setOnsale(true);
+                  setSale(false);
+                }}>
+                <TextInTouchableOpacityStyled>
+                  판매 중인 상품
+                </TextInTouchableOpacityStyled>
+              </ButtonDetailInfoOfBottom>
+              <ButtonDetailInfoOfBottom
+                title={'판매내역'}
+                color="#464e46"
+                onPress={() => {
+                  setOnsale(false);
+                  setSale(true);
+                }}>
+                <TextInTouchableOpacityStyled>
+                  판매내역
+                </TextInTouchableOpacityStyled>
+              </ButtonDetailInfoOfBottom>
+            </ViewDetailInfoOfBottom>
             {onsale ? (
               <SaleInfo prop={props} />
             ) : sale ? (
-              <SaleInfo prop={props} />
+              <OnsaleInfo prop={props} />
             ) : (
               <Text>empty part</Text>
             )}
             <TextStyled>구매자용 마이페이지</TextStyled>
-            <Button
-              title="구매자용 마이페이지"
-              onPress={() => {
-                props.navigation.navigate('Mypage');
-              }}
-            />
+            <ViewRowStyled>
+              <Button
+                title="구매자용 마이페이지"
+                color="#464e46"
+                onPress={() => {
+                  props.navigation.navigate('Mypage');
+                }}
+              />
+            </ViewRowStyled>
           </Contents>
         ) : (
           <Contents>
             <TextStyled>관리자 승인이 필요합니다</TextStyled>
+            <ViewRowStyled>
+              <Button
+                title="홈으로"
+                color="#464e46"
+                onPress={() => {
+                  props.navigation.navigate('Home');
+                }}
+              />
+            </ViewRowStyled>
           </Contents>
         )}
 
