@@ -6,7 +6,7 @@ import Nav from "../components/Nav";
 import {connect, useDispatch, useSelector} from "react-redux";
 // import {actionCreators} from "../reducers/goods";
 import shortid from "shortid";
-import {addToReview} from "../reducers/goods";
+import {addToReview, timesToDelete} from "../reducers/goods";
 // import {initialState} from '../reducers/goods'
 
 // css part
@@ -57,25 +57,29 @@ const ReviewPlus = (props) => {
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
   const id = props.route.params;
-  const review = useSelector((state) => state.goods?.review);
+  // const review = useSelector((state) => state.goods?.review);
+  var text = null;
 
   console.log('In ReviewPlus, id : ', id);
 
   useEffect(() => {
-    // TODO: take the bucket list to axios
-  }, []);
+    text = {
+      // title: title,
+      contents: content,
+      goods_id:id.id,
+    };
+    console.log('In Review, text: ', text);
+  }, [title,content]);
 
-  const text = {
-    title: title,
-    contents: content,
-    goods_id:id.id,
-  };
 
   const onPressReview = useCallback(() => {
+    dispatch(timesToDelete())
     console.log('In Review, text: ', text);
     dispatch(addToReview(text));  //TODO : 1. text  or  2. (name, content)
-    props.navigation.goBack();
-  }, [userName, content]);
+    setTimeout(() => {
+      props.navigation.goBack();
+    },3000);
+  }, [title, content]);
 
 
   return (
@@ -92,8 +96,12 @@ const ReviewPlus = (props) => {
         </Text>
 
         <ReviewView>
-          <ReviewNameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>
-          <ReviewTitleText maxLength={20} value={title} onChangeText={(text) => onChangeTitle(text)}/>
+          {/*<ReviewNameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>*/}
+          {/*<ReviewTitleText*/}
+          {/*  maxLength={50}*/}
+          {/*  value={title}*/}
+          {/*  multiline={true}*/}
+          {/*  onChangeText={(text) => onChangeTitle(text)}/>*/}
 
           <ReviewButton title={"등록하기"} onPress={onPressReview}/>
 

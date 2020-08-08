@@ -11,7 +11,7 @@ import shortId from 'shortid'
 // review detail part
 const ReviewDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
-  height: 500px;
+  height: 100%;
 `;
 
 const ReviewButtonDetailInfoOfBottom = styled.Button`
@@ -29,20 +29,23 @@ const ReviewDetailInfo = (props) => {
   console.log('In ReviewDetailInfo, props : ', props);
   const id = props.prop?.route.params.id
   const dispatch = useDispatch();
-  var review = useSelector((state) => state.goods?.review);
-  // const loadQnAError = useSelector((state) => state.goods?.loadQnAError);
-  console.log('In ReviewDetailInfo, review : ', review);
-  const loadReviewError = useSelector((state) => state.goods?.loadReviewError)
-  // var qna = useSelector(state => state.goods?.qna);
-
-  if (loadReviewError) {
-    console.log('In ReviewDetailInfo At IF, id : ', id)  //id : 9,
-    review = [];
-  }
+  const review = useSelector((state) => state.goods?.review);
+  const timesQ = useSelector((state) => state.goods?.times);
+  console.log('In ReviewDetailInfo, id : ', id);
+  console.log('In ReviewDetailInfo, timesR  1 : ', timesQ);
+  // if (loadReviewError) {
+  //   console.log('In ReviewDetailInfo At IF, id : ', id)  //id : 9,
+  //   review = [];
+  // }
 
   useEffect(() => {
     dispatch(loadToReview(id))
   },[])
+
+  useEffect(() => {
+    console.log('In ReviewDetailInfo, timesR 2 : ', timesQ);
+    dispatch(loadToReview(id))
+  },[timesQ])
 
   return (
     <ReviewDetailInfoOfBottom>
@@ -58,7 +61,7 @@ const ReviewDetailInfo = (props) => {
       </ReviewHeader>
       { review.length === 0
         ? <Text>등록된 Review가 없습니다</Text>
-        : (review.map(el => {
+        : (review[0].map(el => {
           return <ReviewList key={shortId.generate()} list={el} prop={props}/>;
         }))
       }
