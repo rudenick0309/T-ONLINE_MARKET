@@ -59,8 +59,9 @@ const RightDetailInfoOfUpper = styled.View`
 
 const TextOfUpperRight = styled.Text`
   font-family: 'DancingScript-Regular';
-  font-size: 18px;
-  margin-top:19px;
+  
+  font-size: 16px;
+  margin-top:23px;
 `;
 
 // bottom components
@@ -74,34 +75,11 @@ const InfoDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
 `;
 
-// const ImageInfoOfBottom = styled.Image`
-//   flex: 1;
-//   height: 2800px;
-//   resize-mode: contain;
-// `;
-// const ImageInfoOfBottom = styled("AutoHeightImage")`
-//   flex: 1;
-// `;
-
 // qna detail part
 const QnADetailInfoOfBottom = styled.ScrollView`
   flex: 1;
   height: 500px;
 `;
-
-
-// const QnAheader = styled.View`                  // no use
-//   flex-direction : row;
-//   justify-content : space-around;
-// `;
-
-// const QnAButtonDetailInfoOfBottom = styled.Button`    // no use
-//   height: 150px;
-//   width : 400px;
-//
-// `;
-
-
 
 const ViewDetailInfoOfBottom = styled.View`
 flex:1;
@@ -382,34 +360,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
 })
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//     color: Colors.black,
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//     color: Colors.dark,
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-//   footer: {
-//     color: Colors.dark,
-//     fontSize: 12,
-//     fontWeight: '600',
-//     padding: 4,
-//     paddingRight: 12,
-//     textAlign: 'right',
-//   },
-// });
+
