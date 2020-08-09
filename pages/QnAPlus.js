@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from "react";
-import {StyleSheet, Text, View, TextInput} from "react-native";
+import {StyleSheet, Text, View, TextInput, TouchableOpacity} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
@@ -12,42 +12,65 @@ import {addToQuestion, loadToQuestion, timesToDelete} from "../reducers/goods";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid blue;
+ 
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid blue;
+  
+  padding: 10px;
 `;
 
 // flex-direction:row;
 const QnAView = styled.View`
-  border: 3px solid red;
+  margin-bottom: 40px;
+  
   flex-direction: row;
-  justify-content: space-around;
+  
 `;
 
-const QnANameText = styled.TextInput`
-  width: 100px;
-  border: 2px solid yellow;
-`;
+// const QnANameText = styled.TextInput`
+//   width: 100px;
+//   border: 2px solid yellow;
+// `;
 
 const QnATitleText = styled.TextInput`
-  width: 100px;
-  border: 2px solid green;
+  flex:1;
+  border-bottom-width: 2px;
+  border-style : solid;
+  margin-bottom:20px;
 `;
 
-const QnAButton = styled.Button`
-  width: 100px;
-  border: 2px solid yellow;
+const QnAButton = styled.TouchableOpacity`
+  flex:1;
+  height: 50px;
+  background-color:#535204;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;  
 `;
+
+const ButtonText = styled.Text`
+  color:white;
+  font-size:30px;
+  letter-spacing:10px;
+`
 
 const QnAContentTextInput = styled.TextInput`
+  margin-bottom: 20px;
   flex: 1;
-  border: 2px solid green;
+  border: 2px solid grey  
   height: 200px;
+  border-radius:10px;
 `;
 
+const TopTextView= styled.View`
+  flex:1;
+  opacity:0.2
+  justify-content:center;
+  align-items:center;
+  margin: 50px 0px;
+`
 
 // function part
 const QnAPlus = (props) => {
@@ -63,25 +86,25 @@ const QnAPlus = (props) => {
 
   var text = null;
 
-  useEffect(()=> {
+  useEffect(() => {
     text = {
       title: title,
       contents: content,
-      goods_id:id.id,
+      goods_id: id.id,
     };
     // console.log('In QnAPlus, text collection : ', text);
-  },[title, content])
+  }, [title, content]);
 
 
   const onPressQuestion = useCallback(() => {
-    dispatch(timesToDelete())
+    dispatch(timesToDelete());
     // console.log('In QnAPlus, text: ', text);
 
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
 
     setTimeout(() => {
       props.navigation.goBack();
-    },2000);
+    }, 2000);
   }, [title, content]);
 
 
@@ -92,30 +115,45 @@ const QnAPlus = (props) => {
 
       <Contents>
 
-        <Text>
-          {
-            `질문을 등록해 주세요. 질문은 200자로 제한됩니다`
-          }
-        </Text>
+        <TopTextView>
+          <Text>
+            {
+              `질문은 200자로 제한되오며,`
+            }
+          </Text>
+          <Text>
+            {
+              `악의적인 공격성 글은 가슴이 아파요.`
+            }
+          </Text>
+        </TopTextView>
 
-        <QnAView>
+
           {/*<QnANameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>*/}
-          <QnATitleText maxLength={20} value={title} onChangeText={(text) => onChangeTitle(text)}/>
-
-          <QnAButton title={"등록하기"} onPress={onPressQuestion}/>
-
-        </QnAView>
+          <QnATitleText
+            maxLength={60}
+            value={title}
+            placeholder={"제목을 입력해 주세요"}
+            onChangeText={(text) => onChangeTitle(text)}
+          />
 
         <QnAContentTextInput
           maxLength={200}
           multiline={true}
+          placeholder={"내용을 입력해 주세요"}
           value={content}
           onChangeText={(text) => onChangeContent(text)}
         />
 
+        {/*<QnAButton title={"등록하기"} onPress={onPressQuestion}/>*/}
+        <QnAButton onPress={onPressQuestion}>
+          <ButtonText>등록하기</ButtonText>
+        </QnAButton>
+
       </Contents>
 
       <Nav props={props}/>
+
     </Container>
   );
 };
