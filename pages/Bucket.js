@@ -20,7 +20,7 @@ const Contents = styled.ScrollView`
 
 // function part
 const Bucket = (props) => {
-  console.log("In Bucket, props : ", props);
+  // console.log("In Bucket, props : ", props);
   const count = props.route.params.count;
   const goods_img = props.route.params.goods_img;
   const goods_name = props.route.params.goods_name;
@@ -35,10 +35,10 @@ const Bucket = (props) => {
 
 
   if (typeof useParsedData === "object") {
-    console.log("In Bucket, IF state, useParsedData : ", useParsedData);   // asyncStorage get data
+    // console.log("In Bucket, IF state, useParsedData : ", useParsedData);   // asyncStorage get data
     // dispatch(addToBucket(useParsedData));   //TODO : Why this dispatch sparkes the infinity-loop?
     reduxData.unshift(useParsedData);
-    console.log("In Bucket, reduxData : ", reduxData);
+    // console.log("In Bucket, reduxData : ", reduxData);
   }
 
   //   **********************************************************************   storing

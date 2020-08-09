@@ -76,7 +76,7 @@ const Home = (props) => {
   const home = useSelector(state => state.goods?.home);
   const recommendation = useSelector((state) => state.goods.home?.recommendation);
   const best = useSelector((state) => state.goods.home?.best);
-  console.log("In HOME COMPONENT, home : ", home);
+  // console.log("In HOME COMPONENT, home : ", home);
 
 
   useEffect(() => {

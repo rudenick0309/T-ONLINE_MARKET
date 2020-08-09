@@ -21,7 +21,7 @@ const TextViewStyled = styled.View`
 
 
 const BucketList = (props) => {
-  console.log('In BucketList, all the props : ', props);
+  // console.log('In BucketList, all the props : ', props);
   // console.log('In BucketList, all the props : ', props.props.route.params);
 
   // const img = props.props.route.params.goods_img;

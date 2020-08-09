@@ -37,10 +37,10 @@ const TextInputStyled = styled.TextInput`
 //
 const ReviewPlusEdit = (props) => {
   const {id, title, contents, username} = props.route.params;
-  console.log("In ReviewPlusEdit props  : ", props);   //TODO : must check console.log for study
+  // console.log("In ReviewPlusEdit props  : ", props);   //TODO : must check console.log for study
   const dispatch = useDispatch();
   const {patchReviewDone} = useSelector(state => state.goods)
-  console.log('In ReviewPlusEdit patchReviewDone : ', patchReviewDone);
+  // console.log('In ReviewPlusEdit patchReviewDone : ', patchReviewDone);
 
   const [editTitle, onChangeTextTitle] = useState(title);
   const [editContent, onChangeTextContent] = useState(contents);
@@ -62,7 +62,7 @@ const ReviewPlusEdit = (props) => {
 
 
   const onPressEditReview = () => {
-    console.log('In ReviewPluseEdit modifiedReview : ', id);
+    // console.log('In ReviewPluseEdit modifiedReview : ', id);
     dispatch(patchToReview(modifiedReview))
 
     onChangeTextTitle(title)

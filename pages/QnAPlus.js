@@ -51,7 +51,7 @@ const QnAContentTextInput = styled.TextInput`
 
 // function part
 const QnAPlus = (props) => {
-  console.log('In QnAPlus, props : ', props.route.params);
+  // console.log('In QnAPlus, props : ', props.route.params);
   const [title, onChangeTitle] = useState("");
   const [content, onChangeContent] = useState("");
   const dispatch = useDispatch();
@@ -69,13 +69,13 @@ const QnAPlus = (props) => {
       contents: content,
       goods_id:id.id,
     };
-    console.log('In QnAPlus, text collection : ', text);
+    // console.log('In QnAPlus, text collection : ', text);
   },[title, content])
 
 
   const onPressQuestion = useCallback(() => {
     dispatch(timesToDelete())
-    console.log('In QnAPlus, text: ', text);
+    // console.log('In QnAPlus, text: ', text);
 
     dispatch(addToQuestion(text));  //TODO : 1. text  or  2. (name, content)
 

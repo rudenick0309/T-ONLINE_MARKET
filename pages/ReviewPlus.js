@@ -51,7 +51,7 @@ const ReviewContentTextInput = styled.TextInput`
 
 // function part
 const ReviewPlus = (props) => {
-  console.log('In ReviewPlus, props : ', props.route.params);
+  // console.log('In ReviewPlus, props : ', props.route.params);
   const [userName, onChangeUserName] = useState("");
   const [title, onChangeTitle] = useState("");
   const [content, onChangeContent] = useState("");
@@ -60,7 +60,7 @@ const ReviewPlus = (props) => {
   // const review = useSelector((state) => state.goods?.review);
   var text = null;
 
-  console.log('In ReviewPlus, id : ', id);
+  // console.log('In ReviewPlus, id : ', id);
 
   useEffect(() => {
     text = {
@@ -68,12 +68,12 @@ const ReviewPlus = (props) => {
       contents: content,
       goods_id:id.id,
     };
-    console.log('In Review, text: ', text);
+    // console.log('In Review, text: ', text);
   }, [content]);
 
 
   const onPressReview = useCallback(() => {
-    console.log('In Review, text: ', text);
+    // console.log('In Review, text: ', text);
 
     dispatch(addToReview(text));  //TODO : 1. text  or  2. (name, content)
 
@@ -98,12 +98,6 @@ const ReviewPlus = (props) => {
         </Text>
 
         <ReviewView>
-          {/*<ReviewNameText maxLength={5} value={userName} onChangeText={(text) => onChangeUserName(text)}/>*/}
-          {/*<ReviewTitleText*/}
-          {/*  maxLength={50}*/}
-          {/*  value={title}*/}
-          {/*  multiline={true}*/}
-          {/*  onChangeText={(text) => onChangeTitle(text)}/>*/}
 
           <ReviewButton title={"등록하기"} onPress={onPressReview}/>
 

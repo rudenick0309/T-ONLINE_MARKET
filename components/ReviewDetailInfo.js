@@ -26,24 +26,21 @@ const ReviewHeader = styled.View`
 
 // function part
 const ReviewDetailInfo = (props) => {
-  console.log('In ReviewDetailInfo, props : ', props);
+  // console.log('In ReviewDetailInfo, props : ', props);
   const id = props.prop?.route.params.id
   const dispatch = useDispatch();
   const review = useSelector((state) => state.goods?.review);
   const timesQ = useSelector((state) => state.goods?.times);
-  console.log('In ReviewDetailInfo, id : ', id);
-  console.log('In ReviewDetailInfo, timesR  1 : ', timesQ);
-  // if (loadReviewError) {
-  //   console.log('In ReviewDetailInfo At IF, id : ', id)  //id : 9,
-  //   review = [];
-  // }
+  // console.log('In ReviewDetailInfo, id : ', id);
+  // console.log('In ReviewDetailInfo, timesR  1 : ', timesQ);
+
 
   useEffect(() => {
     dispatch(loadToReview(id))
   },[])
 
   useEffect(() => {
-    console.log('In ReviewDetailInfo, timesR 2 : ', timesQ);
+    // console.log('In ReviewDetailInfo, timesR 2 : ', timesQ);
     setTimeout(() => {
       dispatch(loadToReview(id))
     }, 1000)
