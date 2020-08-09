@@ -58,7 +58,7 @@ const ImageStyled = styled.Image`
 
 //
 const ReviewList = (props) => {
-  console.log("In ReviewList, props : ", props);
+  // console.log("In ReviewList, props : ", props);
   // const [replies, setReplies] = useState(false);
   const dispatch = useDispatch();
   const {username} = props.list;
@@ -72,18 +72,11 @@ const ReviewList = (props) => {
   const starStr = "*".repeat(star);
   const startArray = [<FontAwesomeIcon icon={faStar} size={15}/>];
 
-  console.log("In ReviewList, id : ", id);
-
   const {prop} = props.prop;  // for Route
-  console.log("In ReviewList, prop : ", prop);
-
-  // const onPressReview = useCallback(() => {
-  //   // setReplies((prevState) => !prevState);
-  // }, []);
 
   const deleteReview = useCallback(() => {
     dispatch(timesToDelete())
-    console.log("In deleteQnA", id);
+    // console.log("In deleteQnA", id);
     let data = {
       review_id: id
     }
@@ -120,10 +113,11 @@ const ReviewList = (props) => {
               <ButtonStyled
                 title={"수정"}
                 color={"#62760c"}
+
                 onPress={() => {
                   prop.navigation.navigate("ReviewPlusEdit", {id, title, contents, username});
                 }}/>
-              <Text>{"   "}</Text>
+              {/*<Text>{"   "}</Text>*/}
               <ButtonStyled
                 title={"삭제"}
                 color={"#62760c"}
