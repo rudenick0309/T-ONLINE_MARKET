@@ -13,12 +13,12 @@ function AppNavigator() {
       <Drawer.Screen
         name="HomeNavigator"
         component={HomeNavigator}
-        options={{drawerLabel: '제 맘대로 홈'}}
+        options={{drawerLabel: 'Home'}}
       />
       <Drawer.Screen
         name="BucketNavigator"
         component={BucketNavigator}
-        options={{drawerLabel: '장바구니'}}
+        options={{drawerLabel: 'Bucket'}}
       />
       {/* TODO : <Drawer.Screen name="BucketNavigator" component={ BucketNavigator } options={{ drawerLabel: '아무거나' }}/>*/}
       {/*<Drawer.Screen name="LoginNavigator" component={ LoginNavigator } options={{ drawerLabel: '로그인 ( 지금은 홈 )' }}/>*/}

@@ -20,6 +20,7 @@ import Search from "../pages/Search";
 import ReviewPlusEdit from "../pages/ReviewPlusEdit";
 import QnAList from "../components/QnAList";
 import QnADetailInfo from "../components/QnADetailInfo";
+import BucketList from "../components/BucketList";
 
 
 const Stack = createStackNavigator();
@@ -32,6 +33,7 @@ const HomeNavigator = () => {
       <Stack.Screen name="GoodsList" component={GoodsList}/>
       <Stack.Screen name="Payment" component={Payment}/>
       <Stack.Screen name="Bucket" component={Bucket}/>
+      <Stack.Screen name="BucketList" component={BucketList}/>
 
       <Stack.Screen name="QnAPlus" component={QnAPlus}/>
       <Stack.Screen name="QnAList" component={QnAList}/>
