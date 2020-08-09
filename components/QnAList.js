@@ -12,7 +12,7 @@ import {
 import QnAPlusEdit from "../pages/QnAPlusEdit";
 import GoodsDetail from "../pages/GoodsDetail";
 import {generate} from "shortid";
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faGripLinesVertical} from "@fortawesome/free-solid-svg-icons";
 
 // css part
@@ -37,13 +37,14 @@ const Contents = styled.ScrollView`
 const ReContainer = styled.SafeAreaView`
   margin-top: -20px;
   margin-bottom: 20px;
+  padding:10px;
   
 `;
 
 const ReContents = styled.View`
   flex: 1;
-  border:2px solid red;
-  flex-direction:row;
+  padding:10px;
+  
   align-items:center;
 `;
 
@@ -73,7 +74,7 @@ const ReViewStyled = styled.View`
   flex: 1;
   height: 100%;
   margin : -10px;
-  padding: 20px;
+  
   flex-direction: row;
   align-items:center;
   
@@ -145,6 +146,7 @@ const ReListRightView = styled.View`
   flex:1
   justify-content: space-between;
   padding-right:10px;
+  
 `;
 
 const ReplyView = styled.View`
@@ -159,7 +161,34 @@ const ReplyView = styled.View`
   opacity:0.5
   justify-content:space-between;
   align-items:center;
-`
+`;
+//
+// const EditView = styled.View`
+//
+//   flex-direction:row;
+//   padding: 10px;
+//   padding-right:14px;
+//   justify-content:space-between;
+//   width:100%;
+//   align-items:center;
+// `;
+//
+// const EditTextInput = styled.TextInput`
+//   flex: 1;
+//   border-bottom-width:1px;
+//   border-top-width:1px;
+//   border-radius:12px;
+// `
+//
+// const EditButtonStyled = styled.TouchableOpacity`
+//   height : 30px;
+//   background-color: #62760c;
+//   flex:0.25;
+//   border : 3px solid blue
+//   border-radius: 5px;
+//   justify-content:center;
+//   align-items:center;
+// `;
 
 //
 const QnAList = (props) => {
@@ -178,7 +207,13 @@ const QnAList = (props) => {
   const {reply} = props.list;
   const {prop} = props.prop;  // for Route
   const goodsId = prop.route.params.id;
+  const replyId = reply.length ? reply[0].id : null;
+
   // console.log("In QnAList, props : ", props.list);
+
+  // reply가 빈 배열이다? - length 가 0 이다
+  // reply가 빈 배열이 아니다? id가 존재한다
+
 
   var text = null;
   var reData = null;
@@ -206,7 +241,7 @@ const QnAList = (props) => {
     };
 
     reData = {
-      reply_id: id,
+      reply_id: replyId,
       text: reWriting,
     };
     // console.log("In QnAList, useEffect, text : ", text);
@@ -222,7 +257,7 @@ const QnAList = (props) => {
     // console.log('In QnAList, deleteReply, id : ', id);
     dispatch(timesToDelete());
     let data = {
-      reply_id: id,
+      reply_id: replyId,
     };
     dispatch(deleteToReplyToQuestion(data));
   }, []);
@@ -286,11 +321,9 @@ const QnAList = (props) => {
               {
                 `내용 :   ${contents}`
               }
-              {/*<TouchableTextStyled onPress={onPressReplyToQnA}>*/}
-              {/*  <Text>답글달기</Text>*/}
-              {/*</TouchableTextStyled>*/}
+
             </TextStyled>
-            {/*<ButtonStyled title={"답글 작성"} onPress={() => {}}/>*/}
+
             {
               openReply
                 ?
@@ -314,23 +347,6 @@ const QnAList = (props) => {
                 )
                 : (<></>)
             }
-            {
-              reReply
-                ?
-                (
-                  <View>
-                    <TextInput
-                      maxLength={200}
-                      multiline={true}
-                      value={reWriting}
-                      onChangeText={(text) => onChangeReWriting(text)}
-                    />
-                    <TouchableTextStyled onPress={onPressReReplyToRequest}><Text>수정</Text></TouchableTextStyled>
-                  </View>
-                )
-                : (<></>)
-
-            }
           </TouchableTextStyled>
 
 
@@ -340,54 +356,94 @@ const QnAList = (props) => {
       {
         replies
           ?
-          // TODO : createdAt will be transferred daily number using 'moment lib'
           reply.map(el => {
             return (
-              <ReContainer key={generate().id}>
+              <>
+                <ReContainer key={generate().id}>
 
-                {/*<ReContents>*/}
-                  <ReViewStyled>
-                    <ReView>
-                      <FontAwesomeIcon icon={faGripLinesVertical} size={60}/>
-                    </ReView>
+                  <ReContents>
+                    <ReViewStyled>
+                      <ReView>
+                        <FontAwesomeIcon icon={faGripLinesVertical} size={60}/>
+                      </ReView>
 
-                    <ReTouchableTextStyled key={generate()} onPress={onPressReply}>
-                      <ReListLeftView>
-                        <TextStyled>
-                          {
-                            `이름: ${el.username}  `
+                      <ReTouchableTextStyled key={generate().id} onPress={onPressReply}>
+                        <ReListLeftView>
+                          <TextStyled>
+                            {
+                              `이름: ${el.username}  `
 
-                          }
-                          {/*  작성일 : ${el.createdAt}*/}
-                        </TextStyled>
-                        <TextStyled>
-                          {
-                            ` 제목: ${el.text} `
-                          }
-                        </TextStyled>
-                      </ReListLeftView>
+                            }
+                            {/*  작성일 : ${el.createdAt}*/}
+                          </TextStyled>
+                          <TextStyled>
+                            {
+                              ` 제목: ${el.text} `
+                            }
+                          </TextStyled>
+                        </ReListLeftView>
 
-                      <ReListRightView>
-                        <ButtonStyled onPress={onPressReReply}>
-                          <ButtonText>수정</ButtonText>
-                        </ButtonStyled>
+                        <ReListRightView>
+                          <ButtonStyled onPress={onPressReReply}>
+                            <ButtonText>수정</ButtonText>
+                          </ButtonStyled>
 
-                        <ButtonStyled onPress={deleteReply}>
-                          <ButtonText>삭제</ButtonText>
-                        </ButtonStyled>
-                      </ReListRightView>
-                    </ReTouchableTextStyled>
+                          <ButtonStyled onPress={deleteReply}>
+                            <ButtonText>삭제</ButtonText>
+                          </ButtonStyled>
+                        </ReListRightView>
+                      </ReTouchableTextStyled>
 
-                  </ReViewStyled>
+                    </ReViewStyled>
 
-                {/*</ReContents>*/}
+                    {
+                      reReply
+                        ?
+                        (
+                          // <EditView>
+                          //   <EditTextInput
+                          //     maxLength={200}
+                          //     multiline={false}
+                          //     value={reWriting}
+                          //     onChangeText={(text) => onChangeReWriting(text)}
+                          //   />
+                          //   {/*<TouchableTextStyled onPress={onPressReReplyToRequest}>*/}
+                          //   {/*  <Text>수정</Text>*/}
+                          //   {/*</TouchableTextStyled>*/}
+                          //   <EditButtonStyled onPress={onPressReReplyToRequest}>
+                          //     <ButtonText>수정</ButtonText>
+                          //   </EditButtonStyled>
+                          // </EditView>
 
-              </ReContainer>
-            )
-              ;
+                        <ReplyView>
+                          <ListLeftView>
+                            <TextInput
+                              maxLength={200}
+                              multiline={true}
+                              value={writing}
+                              onChangeText={(text) => onChangeReWriting(text)}
+                            />
+                          </ListLeftView>
+
+                          <ListRightView>
+                            <ReButtonStyled onPress={onPressReReplyToRequest}>
+                              <ButtonText>수정</ButtonText>
+                            </ReButtonStyled>
+                          </ListRightView>
+                        </ReplyView>
+
+
+                        )
+                        : (<></>)
+
+                    }
+                  </ReContents>
+
+                </ReContainer>
+              </>
+            );
           })
-          : (<></>
-          )
+          : (<></>)
       }
     </Container>
   );
