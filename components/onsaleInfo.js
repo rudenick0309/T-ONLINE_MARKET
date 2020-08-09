@@ -70,11 +70,11 @@ const OnsaleInfo = (props) => {
   console.log('onsale info props', props);
   const dispatch = useDispatch();
   const onsale = useSelector((state) => state.orders?.onsale);
-  const id = props.route.params;
+  // const id = props.route.params;
 
   console.log('onsale info salesss', onsale);
   useEffect(() => {
-    dispatch(loadOnsale(id));
+    dispatch(loadOnsale());
   }, []);
   return (
     <ScrollView>
