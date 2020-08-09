@@ -11,10 +11,6 @@ const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-// const InContainer = styled.TouchableOpacity`
-//   border: 3px solid ivory
-// `;
-
 const Contents = styled.View`
   flex: 1;
   padding:10px;
@@ -28,12 +24,6 @@ const TopTextView = styled.View`
   margin: 20px 0px;
 `;
 
-
-// const TextInputStyled = styled.TextInput`
-//   border : 3px solid red
-//   flex:1;
-//   width:100%;
-// `;
 const TextInputStyled = styled.TextInput`
   margin-bottom: 10px;
   flex: 0.5;
@@ -41,13 +31,6 @@ const TextInputStyled = styled.TextInput`
   height: 50px;
   border-radius:10px;
 `;
-
-// const QnAEditTitleText = styled.TextInput`
-//   flex:1;
-//   border-bottom-width: 2px;
-//   border-style : solid;
-//   margin-bottom:20px;
-// `;
 
 const EditButton = styled.TouchableOpacity`
   flex:0.3;
