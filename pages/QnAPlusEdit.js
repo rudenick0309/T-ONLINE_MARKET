@@ -37,10 +37,10 @@ const TextInputStyled = styled.TextInput`
 //
 const QnAPlusEdit = (props) => {
   const {id, title, contents, username} = props.route.params;
-  console.log("In QnAPlusEdit props  : ", props);   //TODO : must check console.log for study
+  // console.log("In QnAPlusEdit props  : ", props);   //TODO : must check console.log for study
   const dispatch = useDispatch();
   const {patchQnADone} = useSelector(state => state.goods)
-  console.log('In QnAEditPlus patchQnADone : ', patchQnADone);
+  // console.log('In QnAEditPlus patchQnADone : ', patchQnADone);
 
   const [editTitle, onChangeTextTitle] = useState(title);
   const [editContent, onChangeTextContent] = useState(contents);
@@ -54,7 +54,7 @@ const QnAPlusEdit = (props) => {
 
   const onPressEditQnA = useCallback(() => {
     dispatch(timesToDelete())
-    console.log('In QnAPluseEdit modifiedQnA : ', id);
+    // console.log('In QnAPluseEdit modifiedQnA : ', id);
     dispatch(patchToQuestion(modifiedQnA))
     onChangeTextTitle(title)
     onChangeTextContent(contents)
