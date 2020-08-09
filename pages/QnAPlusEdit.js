@@ -20,13 +20,13 @@ const Contents = styled.View`
   padding:10px;
 `;
 
-const TopTextView= styled.View`
+const TopTextView = styled.View`
   flex:0.7;
   opacity:0.2
   justify-content:center;
   align-items:center;
   margin: 20px 0px;
-`
+`;
 
 
 // const TextInputStyled = styled.TextInput`
@@ -61,14 +61,14 @@ const EditButtonText = styled.Text`
   color:white;
   font-size:30px;
   letter-spacing:10px;
-`
+`;
 
 //
 const QnAPlusEdit = (props) => {
   const {id, title, contents, username} = props.route.params;
   // console.log("In QnAPlusEdit props  : ", props);   //TODO : must check console.log for study
   const dispatch = useDispatch();
-  const {patchQnADone} = useSelector(state => state.goods)
+  const {patchQnADone} = useSelector(state => state.goods);
   // console.log('In QnAEditPlus patchQnADone : ', patchQnADone);
 
   const [editTitle, onChangeTextTitle] = useState(title);
@@ -78,17 +78,17 @@ const QnAPlusEdit = (props) => {
   const modifiedQnA = {
     title: editTitle,
     contents: editContent,
-    qa_list_id : id,
-  }
+    qa_list_id: id,
+  };
 
   const onPressEditQnA = useCallback(() => {
-    dispatch(timesToDelete())
+    dispatch(timesToDelete());
     // console.log('In QnAPluseEdit modifiedQnA : ', id);
-    dispatch(patchToQuestion(modifiedQnA))
-    onChangeTextTitle(title)
-    onChangeTextContent(contents)
+    dispatch(patchToQuestion(modifiedQnA));
+    onChangeTextTitle(title);
+    onChangeTextContent(contents);
     props.navigation.goBack();
-  })
+  });
 
   return (
     <Container>
@@ -108,32 +108,32 @@ const QnAPlusEdit = (props) => {
           </Text>
         </TopTextView>
 
-        {/*<View>*/}
-          <TextInputStyled
-            placeholder={nonEditUserName}
-            value={nonEditUserName}
-            editable={false}
-          />
-          <TextInputStyled
-            maxLength={200}
-            multiline={true}
-            placeholder={editTitle}
-            value={editTitle}
-            onChangeText={(text) => onChangeTextTitle(text)}
-            editable={true}/>
-          {/*<TextInputStyled placeholder={'변경할 제목을 입력해 주세요'} value={editTitle} onChangeText={(text) => onChangeTextTitle(text)} edi/>*/}
-          <TextInputStyled
-            maxLength={200}
-            multiline={true}
-            placeholder={'변경할 내용을 입력해 주세요'}
-            value={editContent}
-            onChangeText={(text) => onChangeTextContent(text)}
-            editable={true} />
-        {/*</View>*/}
 
-        {/*<Button title={"수정"} onPress={onPressEditQnA} />*/}
+        <TextInputStyled
+          placeholder={nonEditUserName}
+          value={nonEditUserName}
+          editable={false}
+        />
+        <TextInputStyled
+          maxLength={200}
+          multiline={true}
+          placeholder={editTitle}
+          value={editTitle}
+          onChangeText={(text) => onChangeTextTitle(text)}
+          editable={true}
+        />
+
+        <TextInputStyled
+          maxLength={200}
+          multiline={true}
+          placeholder={"변경할 내용을 입력해 주세요"}
+          value={editContent}
+          onChangeText={(text) => onChangeTextContent(text)}
+          editable={true}
+        />
+
         <EditButton onPress={onPressEditQnA}>
-          <EditButtonText>등록하기</EditButtonText>
+          <EditButtonText>수정하기</EditButtonText>
         </EditButton>
 
       </Contents>
