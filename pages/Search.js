@@ -47,18 +47,17 @@ const StyledTouchableOpacity = styled.TouchableOpacity`
 
 // function part
 const Search = (props) => {
-  console.log("In Search, props : ", props.route.params);
+  // console.log("In Search, props : ", props.route.params);
   const dispatch = useDispatch();
   const [value, onChangeText] = useState("");
   var searchList = useSelector((state) => state.goods?.searchList[0]);
-  console.log('In Search, searchList, : ',searchList)
+  // console.log('In Search, searchList, : ',searchList)
 
 
   useEffect(() => {
     if (searchList && searchList.length > 0) {
       searchList = [];
     }
-  // }, [searchList]);
   }, [searchList]);
 
   const onChangeTextSearch = useCallback((text) => {
@@ -66,11 +65,7 @@ const Search = (props) => {
   }, [value]);
 
   const onPressSearch = useCallback(() => {
-    console.log('In Search, onPressSearch, value : ', value)
-    // var data = {
-    //   keyword: value,
-    //   filter : null,
-    // }
+    // console.log('In Search, onPressSearch, value : ', value)
     dispatch(loadSearchList(value));
   }, [value])
 
@@ -117,12 +112,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "grey",
   },
-
-  // engine: {
-  //   position: 'absolute',
-  //   right: 0,
-  // },
-  // body: {
-  //   backgroundColor: Colors.white,
-  // },
 });

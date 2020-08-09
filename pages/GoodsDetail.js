@@ -180,7 +180,7 @@ const GoodsDetail = (props) => {
   const qna = useSelector((state) => state.goods?.qna);
   const id = props.route.params;
   const goodsInfo = useSelector((state) => state.goods?.goodsInfo);
-  console.log("In GOODS_DETAIL, goodsInfo : ", goodsInfo);
+  // console.log("In GOODS_DETAIL, goodsInfo : ", goodsInfo);
   const goods_name = goodsInfo?.goods_name;
   const goods_img = goodsInfo?.goods_img;
   const goods_price = goodsInfo?.goods_price;
@@ -197,7 +197,7 @@ const GoodsDetail = (props) => {
     goods_price: goods_price,
   };
 
-  console.log("In GOODSDETAIL, count : ", count);
+  // console.log("In GOODSDETAIL, count : ", count);
 
   useEffect(() => {
     // TODO: In here, qna states are re-rendering? Or, In render part, qna states are re-rendering? TEST!

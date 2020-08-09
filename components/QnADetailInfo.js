@@ -26,12 +26,12 @@ const QnAButtonDetailInfoOfBottom = styled.Button`
 
 // function part
 const QnADetailInfo = (props) => {
-  console.log("In QnADetailInfo, props : ", props);
+  // console.log("In QnADetailInfo, props : ", props);
   const id = props.prop?.route.params.id;
   const dispatch = useDispatch();
   const qna = useSelector(state => state.goods?.qna);
   const timesQ = useSelector((state => state.goods?.times))
-  console.log("In QnADetailInfo, times : ", timesQ);
+  // console.log("In QnADetailInfo, times : ", timesQ);
   // console.log("In QnADetailInfo, qna : ", qna);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const QnADetailInfo = (props) => {
         />
       </QnAheader>
       {qna && qna.length === 0
-        ? <Text>등록된 QnA가 없습니다</Text>
+        ? (<></>)
         : (qna[0].map(el => {
           return <QnAList key={shortId.generate()} list={el} prop={props}/>;
         }))

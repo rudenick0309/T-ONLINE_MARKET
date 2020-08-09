@@ -40,10 +40,10 @@ const TextView = styled.Text`
 
 // function part
 const GoodsList = (props) => {
-  console.log("In GOODSLIST, props : ", props);
+  // console.log("In GOODSLIST, props : ", props);
   const dispatch = useDispatch();
   var goodsList = useSelector(state => state.goods?.goodsList[0]);
-  console.log("In GOODSLIST, goodslist : ", goodsList);
+  // console.log("In GOODSLIST, goodslist : ", goodsList);
   const filterValue = props.route.params?.filter;
 
   useEffect(() => {
