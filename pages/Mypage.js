@@ -190,17 +190,19 @@ const Mypage = (props) => {
                           }}>
                           <View style={styles.centeredView}>
                             <View style={styles.modalView}>
-                              <Text style={styles.modalText}>Hello World!</Text>
+                              <Text style={styles.modalText}>
+                                배송준비 중입니다
+                              </Text>
 
                               <TouchableHighlight
                                 style={{
                                   ...styles.openButton,
-                                  backgroundColor: '#2196F3',
+                                  backgroundColor: '#464e46',
                                 }}
                                 onPress={() => {
                                   setModalVisible(!modalVisible);
                                 }}>
-                                <Text style={styles.textStyle}>Hide Modal</Text>
+                                <Text style={styles.textStyle}>조회 종료</Text>
                               </TouchableHighlight>
                             </View>
                           </View>
