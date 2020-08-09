@@ -12,13 +12,21 @@ import {addToReview, timesToDelete} from "../reducers/goods";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border: 2px solid blue;
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border: 2px solid blue;
+  
+  padding: 10px;
 `;
+
+const TopTextView= styled.View`
+  flex:1;
+  opacity:0.2
+  justify-content:center;
+  align-items:center;
+  margin: 50px 0px;
+`
 
 // flex-direction:row;
 const ReviewView = styled.View`
@@ -37,16 +45,30 @@ const ReviewTitleText = styled.TextInput`
   border: 2px solid green;
 `;
 
-const ReviewButton = styled.Button`
-  width: 100px;
-  border: 2px solid yellow;
-`;
+
 
 const ReviewContentTextInput = styled.TextInput`
+  margin-bottom: 20px;
   flex: 1;
-  border: 2px solid green;
+  border: 2px solid grey  
   height: 200px;
+  border-radius:10px;
 `;
+
+const ReviewButton = styled.TouchableOpacity`
+  flex:1;
+  height: 50px;
+  background-color:#535204;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;  
+`;
+
+const ButtonText = styled.Text`
+  color:white;
+  font-size:30px;
+  letter-spacing:10px;
+`
 
 
 // function part
@@ -91,24 +113,33 @@ const ReviewPlus = (props) => {
 
       <Contents>
 
-        <Text>
-          {
-            `리뷰를 등록해 주세요. 사랑합니다 갱님`
-          }
-        </Text>
+        <TopTextView>
+          <Text>
+            {
+              `저희 제품을 구매해 주셔서 감사드립니다`
+            }
+          </Text>
+          <Text>
+            {
+              `고객님의 소중한 후기가 저희에겐 큰 힘이 됩니다`
+            }
+          </Text>
+        </TopTextView>
 
-        <ReviewView>
 
-          <ReviewButton title={"등록하기"} onPress={onPressReview}/>
-
-        </ReviewView>
 
         <ReviewContentTextInput
           maxLength={200}
           multiline={true}
+          placeholder={"내용을 입력해 주세요"}
           onChangeText={(text) => onChangeContent(text)}
           value={content}
         />
+
+        <ReviewButton onPress={onPressReview}>
+          <ButtonText>등록하기</ButtonText>
+        </ReviewButton>
+
       </Contents>
 
       <Nav props={props}/>
