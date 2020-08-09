@@ -43,9 +43,15 @@ const ButtonRowStyled = styled.View`
   flex-direction:row;
 `;
 
-const ButtonStyled = styled.Button`
-  height : 50px;
-  color : #e3dfc8;
+const ButtonStyled = styled.TouchableOpacity`
+  height : 40px;
+  background-color: #62760c; 
+  margin-bottom:10px;
+  border-radius: 5px;
+  justify-content:center;
+  align-items:center;
+  width: 50px;
+  margin-right:10px;
 `;
 
 const ImageStyled = styled.Image`
@@ -54,6 +60,14 @@ const ImageStyled = styled.Image`
   height: 400px;
   resize-mode: contain;
   border-radius: 10px;
+`;
+
+const StarView = styled.View`
+  flex-direction :row;
+`
+
+const ButtonText = styled.Text`
+  color:white;
 `;
 
 //
@@ -95,10 +109,14 @@ const ReviewList = (props) => {
             <TextStyled>
               {starStr}
 
-              <View>
+              <StarView>
                 <FontAwesomeIcon icon={faStar} size={15}/>
-              </View>
-              {/*  TODO : How the tag iterator about the quantity of the star number?*/}
+                <FontAwesomeIcon icon={faStar} size={15}/>
+                <FontAwesomeIcon icon={faStar} size={15}/>
+                <FontAwesomeIcon icon={faStar} size={15}/>
+                <FontAwesomeIcon icon={faStar} size={15}/>
+              </StarView>
+
             </TextStyled>
 
             <TextStyled>
@@ -110,18 +128,30 @@ const ReviewList = (props) => {
             </TextStyled>
 
             <ButtonRowStyled>
-              <ButtonStyled
-                title={"수정"}
-                color={"#62760c"}
+              {/*<ButtonStyled*/}
+              {/*  title={"수정"}*/}
+              {/*  color={"#62760c"}*/}
 
+              {/*  onPress={() => {*/}
+              {/*    prop.navigation.navigate("ReviewPlusEdit", {id, title, contents, username});*/}
+              {/*  }}/>*/}
+
+              <ButtonStyled
+                color={"#62760c"}
                 onPress={() => {
                   prop.navigation.navigate("ReviewPlusEdit", {id, title, contents, username});
-                }}/>
-              {/*<Text>{"   "}</Text>*/}
+                }}
+              >
+                <ButtonText>수정</ButtonText>
+              </ButtonStyled>
+
               <ButtonStyled
-                title={"삭제"}
                 color={"#62760c"}
-                onPress={deleteReview}/>
+                onPress={deleteReview}
+              >
+                <ButtonText>삭제</ButtonText>
+              </ButtonStyled>
+
             </ButtonRowStyled>
 
           </ViewPaddingStyled>
