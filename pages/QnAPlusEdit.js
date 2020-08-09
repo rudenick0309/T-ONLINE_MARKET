@@ -7,32 +7,61 @@ import {useDispatch, useSelector} from "react-redux";
 import {patchToQuestion, timesToDelete} from "../reducers/goods";
 
 // css part
-const Container = styled.ScrollView`
+const Container = styled.SafeAreaView`
   flex: 1;
-  border: 3px solid blue
 `;
 
-const InContainer = styled.TouchableOpacity`
-  border: 3px solid ivory
-`;
+// const InContainer = styled.TouchableOpacity`
+//   border: 3px solid ivory
+// `;
 
 const Contents = styled.View`
   flex: 1;
-  border: 3px solid grey;
+  padding:10px;
 `;
 
-const ImageView = styled.Image`
-  flex:1
-  border: 2px solid yellow;
-`;
+const TopTextView= styled.View`
+  flex:0.7;
+  opacity:0.2
+  justify-content:center;
+  align-items:center;
+  margin: 20px 0px;
+`
 
-const TextView = styled.Text`
-  color : red;
-`;
 
+// const TextInputStyled = styled.TextInput`
+//   border : 3px solid red
+//   flex:1;
+//   width:100%;
+// `;
 const TextInputStyled = styled.TextInput`
-  border: 3px solid red;
+  margin-bottom: 10px;
+  flex: 0.5;
+  border: 2px solid grey  
+  height: 50px;
+  border-radius:10px;
 `;
+
+// const QnAEditTitleText = styled.TextInput`
+//   flex:1;
+//   border-bottom-width: 2px;
+//   border-style : solid;
+//   margin-bottom:20px;
+// `;
+
+const EditButton = styled.TouchableOpacity`
+  flex:0.3;
+  background-color:#535204;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;  
+`;
+
+const EditButtonText = styled.Text`
+  color:white;
+  font-size:30px;
+  letter-spacing:10px;
+`
 
 //
 const QnAPlusEdit = (props) => {
@@ -66,13 +95,46 @@ const QnAPlusEdit = (props) => {
       <Header props={props}/>
 
       <Contents>
+        <TopTextView>
+          <Text>
+            {
+              `질문은 200자로 제한되오며,`
+            }
+          </Text>
+          <Text>
+            {
+              `악의적인 공격성 글은 가슴이 아파요.`
+            }
+          </Text>
+        </TopTextView>
 
-        <View>
-          <TextInputStyled placeholder={nonEditUserName} value={nonEditUserName} editable={false} />
-          <TextInputStyled placeholder={editTitle} value={editTitle} onChangeText={(text) => onChangeTextTitle(text)} />
-          <TextInputStyled placeholder={editContent} value={editContent} onChangeText={(text) => onChangeTextContent(text)} />
-        </View>
-        <Button title={"수정"} onPress={onPressEditQnA} />
+        {/*<View>*/}
+          <TextInputStyled
+            placeholder={nonEditUserName}
+            value={nonEditUserName}
+            editable={false}
+          />
+          <TextInputStyled
+            maxLength={200}
+            multiline={true}
+            placeholder={editTitle}
+            value={editTitle}
+            onChangeText={(text) => onChangeTextTitle(text)}
+            editable={true}/>
+          {/*<TextInputStyled placeholder={'변경할 제목을 입력해 주세요'} value={editTitle} onChangeText={(text) => onChangeTextTitle(text)} edi/>*/}
+          <TextInputStyled
+            maxLength={200}
+            multiline={true}
+            placeholder={'변경할 내용을 입력해 주세요'}
+            value={editContent}
+            onChangeText={(text) => onChangeTextContent(text)}
+            editable={true} />
+        {/*</View>*/}
+
+        {/*<Button title={"수정"} onPress={onPressEditQnA} />*/}
+        <EditButton onPress={onPressEditQnA}>
+          <EditButtonText>등록하기</EditButtonText>
+        </EditButton>
 
       </Contents>
 

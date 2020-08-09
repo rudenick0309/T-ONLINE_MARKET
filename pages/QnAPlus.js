@@ -12,27 +12,18 @@ import {addToQuestion, loadToQuestion, timesToDelete} from "../reducers/goods";
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
- 
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  
   padding: 10px;
 `;
 
 // flex-direction:row;
 const QnAView = styled.View`
   margin-bottom: 40px;
-  
   flex-direction: row;
-  
 `;
-
-// const QnANameText = styled.TextInput`
-//   width: 100px;
-//   border: 2px solid yellow;
-// `;
 
 const QnATitleText = styled.TextInput`
   flex:1;
