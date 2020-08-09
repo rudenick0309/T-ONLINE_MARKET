@@ -235,7 +235,7 @@ const GoodsDetail = (props) => {
 
                 <ViewNavRowStyled>
                   <ButtonNavStyled
-                    title={"장바구니 담기"}
+                    title={"담기"}
                     color="#464e46"
                     onPress={() => {
                       props.navigation.navigate("Bucket", data);
