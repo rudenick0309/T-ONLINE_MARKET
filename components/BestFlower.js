@@ -12,7 +12,7 @@ import styled from 'styled-components';
 // css part
 export const BestFlowerContainer = styled.TouchableOpacity`
   flex: 1;
-  
+  margin: 0px 5px;
 `;
 
 export const BestFlowerContents = styled.ScrollView`
@@ -25,6 +25,8 @@ export const BestFlowerContents = styled.ScrollView`
 export const BestFlowerImageView = styled.Image`
   flex:1
   height: 160px;
+  margin-top:10px;
+  border-radius:10px;
   resize-mode: contain;
 `;
 
