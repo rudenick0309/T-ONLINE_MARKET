@@ -22,6 +22,8 @@ const ReviewHeader = styled.View`
   flex: 1;
   flex-direction: row;
   justify-content:space-around;
+  align-items:center;
+
 `;
 
 // function part
@@ -49,7 +51,7 @@ const ReviewDetailInfo = (props) => {
   return (
     <ReviewDetailInfoOfBottom>
       <ReviewHeader>
-        <Text>호갱님의 소중한 리뷰는 상업용으로 쓰일거에요.</Text>
+        <Text>고객님의 아름다운 리뷰를 기다립니다.</Text>
         <ReviewButtonDetailInfoOfBottom
           title={"글쓰기"}
           color={"#535204"}
