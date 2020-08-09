@@ -2,19 +2,25 @@ import React, {useState, useEffect} from "react";
 import {StyleSheet, Text, View} from "react-native";
 import styled from "styled-components";
 import Header from "../components/Header";
-import Nav from '../components/Nav'
+import Nav from "../components/Nav";
 
 // css part
 const Container = styled.SafeAreaView`
   flex: 1;
-  border : 2px solid blue
+
 `;
 
 const Contents = styled.ScrollView`
   flex: 1;
-  border : 2px solid blue
+  
 `;
-
+const ViewStyled = styled.View`
+  flex:1;
+  margin-top:200px
+  
+  align-items:center;
+  justify-content:center;
+`;
 
 // function part
 const Payment = (props) => {
@@ -30,7 +36,14 @@ const Payment = (props) => {
   return (
     <Container>
       <Header props={props}/>
-      <Contents><Text>Payment</Text></Contents>
+
+      <Contents>
+        <ViewStyled>
+          <Text>서비스 준비 중입니다</Text>
+
+        </ViewStyled>
+      </Contents>
+
       <Nav props={props}/>
     </Container>
   );
