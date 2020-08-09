@@ -71,11 +71,11 @@ const SaleInfo = (props) => {
   console.log('sale info props', props);
   const dispatch = useDispatch();
   const sale = useSelector((state) => state.orders?.sale);
-  const id = props.route.params;
+  // const id = props.route.params;
 
   console.log('sale info salesss', sale);
   useEffect(() => {
-    dispatch(loadSale(id));
+    dispatch(loadSale());
   }, []);
 
   return (
