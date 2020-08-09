@@ -36,7 +36,7 @@ function loadOnsaleAPI(data) {
 
 function loadTrackingAPI(data) {
   console.log('In SAGA, loadOTrackingAPI, data : ', data);
-  return axios.get(`/mypage/tracking?userId=${data}`, data);
+  return axios.get(`/mypage/tracking?local.userId=${data}`, data);
 }
 
 function loadOrderCheckAPI(data) {
