@@ -162,33 +162,6 @@ const ReplyView = styled.View`
   justify-content:space-between;
   align-items:center;
 `;
-//
-// const EditView = styled.View`
-//
-//   flex-direction:row;
-//   padding: 10px;
-//   padding-right:14px;
-//   justify-content:space-between;
-//   width:100%;
-//   align-items:center;
-// `;
-//
-// const EditTextInput = styled.TextInput`
-//   flex: 1;
-//   border-bottom-width:1px;
-//   border-top-width:1px;
-//   border-radius:12px;
-// `
-//
-// const EditButtonStyled = styled.TouchableOpacity`
-//   height : 30px;
-//   background-color: #62760c;
-//   flex:0.25;
-//   border : 3px solid blue
-//   border-radius: 5px;
-//   justify-content:center;
-//   align-items:center;
-// `;
 
 //
 const QnAList = (props) => {
@@ -371,7 +344,7 @@ const QnAList = (props) => {
                         <ReListLeftView>
                           <TextStyled>
                             {
-                              `이름: ${el.username}  `
+                              `이름: ${el.username} `
 
                             }
                             {/*  작성일 : ${el.createdAt}*/}
@@ -400,20 +373,6 @@ const QnAList = (props) => {
                       reReply
                         ?
                         (
-                          // <EditView>
-                          //   <EditTextInput
-                          //     maxLength={200}
-                          //     multiline={false}
-                          //     value={reWriting}
-                          //     onChangeText={(text) => onChangeReWriting(text)}
-                          //   />
-                          //   {/*<TouchableTextStyled onPress={onPressReReplyToRequest}>*/}
-                          //   {/*  <Text>수정</Text>*/}
-                          //   {/*</TouchableTextStyled>*/}
-                          //   <EditButtonStyled onPress={onPressReReplyToRequest}>
-                          //     <ButtonText>수정</ButtonText>
-                          //   </EditButtonStyled>
-                          // </EditView>
 
                         <ReplyView>
                           <ListLeftView>

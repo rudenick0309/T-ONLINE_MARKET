@@ -75,12 +75,6 @@ const InfoDetailInfoOfBottom = styled.ScrollView`
   flex: 1;
 `;
 
-// qna detail part
-const QnADetailInfoOfBottom = styled.ScrollView`
-  flex: 1;
-  height: 500px;
-`;
-
 const ViewDetailInfoOfBottom = styled.View`
 flex:1;
   flex-direction:row;
@@ -208,15 +202,12 @@ const GoodsDetail = (props) => {
 
               <View>
                 <TextOfUpperRight>이름 : {goods_name}</TextOfUpperRight>
-                <TextOfUpperRight>가격 : {goods_price}원</TextOfUpperRight>
+                <TextOfUpperRight>가격 : {goods_price.toLocaleString()}원</TextOfUpperRight>
                 <TextOfUpperRight>꽃말 : {language}</TextOfUpperRight>
               </View>
 
               <View>
                 <ViewRowStyled>
-                  {/*<Button title={'d'} onPress={onPressMinus}>*/}
-                  {/*  <Icon name={"arrowdown"} color={'black'} size={30}></Icon>*/}
-                  {/*</Button>*/}
 
                   <QuantityOfText>수량</QuantityOfText>
 
@@ -300,7 +291,7 @@ const GoodsDetail = (props) => {
             ?
             (
               <InfoDetailInfoOfBottom>
-                {/*<ImageInfoOfBottom source={{uri: info_img}}/>*/}
+
                 <AutoHeightImage
                   width={400}
                   source={{uri: info_img}}

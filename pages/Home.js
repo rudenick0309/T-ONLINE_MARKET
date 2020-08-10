@@ -66,7 +66,7 @@ const BestTextStyled = styled.Text`
   font-weight:bold;
   font-size:25px;
   color: #464e46;
-  margin: 30px 10px;
+  margin: 40px 10px;
 `;
 
 const SplitView = styled.View`
@@ -90,7 +90,7 @@ const Home = (props) => {
   const home = useSelector(state => state.goods?.home);
   const recommendation = useSelector((state) => state.goods.home?.recommendation);
   const best = useSelector((state) => state.goods.home?.best);
-  // console.log("In HOME COMPONENT, home : ", home);
+  console.log("In HOME COMPONENT, home : ", home);
 
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const Home = (props) => {
 
         <RecommendTextStyled>MD PICK's</RecommendTextStyled>
         <ViewPagerStyled initialPage={0}>
-          {recommendation && recommendation.map((el) => {
+          {recommendation && recommendation.reverse().map((el) => {
             return (
               <View key={shortId.generate()}>
                 <RecommendedFlowerContainer

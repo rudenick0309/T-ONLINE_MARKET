@@ -47,7 +47,8 @@ const BottomPayment = styled.View`
 // function part
 const Bucket = (props) => {
   console.log("In Bucket, props : ", props);
-  const count = props.route.params.count;
+  // const count = props.route.params.count;
+  const count = props.route.params.count ? props.route.params.count : 1;
   const goods_img = props.route.params.goods_img;
   const goods_name = props.route.params.goods_name;
   const goods_price = props.route.params.goods_price;
