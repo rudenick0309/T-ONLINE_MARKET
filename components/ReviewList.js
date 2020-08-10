@@ -54,10 +54,16 @@ const ButtonStyled = styled.TouchableOpacity`
   margin-right:10px;
 `;
 
+  // padding-right : 20px;
+  // margin-right:20px;
+const ViewImageStyled = styled.View`
+  
+`
+
 const ImageStyled = styled.Image`
-  flex: 1;
-  width:400px;
-  height: 400px;
+  flex: 3;
+  width:300px;
+  height: 300px;
   resize-mode: contain;
   border-radius: 10px;
 `;
@@ -73,7 +79,7 @@ const ButtonText = styled.Text`
 //
 const ReviewList = (props) => {
   // console.log("In ReviewList, props : ", props);
-  // const [replies, setReplies] = useState(false);
+
   const dispatch = useDispatch();
   const {username} = props.list;
   const {title} = props.list;
@@ -107,7 +113,6 @@ const ReviewList = (props) => {
           <ViewPaddingStyled>
 
             <TextStyled>
-              {starStr}
 
               <StarView>
                 <FontAwesomeIcon icon={faStar} size={15}/>
@@ -128,13 +133,6 @@ const ReviewList = (props) => {
             </TextStyled>
 
             <ButtonRowStyled>
-              {/*<ButtonStyled*/}
-              {/*  title={"수정"}*/}
-              {/*  color={"#62760c"}*/}
-
-              {/*  onPress={() => {*/}
-              {/*    prop.navigation.navigate("ReviewPlusEdit", {id, title, contents, username});*/}
-              {/*  }}/>*/}
 
               <ButtonStyled
                 color={"#62760c"}
@@ -156,9 +154,9 @@ const ReviewList = (props) => {
 
           </ViewPaddingStyled>
 
-          <View>
+          <ViewImageStyled>
             <ImageStyled source={{uri: review_img}}/>
-          </View>
+          </ViewImageStyled>
 
         </ViewStyled>
       </Contents>
