@@ -22,6 +22,10 @@ export const initialState = {
   homeQnADone: false,
   homeQnAError: null,
 
+  loadSearchListLoading: true, // search list
+  loadSearchListDone: false,
+  loadSearchListError: null,
+
   loadReviewLoading: false,   // review read
   loadReviewDone: false,
   loadReviewError: null,

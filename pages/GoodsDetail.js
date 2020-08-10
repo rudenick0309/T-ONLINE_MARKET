@@ -155,12 +155,12 @@ const GoodsDetail = (props) => {
   // console.log("In GOODS_DETAIL, goodsInfo : ", goodsInfo);
   const goods_name = goodsInfo?.goods_name;
   const goods_img = goodsInfo?.goods_img;
-  const goods_price = goodsInfo?.goods_price;
+  var goods_price = goodsInfo?.goods_price;
   const info_img = goodsInfo?.info_img;
   const language = goodsInfo?.flower_language;
   const count = useSelector((state) => state.goods?.count);
   // const scrollRef = useRef();
-
+ // goods_price = goods_price.toLocaleString();
   const data = {
     count: count,
     id: id,
@@ -202,7 +202,7 @@ const GoodsDetail = (props) => {
 
               <View>
                 <TextOfUpperRight>이름 : {goods_name}</TextOfUpperRight>
-                <TextOfUpperRight>가격 : {goods_price.toLocaleString()}원</TextOfUpperRight>
+                <TextOfUpperRight>가격 : {goods_price}원</TextOfUpperRight>
                 <TextOfUpperRight>꽃말 : {language}</TextOfUpperRight>
               </View>
 

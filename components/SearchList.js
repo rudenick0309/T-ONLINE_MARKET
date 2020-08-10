@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {View, Text, Image,TouchableOpacity} from "react-native";
 import styled from "styled-components";
 
@@ -45,18 +45,13 @@ const SearchList = (props) => {
   const price = props.data.goods_price;
   const id = props.data.goods_id;
 
-  // const onPressToBuckt =(num)=> {
-  //   props.navigation.navigate('GoodsDetail', {id: id})
-  // }
 
-  const onPressToGoodsDetail = () => {
-    props.prop.navigation.navigate('GoodsDetail', {id: id})
-  }
+  const onPressToGoodsDetail = useCallback(() => {
+      props.prop.navigation.navigate('GoodsDetail', {id: id})
+  }, [])
 
   return (
     <ViewStyled onPress={onPressToGoodsDetail} >
-
-      {/*<TouchableOpacity onPress={onPressToBuckt}>*/}
 
         <ImageViewStyled>
           <ImageOfUpperLeft source={{uri: img}}/>
@@ -64,13 +59,8 @@ const SearchList = (props) => {
 
         <TextViewStyled>
           <TextStyled>{name}</TextStyled>
-          <TextStyled>{price}</TextStyled>
+          <TextStyled>{price.toLocaleString()}원</TextStyled>
         </TextViewStyled>
-
-        {/*<View>*/}
-        {/*  /!*<Text>{count}</Text>*!/*/}
-        {/*</View>*/}
-      {/*</TouchableOpacity>*/}
 
     </ViewStyled>
   );

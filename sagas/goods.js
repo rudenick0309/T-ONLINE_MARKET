@@ -154,7 +154,7 @@ function* home() {
 function* searchList(action) {
   console.log("In SAGA, searchList, action : ", action);
   try {
-    const result = yield call(searchListAPI, action.data); // TODO : max params?
+    const result = yield call(searchListAPI, action.data);
     console.log("In SAGA, searchList, result : ", result);
     yield put({
       type: LOAD_SEARCHLIST_SUCCESS,
